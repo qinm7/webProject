@@ -1,0 +1,29 @@
+###### Descriptif des différentes pages de notre site ########
+
+bandeau de site :
+- lien vers la page d'inscription
+- lien vers la page de connection
+- lien vers une page explicative
+
+pied de page :
+- rubrique "contacts"
+- rubrique "réseaux sociaux"
+- rubrique "à propos"
+
+1) Page d'accueil (charles)
+
+- champ de choix de ville
+- bouton "publiez une offre"
+- explication du principe du site
+
+2) Page présentant la liste des jobs disponibles
+- contenu dynamique
+
+3) Page détaillant une annonce
+- contenu dynamique
+
+4) Page d'inscription (benoit)
+- bouton connection si déjà inscrit
+- formulaire d'inscription sinon
+
+5) Page de remerciement
