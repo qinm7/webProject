@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<!--
+	Ion by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>BlablaJob</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-xlarge.css" />
+		</noscript>
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header" class="skel-layers-fixed">
+				<h1><a href="#">BlablaJob</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Accueil</a></li>
+						<li><a href="#">Comment ça marche</a></li>
+						<li><a href="connexion.html">Connexion</a></li>
+						<li><a href="inscrire.html" class="button special">S'inscrire</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<h2>This is BlablaJob</h2>
+					<p>La réponse à toutes vos demandes</p>
+					<div class="actions">
+						<a href="#content" class="button big special">Publiez une annonce</a>
+					</div>
+				</div>
+			</section>
+		
+		<!-- One -->
+			<section id="one" class="wrapper style1">
+				<header class="major">
+					<h2>Trouvez un boulot près de chez vous </h2>
+					<img src="images/logo.jpg" alt="Logo de BlablaJob" />
+				</header>
+				
+				<div class="container">
+				<div class="row">
+				<div id="section_1">
+					<form method="get" action="#">
+                	<div class="form_row"> 
+                		<label class="main">Ville: </label>
+                		<input class="main" type="text" name="city" value="" placeholder="Entrez une ville" /> </div>
+                	<div class="form_row"> 
+                		<label class="main">Compétence: </label>
+                		<select class="main" name="skill">
+                			<option value="-1">Sélectionnez une compétence...</option>
+               				<option value="bricolage">Bricolage</option>
+      						<option value="menage">Ménage</option>
+      						<option value="jardinage">Jardinage</option>
+                			<option value="pyrogravure">Pyrogravure sur boîte de camembert</option>
+                			<option value="peinture">Peinture</option>
+                			<option value="reparation">Réparation</option>
+                			<option value="cuisine">Cuisine</option>
+                			<option value="aide">Aide à la personne</option>
+                		</select>
+                	</div>
+               		<div class="form_row" id="recherche"> 
+               			<label class="main"></label>
+                		<input class="main" type="submit" value="Rechercher" name="search" />
+                	</div>        
+        			</form>
+        		</div>
+        		</div>
+        		</div>
+        		
+        		
+    	<!-- end of section 1 -->
+			</section>			
+			
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<div class="row double">
+						<div class="6u">
+							<div class="row collapse-at-2">
+								<div class="6u">
+									<h3>Infos pratiques</h3>
+									<ul class="alt">
+										<li><a href="#">FAC</a></li>
+										<li><a href="#">Contact</a></li>
+									</ul>
+								</div>
+								<div class="6u">
+									<h3>À propos</h3>
+									<ul class="alt">
+										<li><a href="#">Qui sommes-nous ?</a></li>
+										<li><a href="#">Conditions générales et confidentialité</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="6u">
+							<h3>Suivez-nous</h3>
+							<p> Retrouvez toutes nos dernières actualités sur les réseaux sociaux. </p>
+							<ul class="icons">
+								<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+								<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+								<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
+							</ul>
+						</div>
+					</div>
+					<ul class="copyright">
+						<li>&copy; BlablaJob. Tous droits réservés.</li>
+						<li>Design : <a href="http://templated.co">TEMPLATED</a></li>
+					</ul>
+				</div>
+			</footer>
+
+	</body>
+</html>
