@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import modele.User;
 
 /**
  *
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
 @WebServlet(name = "Controleur", urlPatterns = {"/controleur"})
 public class Controleur extends HttpServlet {
     
-    @Resource(name = "jdbc/user")
+    @Resource(name = "jdbc/blablajob")
     private DataSource ds;
     
     /* pages d’erreurs */
@@ -37,6 +38,8 @@ public class Controleur extends HttpServlet {
                 HttpServletResponse response, DAOException e)
             throws ServletException, IOException {
         request.setAttribute("erreurMessage", e.getMessage());
+        String action = request.getParameter("action");
+        request.setAttribute("action", action);
         request.getRequestDispatcher("/WEB-INF/bdErreur.jsp").forward(request, response);
     }
     
@@ -86,7 +89,7 @@ public class Controleur extends HttpServlet {
             if (action == null) {
                 actionAfficher(request, response, userDAO);
             } else if (action.equals("ajout-user")){
-                actionAjouter(request, response, userDAO);
+                actionAjouter(request, response, userDAO);               
             } else {
                 invalidParameters(request, response);
             }
@@ -111,8 +114,12 @@ public class Controleur extends HttpServlet {
     
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO) 
             throws DAOException, ServletException, IOException {
-        //request.setAttribute("ouvrages", ouvrageDAO.getListeOuvrages());                
-        request.getRequestDispatcher("/WEB-INF/listAll.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        if(action.equals("ajout-user")) {
+            String email = request.getParameter("email");
+            request.setAttribute("utilisateur", userDAO.getUser(email));               
+            request.getRequestDispatcher("/WEB-INF/indexUser.jsp").forward(request, response);
+        }    
     }
 
     /**
@@ -120,18 +127,19 @@ public class Controleur extends HttpServlet {
      */
     private void actionAjouter(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws IOException, ServletException, DAOException {
-        String confirm = request.getParameter("check");
-        if (Boolean.parseBoolean(confirm))
-        {
-            String email = request.getParameter("email");
+        String email = request.getParameter("email");
+        User user = null;
+        user = userDAO.getUser(email);
+        if (user.equals(null)) {
             String password = request.getParameter("password");
             String nom = request.getParameter("lastname");
             String prenom = request.getParameter("firstname");
             String genre = request.getParameter("sex");
-            String birth = request.getParameter("email");
+            String birth = request.getParameter("Birthday_day") + "/" + request.getParameter("Birthday_Month") + "/" + request.getParameter("Birthday_Year");
             userDAO.ajouterUser(email, password, nom, prenom, genre, birth);
+            actionAfficher(request, response, userDAO);
+        } else {
         }
-        
     }
     
     /**

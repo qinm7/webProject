@@ -16,26 +16,51 @@ and open the template in the editor.
 
         <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
 
-        <script> function surligne(champ, erreur)
-            {
-                if (erreur)
-                    champ.style.backgroundColor = "#FFD9CF";
-                else
-                    champ.style.backgroundColor = "";
+        <script type="text/javascript">
+            document.forms[0].elements[0].focus(); 
+            function verifForm(f) {
+                if ( f.elements['input-password'].value == f.elements['input-confirm'].value ) return true;        
+                return false;
             }
-
-            function verifMdp2(champ)
-            {
-                if(champ.value != document.getElementById('input-password').value)
-                {
-                    surligne(champ, true);
-                    return false;
+            function verifForm1(f) {
+                if ( f.elements['gender'].value != -1 ) return true;            
+                return false;
+            }
+            function verifForm2(f) {
+                if ( f.elements['day'].value != -1 ) return true;            
+                return false;
+            }
+            function verifForm3(f) {
+                if ( f.elements['month'].value != -1 ) return true;            
+                return false;
+            }
+            function verifForm4(f) {
+                if ( f.elements['year'].value != -1 ) return true;            
+                return false;
+            }
+            function verif(f) {
+                var verif = verifForm(f) && verifForm1(f) && verifForm2(f) && verifForm3(f) && verifForm4(f);
+                if(!verifForm(f)) {
+                    mySpan.innerHTML = "Les mots de passe sont différents !";
+                    mySpan1.innerHTML = "Les mots de passe sont différents !";
                 }
-                else
-                {
-                    surligne(champ, false);
-                    return true;
+                else {
+                    mySpan.innerHTML = "";
+                    mySpan1.innerHTML = "";
                 }
+                if(!verifForm1(f)) {
+                    mySex.innerHTML = "Veuillez préciser votre sexe !";
+                }
+                else {
+                    mySex.innerHTML = "";
+                }
+                if(!(verifForm2(f) && verifForm3(f) && verifForm4(f))) {
+                    myBirth.innerHTML = "Veuillez préciser votre date de naissance !";
+                }
+                else {
+                    myBirth.innerHTML = ""
+                }
+                return verif;
             }
         </script>
     </head>
@@ -56,7 +81,7 @@ and open the template in the editor.
 
             <section class="af-wrapper">
                 <h3>Inscription à BlablaJob</h3>			
-                <form class="af-form" id="af-form" method="get" action="controleur">
+                <form class="af-form" id="af-form" method="get" action="controleur" onsubmit="return veriff(this)" >
 
                     <div class="af-outer">
                         <div class="af-inner">
@@ -68,12 +93,16 @@ and open the template in the editor.
                         <div class="af-inner">
                             <label for="input-password">Mot de passe</label>
                             <input type="password" name="password" value="" id="input-password" required placeholder="Mot de passe">
+                            <br/>
+                            <span id="mySpan" style="color:red"></span> 
                         </div>
                     </div>	
                     <div class="af-outer">
                         <div class="af-inner">	
                             <label for="input-confirm">Confirmation</label>
-                            <input type="password" name="confirm" value="" id="input-confirm" required onblur="verifMdp2(this)" placeholder="Confirmez le mot de passe">
+                            <input type="password" name="confirm" value="" id="input-confirm" required placeholder="Confirmez le mot de passe">
+                            <br/>
+                            <span id="mySpan1" style="color:red"></span> 
                         </div>
                     </div>					
 
@@ -94,28 +123,30 @@ and open the template in the editor.
                     <div class="af-outer">
                         <div class="af-inner">	
                             <label id="sexe" >Sexe</label>		
-                            <select class="styled-select" name="sex">
+                            <select class="styled-select" name="sex" id="gender" >
                                 <option value="-1">Choix</option>
-                                <option value="male">Homme</option>
-                                <option value="female">Femme</option>
-                            </select>	
+                                <option value="Masculin">Homme</option>
+                                <option value="Féminin">Femme</option>
+                            </select>
+                            <br/>
+                            <span id="mySex" style="color:red"></span>
                         </div>
                     </div>
 
                     <div class="af-outer">	
                         <div class="af-inner">				
                             <label id="bdate">Date de naissance</label>
-                            <select class="styled-select" name="Birthday_day">
+                            <select class="styled-select" name="Birthday_day" id="day">
                                 <option value="-1">Jour</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option> 
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
+                                <option value="01">1</option>
+                                <option value="02">2</option>
+                                <option value="03">3</option> 
+                                <option value="04">4</option>
+                                <option value="05">5</option>
+                                <option value="06">6</option>
+                                <option value="07">7</option>
+                                <option value="08">8</option>
+                                <option value="09">9</option>
                                 <option value="10">10</option>
                                 <option value="11">11</option>
                                 <option value="12">12</option>
@@ -140,23 +171,23 @@ and open the template in the editor.
                                 <option value="31">31</option>
                             </select>
 
-                            <select class="styled-select" name="Birthday_Month">
+                            <select class="styled-select" name="Birthday_Month" id="month">
                                 <option value="-1">Mois</option>
-                                <option value="January">Janvier</option>
-                                <option value="February">Février</option>
-                                <option value="March">Mars</option>
-                                <option value="April">Avril</option>
-                                <option value="May">Mai</option>
-                                <option value="June">Juin</option>
-                                <option value="July">Juillet</option>
-                                <option value="August">Août</option>
-                                <option value="September">Septembre</option>
-                                <option value="October">Octobre</option>
-                                <option value="November">Novembre</option>
-                                <option value="December">Décembre</option>
+                                <option value="01">Janvier</option>
+                                <option value="02">Février</option>
+                                <option value="03">Mars</option>
+                                <option value="04">Avril</option>
+                                <option value="05">Mai</option>
+                                <option value="06">Juin</option>
+                                <option value="07">Juillet</option>
+                                <option value="08">Août</option>
+                                <option value="09">Septembre</option>
+                                <option value="10">Octobre</option>
+                                <option value="11">Novembre</option>
+                                <option value="12">Décembre</option>
                             </select>
 
-                            <select class="styled-select" name="Birthday_Year"> 
+                            <select class="styled-select" name="Birthday_Year" id="year"> 
                                 <option value="-1">Année</option>
                                 <option value="2012">2012</option>
                                 <option value="2011">2011</option>
@@ -232,6 +263,8 @@ and open the template in the editor.
                                 <option value="1941">1941</option>
                                 <option value="1940">1940</option>
                             </select>
+                            <br/>
+                            <span id="myBirth" style="color:red"></span>
                         </div>
                     </div>
 

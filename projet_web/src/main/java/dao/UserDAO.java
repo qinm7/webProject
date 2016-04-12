@@ -31,7 +31,7 @@ public class UserDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st =
-                conn.prepareStatement("INSERT INTO bibliographie (email, motdepasse, nom, prenom, sexe, datenaissance) VALUES (?, ?, ?, ?, ?, ?)");
+                conn.prepareStatement("INSERT INTO utilisateur (email, motdepasse, nom, prenom, sexe, datenaissance) VALUES (?, ?, ?, ?, ?, ?)");
             st.setString(1, email);
             st.setString(2, password);
             st.setString(3, name);
