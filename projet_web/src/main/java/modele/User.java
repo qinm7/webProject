@@ -16,6 +16,10 @@ public class User {
    private String prenom;
    private String genre; 
    private String birth; 
+   
+   public User() {
+       super();       
+   }
 
    public User(String email, String nom, String prenom, String genre, String birth) {
       this.email = email;
@@ -23,6 +27,10 @@ public class User {
       this.prenom = prenom;
       this.genre = genre;
       this.birth = birth;
+   }
+   
+   public User(User user) {
+       this(user.email, user.nom, user.prenom, user.genre, user.birth);
    }
 
    public String getEmail() {

@@ -1,14 +1,16 @@
+<%-- 
+    Document   : inscription
+    Created on : 13 avr. 2016, 18:02:21
+    Author     : qinm
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>S'inscrire</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
@@ -17,30 +19,35 @@ and open the template in the editor.
         <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
 
         <script type="text/javascript">
-            document.forms[0].elements[0].focus(); 
+            document.forms[0].elements[0].focus();
             function verifForm(f) {
-                if ( f.elements['input-password'].value == f.elements['input-confirm'].value ) return true;        
+                if (f.elements['input-password'].value == f.elements['input-confirm'].value)
+                    return true;
                 return false;
             }
             function verifForm1(f) {
-                if ( f.elements['gender'].value != -1 ) return true;            
+                if (f.elements['gender'].value != -1)
+                    return true;
                 return false;
             }
             function verifForm2(f) {
-                if ( f.elements['day'].value != -1 ) return true;            
+                if (f.elements['day'].value != -1)
+                    return true;
                 return false;
             }
             function verifForm3(f) {
-                if ( f.elements['month'].value != -1 ) return true;            
+                if (f.elements['month'].value != -1)
+                    return true;
                 return false;
             }
             function verifForm4(f) {
-                if ( f.elements['year'].value != -1 ) return true;            
+                if (f.elements['year'].value != -1)
+                    return true;
                 return false;
             }
             function verif(f) {
                 var verif = verifForm(f) && verifForm1(f) && verifForm2(f) && verifForm3(f) && verifForm4(f);
-                if(!verifForm(f)) {
+                if (!verifForm(f)) {
                     mySpan.innerHTML = "Les mots de passe sont différents !";
                     mySpan1.innerHTML = "Les mots de passe sont différents !";
                 }
@@ -48,13 +55,13 @@ and open the template in the editor.
                     mySpan.innerHTML = "";
                     mySpan1.innerHTML = "";
                 }
-                if(!verifForm1(f)) {
+                if (!verifForm1(f)) {
                     mySex.innerHTML = "Veuillez préciser votre sexe !";
                 }
                 else {
                     mySex.innerHTML = "";
                 }
-                if(!(verifForm2(f) && verifForm3(f) && verifForm4(f))) {
+                if (!(verifForm2(f) && verifForm3(f) && verifForm4(f))) {
                     myBirth.innerHTML = "Veuillez préciser votre date de naissance !";
                 }
                 else {
@@ -87,6 +94,8 @@ and open the template in the editor.
                         <div class="af-inner">
                             <label for="input-email">E-mail</label>
                             <input type="email" name="email" id="input-email" required placeholder="E-mail" />
+                            <br/> 
+                            <span style="color:red">${email} est déja utilisé</span>         
                         </div>
                     </div>
                     <div class="af-outer">

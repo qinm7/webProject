@@ -9,6 +9,7 @@ import dao.DAOException;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -128,9 +129,13 @@ public class Controleur extends HttpServlet {
     private void actionAjouter(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws IOException, ServletException, DAOException {
         String email = request.getParameter("email");
-        User user = null;
-        user = userDAO.getUser(email);
-        if (user.equals(null)) {
+        User user;
+        try {
+            user = userDAO.getUser(email);
+        } catch (DAOException e) {
+            user = null;
+        }     
+        if(user == null) {    
             String password = request.getParameter("password");
             String nom = request.getParameter("lastname");
             String prenom = request.getParameter("firstname");
@@ -138,7 +143,10 @@ public class Controleur extends HttpServlet {
             String birth = request.getParameter("Birthday_day") + "/" + request.getParameter("Birthday_Month") + "/" + request.getParameter("Birthday_Year");
             userDAO.ajouterUser(email, password, nom, prenom, genre, birth);
             actionAfficher(request, response, userDAO);
-        } else {
+        }
+        else {
+            request.setAttribute("email", user.getEmail());           
+            request.getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
         }
     }
     
