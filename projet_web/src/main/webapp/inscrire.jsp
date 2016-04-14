@@ -80,7 +80,7 @@
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="#">Comment ça marche</a></li>
                     <li><a href="connexion.html">Connexion</a></li>
-                    <li><a href="inscrire.html" class="button special">S'inscrire</a></li>
+                    <li><a href="inscrire.jsp" class="button special">S'inscrire</a></li>
                 </ul>
             </nav>
         </header>
@@ -88,14 +88,16 @@
 
             <section class="af-wrapper">
                 <h3>Inscription à BlablaJob</h3>			
-                <form class="af-form" id="af-form" method="get" action="controleur" onsubmit="return veriff(this)" >
+                <form class="af-form" id="af-form" method="get" action="controleur" onsubmit="return verif(this)" >
 
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-email">E-mail</label>
                             <input type="email" name="email" id="input-email" required placeholder="E-mail" />
-                            <br/> 
-                            <span style="color:red">${email} est déja utilisé</span>         
+                            <% if (request.getParameter("email") != null) { 
+                                out.println("<br/> <span style=\"color:red\">" + request.getParameter("email") + " est déjà utilisé</span>");
+                               }
+                            %>
                         </div>
                     </div>
                     <div class="af-outer">

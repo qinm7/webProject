@@ -144,9 +144,8 @@ public class Controleur extends HttpServlet {
             userDAO.ajouterUser(email, password, nom, prenom, genre, birth);
             actionAfficher(request, response, userDAO);
         }
-        else {
-            request.setAttribute("email", user.getEmail());           
-            request.getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
+        else {          
+            request.getRequestDispatcher("/inscrire.jsp").forward(request, response);
         }
     }
     
