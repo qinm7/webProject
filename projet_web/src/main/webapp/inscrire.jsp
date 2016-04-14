@@ -94,10 +94,8 @@
                         <div class="af-inner">
                             <label for="input-email">E-mail</label>
                             <input type="email" name="email" id="input-email" required placeholder="E-mail" />
-                            <% if (request.getParameter("email") != null) { 
-                                out.println("<br/> <span style=\"color:red\">" + request.getParameter("email") + " est déjà utilisé</span>");
-                               }
-                            %>
+                            <br/> 
+                            <span style="color:red"> ${EmailErr} </span>
                         </div>
                     </div>
                     <div class="af-outer">
@@ -282,7 +280,9 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-addr">Adresse</label>
-                            <input type="text" name="address" id="input-addr" required placeholder="Adresse postale" /> 
+                            <input type="text" name="address" id="input-addr" required placeholder="Adresse postale" />
+                            <br/> 
+                            <span style="color:red"> ${AdrErreur} </span>
                         </div>
                     </div>
 

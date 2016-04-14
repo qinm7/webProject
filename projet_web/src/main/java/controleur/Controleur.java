@@ -5,11 +5,14 @@
  */
 package controleur;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
+import com.google.maps.model.GeocodingResult;
 import dao.DAOException;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -128,6 +131,22 @@ public class Controleur extends HttpServlet {
      */
     private void actionAjouter(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws IOException, ServletException, DAOException {
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
+        GeocodingResult[] results = null;
+        float latitude = 0; 
+        float longitude = 0;
+        String adresse = request.getParameter("adress") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
+        try {
+           //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
+           results =  GeocodingApi.geocode(context, adresse).await();
+           //System.out.println(results[0].formattedAddress);
+           latitude = (float) (results[0].geometry.location.lat);
+           longitude = (float) (results[0].geometry.location.lng);
+        } catch (Exception e) { 
+            String adr = "Adresse mal saisie";
+            request.setAttribute("AdrErreur", adr);
+            request.getRequestDispatcher("/inscrire.jsp").forward(request, response);
+        }
         String email = request.getParameter("email");
         User user;
         try {
@@ -141,10 +160,12 @@ public class Controleur extends HttpServlet {
             String prenom = request.getParameter("firstname");
             String genre = request.getParameter("sex");
             String birth = request.getParameter("Birthday_day") + "/" + request.getParameter("Birthday_Month") + "/" + request.getParameter("Birthday_Year");
-            userDAO.ajouterUser(email, password, nom, prenom, genre, birth);
+            userDAO.ajouterUser(email, password, nom, prenom, genre, birth, longitude, latitude);
             actionAfficher(request, response, userDAO);
         }
-        else {          
+        else { 
+            String EmailErr = email +" est déjà utilisé";
+            request.setAttribute("EmailErr", EmailErr);
             request.getRequestDispatcher("/inscrire.jsp").forward(request, response);
         }
     }
