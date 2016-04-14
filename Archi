@@ -1,0 +1,54 @@
+////////////////////////////***ARCHI du projet (Page et fonctionalité)***\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+Partie Non Membre (réutilisation de certaines pages pour l'espace Membre)
+
+Menu commun à cet ensemble de page : Home/Qui sommes nous/Comment ça marche/taches/Connexion
+
+I - Home
+
+	A voir après avoir fait la partie Membre je pense
+	
+II - Qui sommes nous
+
+	Page exlcusivement descriptives en html
+
+III - Comment ça marche
+
+	De meme page exlcusivement descriptives en html
+
+IV - Liste de Taches
+
+	A voir après avoir fait la partie Membre je pense
+
+V - Connexion
+
+	Demande Id/mdp
+	Et liens  vers Inscriptions 
+
+	V.1 - Page D'inscription classique 
+
+Partie Membre 
+
+Menu commun à cet ensemble de page : Home/Qui sommes nous/Comment ça marche/taches2/Profil/Historique_taches
+
+I & II & III - Home/Qui sommes nous/Comment ça marche/
+
+	Meme Combat
+
+IV - taches2
+	
+	Choix entre soumettre une offre et en choisir une
+
+	IV.1 Soumettre une offre avec tout les trucs
+	IV.2 Choisir une offre : une liste des offres de la + pertinentes à la - s'affiche avec possibilité de choisir
+
+V - Profil
+
+	Affiche les infos
+	Et possibilité de modifier
+	V.1 Page pour changer les infos
+
+VI - Historique de tout ce qu'on a fait (taches + factures) ainsi que ce qu'on propose etc...
+
+
+
