@@ -161,6 +161,7 @@ public class Controleur extends HttpServlet {
             String genre = request.getParameter("sex");
             String birth = request.getParameter("Birthday_day") + "/" + request.getParameter("Birthday_Month") + "/" + request.getParameter("Birthday_Year");
             userDAO.ajouterUser(email, password, nom, prenom, genre, birth, longitude, latitude);
+            //String skill = request.g
             actionAfficher(request, response, userDAO);
         }
         else { 
