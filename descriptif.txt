@@ -27,3 +27,5 @@ pied de page :
 - formulaire d'inscription sinon
 
 5) Page de remerciement
+
+http://www.weboblog.fr/geocoder-adresse-googlemap-v3
