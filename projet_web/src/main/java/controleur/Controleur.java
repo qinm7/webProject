@@ -7,7 +7,6 @@ package controleur;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
 import com.google.maps.model.GeocodingResult;
 import dao.DAOException;
 import dao.UserDAO;
@@ -84,22 +83,7 @@ public class Controleur extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
-        request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
-        UserDAO userDAO = new UserDAO(ds);
-
-        try {
-            if (action == null) {
-                actionAfficher(request, response, userDAO);
-            } else if (action.equals("ajout-user")){
-                actionAjouter(request, response, userDAO);               
-            } else {
-                invalidParameters(request, response);
-            }
-        } catch (DAOException e) {
-            erreurBD(request, response, e);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -113,15 +97,34 @@ public class Controleur extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        UserDAO userDAO = new UserDAO(ds);
+
+        try {
+            if (action == null) {
+                actionAfficher(request, response, userDAO);
+            } else if (action.equals("inscrire")){
+                actionAjouter(request, response, userDAO);               
+            } else {
+                invalidParameters(request, response);
+            }
+        } catch (DAOException e) {
+            erreurBD(request, response, e);
+        }
     }
     
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO) 
             throws DAOException, ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("ajout-user")) {
+        if(action == null) {
+            getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+        }
+        if(action.equals("inscrire")) {
             String email = request.getParameter("email");
-            request.setAttribute("utilisateur", userDAO.getUser(email));               
+            request.setAttribute("utilisateur", userDAO.getUser(email)); 
+            request.setAttribute("skills", userDAO.getUser(email).getSkill());
             request.getRequestDispatcher("/WEB-INF/indexUser.jsp").forward(request, response);
         }    
     }
@@ -135,14 +138,16 @@ public class Controleur extends HttpServlet {
         GeocodingResult[] results = null;
         float latitude = 0; 
         float longitude = 0;
-        String adresse = request.getParameter("adress") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
+        String adresse = request.getParameter("address") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
+        request.setAttribute("adresse", adresse);
         try {
            //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
            results =  GeocodingApi.geocode(context, adresse).await();
            //System.out.println(results[0].formattedAddress);
            latitude = (float) (results[0].geometry.location.lat);
            longitude = (float) (results[0].geometry.location.lng);
-        } catch (Exception e) { 
+        } catch (Exception e) {
+            //on rattrape l'exception dans le cas où l'API de Google n'arrive pas à associer une coordonnée géographique à l'adresse saisie
             String adr = "Adresse mal saisie";
             request.setAttribute("AdrErreur", adr);
             request.getRequestDispatcher("/inscrire.jsp").forward(request, response);
@@ -152,6 +157,7 @@ public class Controleur extends HttpServlet {
         try {
             user = userDAO.getUser(email);
         } catch (DAOException e) {
+            //on rattrappe l'exception levée par getUser dans le cas où l'utilisateur n'existe pas encore dans la BD
             user = null;
         }     
         if(user == null) {    
@@ -160,8 +166,8 @@ public class Controleur extends HttpServlet {
             String prenom = request.getParameter("firstname");
             String genre = request.getParameter("sex");
             String birth = request.getParameter("Birthday_day") + "/" + request.getParameter("Birthday_Month") + "/" + request.getParameter("Birthday_Year");
-            userDAO.ajouterUser(email, password, nom, prenom, genre, birth, longitude, latitude);
-            //String skill = request.g
+            String[] skill = request.getParameterValues("skill");
+            userDAO.creerUser(email, password, nom, prenom, genre, birth, longitude, latitude, adresse, skill);
             actionAfficher(request, response, userDAO);
         }
         else { 

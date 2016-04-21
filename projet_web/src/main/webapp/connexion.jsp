@@ -1,15 +1,16 @@
+<%-- 
+    Document   : connexion
+    Created on : 21 avr. 2016, 11:48:42
+    Author     : qinm
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Se connecter</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <script src="js/jquery.min.js"></script>
         <script src="js/skel.min.js"></script>
         <script src="js/skel-layers.min.js"></script>
@@ -30,7 +31,12 @@ and open the template in the editor.
         </noscript>
 
     </head>
-
+    <style>
+        .info {
+            font-size : 10pt;
+            color : red;
+        }
+    </style>
     <body>
         <!-- Header -->
         <header id="header" class="skel-layers-fixed">
@@ -39,7 +45,7 @@ and open the template in the editor.
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="#">Comment ça marche</a></li>
-                    <li><a href="connexion.html">Connexion</a></li>
+                    <li><a href="connexion.jsp">Connexion</a></li>
                     <li><a href="inscrire.jsp" class="button special">S'inscrire</a></li>
                 </ul>
             </nav>
@@ -52,17 +58,18 @@ and open the template in the editor.
                 <div class="box-header">
                     <h2>Connectez-vous</h2>
                 </div>
-                <form method="get" action="#">
+                <form method="post" action="checkuser">
                     <label for="username">E-mail</label>
                     <br/>
-                    <input type="text" id="username">
+                    <input type="email" id="username" name="username" required placeholder="E-mail" />
                     <br/>
                     <label for="password">Mot de passe</label>
                     <br/>
-                    <input type="password" id="password">
+                    <input type="password" id="password" name="password" required placeholder="Mot de passe" />
                     <br/>
                     <button type="submit">Connexion</button>
                     <br/>
+                    <span class="info"> ${messageErr} </span>
                 </form>
                 <a id="bis" href="#"><p class="small">Mot de passe oublié ?</p></a>
             </div>
@@ -110,7 +117,6 @@ and open the template in the editor.
             </div>
         </footer>
     </body>
-
     <script>
         $(document).ready(function () {
             $('#logo').addClass('animated fadeInDown');
