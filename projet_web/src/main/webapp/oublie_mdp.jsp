@@ -1,66 +1,22 @@
 <%-- 
-    Document   : connexion
-    Created on : 21 avr. 2016, 11:48:42
-    Author     : qinm
+    Document   : oublie_mdp
+    Created on : 22 avr. 2016, 19:28:02
+    Author     : charles
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Se connecter</title>
-
+        <title>Récupération de mot de passe</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <script src="js/jquery.min.js"></script>
         <script src="js/skel.min.js"></script>
-        <script src="js/skel-layers.min.js"></script>
-        <script src="js/init.js"></script>	
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-        <!-- Google Fonts -->
-        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
-
-        <link rel="stylesheet" href="css/animate.css">
-        <!-- Custom Stylesheet -->
-        <link rel="stylesheet" href="css/style_log_in.css">
-
-        <noscript>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/skel.css">
-        <link rel="stylesheet" href="css/xlarge.css">
-        </noscript>
-        
-        <!-- Quitte a que du code DEGEULASSE soit la autant 
-            le mettre au même endroit #OnEnAGros-->
-        
-        <style>
-            .info {
-                font-size : 10pt;
-                color : red;
-            }
-        </style>
-        <script>
-        $(document).ready(function () {
-            $('#logo').addClass('animated fadeInDown');
-            $("input:text:visible:first").focus();
-        });
-        $('#username').focus(function () {
-            $('label[for="username"]').addClass('selected');
-        });
-        $('#username').blur(function () {
-            $('label[for="username"]').removeClass('selected');
-        });
-        $('#password').focus(function () {
-            $('label[for="password"]').addClass('selected');
-        });
-        $('#password').blur(function () {
-            $('label[for="password"]').removeClass('selected');
-        });
-    </script>
-        
+        <script src="js/init.js"></script>
     </head>
-    
-    
     
     <body>
         
@@ -77,32 +33,13 @@
             </nav>
         </header>
         
-        <div class="container1">
-            <div class="top">
-                <h1 id="title" class="hidden"><span id="logo">Blabla <span>Job</span></span></h1>
-            </div>
-            <div class="login-box animated fadeInUp">
-                <div class="box-header">
-                    <h2>Connectez-vous</h2>
-                </div>
-                <form method="post" action="checkuser">
-                    <label for="username">E-mail</label>
-                    <br/>
-                    <input type="email" id="username" name="username" required placeholder="E-mail" />
-                    <br/>
-                    <label for="password">Mot de passe</label>
-                    <br/>
-                    <input type="password" id="password" name="password" required placeholder="Mot de passe" />
-                    <br/>
-                    <button type="submit">Connexion</button>
-                    <br/>
-                    <span class="info"> ${messageErr} </span>
-                </form>
-                <a id="bis" href="oublie_mdp.jsp"><p class="small">Mot de passe oublié ?</p></a>
-            </div>
-        </div>
-        <br/>
-
+        
+        <!-- Mise en page moche et pas propre car ça veut pas aller en dessous 
+            du header mais bon c'est pas comme 
+                si je pouvais aller regarder le css... #tristesse-->
+        <p>a</p>
+        <div>Tu veux recup ton mdp bah attand qu'on code la page</div>
+        
         <!-- Footer PAREIL A mettre sur chaque page jsp/html-->
         <footer id="footer">
             <div class="container">
@@ -144,6 +81,7 @@
                 </ul>
             </div>
         </footer>
+        
     </body>
     
 </html>

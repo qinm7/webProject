@@ -17,6 +17,7 @@
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
 
         <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
+        
         <style>
             body, p, legend, label, input {
                 font-family: "Roboto", Helvetica, sans-serif;
@@ -107,18 +108,19 @@
 
     </head>
     <body>
-        <!-- Header -->
-        <header id="header" class="skel-layers-fixed">
-            <h1><a href="#">BlablaJob</a></h1>
+        <!-- Header A mettre sur chaque page html/jsp -->
+        <header id="header">
+            <h1><a>BlablaJob</a></h1>
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="#">Comment ça marche</a></li>
+                    <li><a href="comment_ca_marche.html">Comment ça marche</a></li>
                     <li><a href="connexion.jsp">Connexion</a></li>
                     <li><a href="inscrire.jsp" class="button special">S'inscrire</a></li>
                 </ul>
             </nav>
         </header>
+        
         <div class="container">
 
             <section class="af-wrapper">
@@ -364,5 +366,6 @@
                 </form>
             </section>
         </div>
-    </body>
+                            
+    </body>  
 </html>
