@@ -26,13 +26,26 @@ and open the template in the editor.
                 $("#input-end").datepicker();
             });
         </script>
+        <style>
+            body, p, legend, label, input {
+                font-family: "Roboto", Helvetica, sans-serif;
+                font-weight: 300;
+            }		
 
-        <!--[if lt IE 8]>
-                <style>
-                        .af-wrapper{display:none;}
-                        .ie-note{display:block;}
-                </style>
-        <![endif]-->
+            h1{
+                color: #666f77;
+                font-weight: 300;
+                line-height: 1em;
+                margin: 0 0 1em 0;
+                text-transform: uppercase;
+                letter-spacing: 0.125em;
+            }
+
+            h1 a {
+                color: inherit;
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body>
 
@@ -43,7 +56,7 @@ and open the template in the editor.
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="#">Comment ça marche</a></li>
-                    <li><a href="connexion.html">Connexion</a></li>
+                    <li><a href="connexion.jsp">Connexion</a></li>
                     <li><a href="inscrire.jsp" class="button special">S'inscrire</a></li>
                 </ul>
             </nav>
@@ -63,7 +76,7 @@ and open the template in the editor.
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-description">Description</label>
-                            <textarea type="text" name="description" id="input-description" rows="5" cols="30" placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200"> 
+                            <textarea name="description" id="input-description" rows="5" cols="30" placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200"> 
                             </textarea>
                         </div>
                     </div>	

@@ -1,18 +1,22 @@
 <%-- 
     Document   : bdErreur
-    Created on : 12 avr. 2016, 18:51:57
-    Author     : qinm
+    Created on : Mar 22, 2012, 12:32:53 AM
+    Author     : reignier
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Erreur</title>
+        <meta charset="UTF-8"/>
+        <title>Erreur BD</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        Erreur « ${action} » ?
+        <h1 style="text-align: center">Erreur</h1>
+        <img src="images/scared.png"/>
+        <p>Une erreur d'accès à la base de données vient de se produire</p>
+        <p>Message : <br/>
+            <div style="font-family: monospace">${erreurMessage}</div>
+        </p>
     </body>
 </html>

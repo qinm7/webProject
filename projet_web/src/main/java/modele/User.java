@@ -5,6 +5,8 @@
  */
 package modele;
 
+import java.util.List;
+
 /**
  *
  * @author qinm
@@ -12,31 +14,43 @@ package modele;
 public class User {
         
    private String email;
+   private String password;
    private String nom; 
    private String prenom;
    private String genre; 
    private String birth; 
+   private float longitude;
+   private float latitude;
+   private List<String> skill;
    
    public User() {
        super();       
    }
 
-   public User(String email, String nom, String prenom, String genre, String birth) {
+   public User(String email, String password, String nom, String prenom, String genre, String birth, float longitude, float latitude, List<String> skill) {
       this.email = email;
+      this.password = password;
       this.nom = nom; 
       this.prenom = prenom;
       this.genre = genre;
       this.birth = birth;
+      this.longitude = longitude;
+      this.latitude = latitude;
+      this.skill = skill;
    }
    
    public User(User user) {
-       this(user.email, user.nom, user.prenom, user.genre, user.birth);
+       this(user.email, user.password, user.nom, user.prenom, user.genre, user.birth, user.longitude, user.latitude, user.skill);
    }
 
    public String getEmail() {
       return this.email; 
    }
-
+   
+   public String getPassword() {
+       return this.password;
+   }
+   
    public String getNom() {
       return this.nom;
    }
@@ -51,6 +65,17 @@ public class User {
    
    public String getBirth() {
        return this.birth;
+   }
+   
+   public float getLongitude() {
+       return this.longitude;
+   }
+   
+   public float getLatitude() {
+       return this.latitude;
+   }
+   public List<String> getSkill() {
+       return this.skill;
    }
 
     @Override

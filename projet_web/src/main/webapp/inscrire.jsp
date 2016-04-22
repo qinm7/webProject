@@ -114,7 +114,7 @@
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="#">Comment ça marche</a></li>
-                    <li><a href="connexion.html">Connexion</a></li>
+                    <li><a href="connexion.jsp">Connexion</a></li>
                     <li><a href="inscrire.jsp" class="button special">S'inscrire</a></li>
                 </ul>
             </nav>
@@ -123,7 +123,7 @@
 
             <section class="af-wrapper">
                 <h3>Inscription à BlablaJob</h3>			
-                <form class="af-form" id="af-form" method="get" action="controleur" onsubmit="return verif(this)" >
+                <form class="af-form" id="af-form" method="post" action="controleur" onsubmit="return verif(this)" >
                     <fieldset>
                         <legend>Informations utilisateur</legend>
                         <div class="af-outer">
@@ -340,14 +340,14 @@
                         <legend>Choix de compétences (facultatif)</legend>
                         <div class="af-outer">
                             <div class="af-inner">
-                                <input type="checkbox" name="skill" value="bricolage"> Bricolage</input> </br>
-                                <input type="checkbox" name="skill" value="menage"> Ménage</input> </br>
-                                <input type="checkbox" name="skill" value="jardinage"> Jardinage</input> </br>
-                                <input type="checkbox" name="skill" value="pyrogravure"> Pyrogravure sur boîte de camembert</input> </br>
-                                <input type="checkbox" name="skill" value="peinture"> Peinture</input> </br>
-                                <input type="checkbox" name="skill" value="reparation"> Réparation</input> </br>
-                                <input type="checkbox" name="skill" value="cuisine"> Cuisine</input> </br>
-                                <input type="checkbox" name="skill" value="aide"> Aide à la personne</input> </br>					
+                                <input type="checkbox" name="skill" value="1"> Bricolage</input> </br>
+                                <input type="checkbox" name="skill" value="2"> Ménage</input> </br>
+                                <input type="checkbox" name="skill" value="3"> Jardinage</input> </br>
+                                <input type="checkbox" name="skill" value="4"> Pyrogravure sur boîte de camembert</input> </br>
+                                <input type="checkbox" name="skill" value="5"> Peinture</input> </br>
+                                <input type="checkbox" name="skill" value="6"> Réparation</input> </br>
+                                <input type="checkbox" name="skill" value="7"> Cuisine</input> </br>
+                                <input type="checkbox" name="skill" value="8"> Aide à la personne</input> </br>					
                             </div>
                         </div>
                         <span class="info">Des tâches vous seront suggérées en fonction de vos compétences</span>
@@ -360,7 +360,7 @@
                     </div>	
 
                     <input type="submit" name="confirm" value="S'inscrire" /> 
-                    <input type="hidden" name="action" value="ajout-user" />
+                    <input type="hidden" name="action" value="inscrire" />
                 </form>
             </section>
         </div>
