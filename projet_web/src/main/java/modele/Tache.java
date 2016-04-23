@@ -21,6 +21,9 @@ public class Tache {
     private String datefin;
     private String email;
     
+    private Competance competance;
+
+    
     public Tache() {
        super();       
    }
@@ -111,6 +114,13 @@ public class Tache {
         this.email = email;
     }
     
+    public Competance getCompetance() {
+        return competance;
+    }
+
+    public void setCompetance(Competance competance) {
+        this.competance = competance;
+    }
     
     
 }

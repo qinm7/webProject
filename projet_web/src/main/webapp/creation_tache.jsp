@@ -1,12 +1,17 @@
+<%-- 
+    Document   : creation_tache
+    Created on : 23 avr. 2016, 15:08:51
+    Author     : utilisateur
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
+    
+    
     <head>
-        <title>Faire une annonce</title>
+        <head>
+        <title>Poster une annonce</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
@@ -47,26 +52,28 @@ and open the template in the editor.
             }
         </style>
     </head>
+    
+    
     <body>
-
-        <!-- Header -->
-        <header id="header" class="skel-layers-fixed">
-            <h1><a href="#">BlablaJob</a></h1>
+        <!-- Header A mettre sur chaque page html/jsp -->
+        <header id="header">
+            <h1><a>BlablaJob</a></h1>
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="#">Comment ça marche</a></li>
+                    <li><a href="comment_ca_marche.html">Comment ça marche</a></li>
                     <li><a href="connexion.jsp">Connexion</a></li>
                     <li><a href="inscrire.jsp" class="button special">S'inscrire</a></li>
                 </ul>
             </nav>
         </header>
+        
+        
+        <!-- Corps du texte : creation d'une tache -->
         <div class="container">
-
             <section class="af-wrapper">
-                <h3>Vous faîtes une annonce sur BlablaJob</h3>			
+                <h3>Poster une annonce sur BlablaJob</h3>			
                 <form class="af-form" id="af-form" method="get" action="#">
-
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-title">Titre</label>
@@ -76,33 +83,34 @@ and open the template in the editor.
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-description">Description</label>
-                            <textarea name="description" id="input-description" rows="5" cols="30" placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200"> 
+                            <textarea name="description" id="input-description" rows="5" cols="30" 
+                                      placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200"> 
                             </textarea>
                         </div>
                     </div>	
                     <div class="af-outer">
                         <div class="af-inner">	
                             <label id=prix for="input-price">Rémunération</label>
-                            <input type="number" name="price" step="0.1" min="0" id="input-price" placeholder="Rémunération en €">
+                            <input type="number" name="price" step="1" min="0" max="10000" id="input-price" 
+                                   placeholder="Rémunération en €">
                         </div>
                     </div>					
 
-                    <div class="af-outer">	
-                        <div class="af-inner">				
-                            <label id="skill">Compétence</label>
-                            <select class="styled-select" id="s1" name="competence">
-                                <option value="-1">Sélectionnez une compétence...</option>
-                                <option value="bricolage">Bricolage</option>
-                                <option value="menage">Ménage</option>
-                                <option value="jardinage">Jardinage</option>
-                                <option value="pyrogravure">Pyrogravure sur boîte de camembert</option>
-                                <option value="peinture">Peinture</option>
-                                <option value="reparation">Réparation</option>
-                                <option value="cuisine">Cuisine</option>
-                                <option value="aide">Aide à la personne</option>
-                            </select>
+                    <fieldset>
+                        <legend>Compétences nécessaires</legend>
+                        <div class="af-outer">
+                            <div class="af-inner">
+                                <input type="checkbox" name="competence" value="1"> Bricolage</input> </br>
+                                <input type="checkbox" name="competence" value="2"> Ménage</input> </br>
+                                <input type="checkbox" name="competence" value="3"> Jardinage</input> </br>
+                                <input type="checkbox" name="competence" value="4"> Pyrogravure sur boîte de camembert</input> </br>
+                                <input type="checkbox" name="competence" value="5"> Peinture</input> </br>
+                                <input type="checkbox" name="competence" value="6"> Réparation</input> </br>
+                                <input type="checkbox" name="competence" value="7"> Cuisine</input> </br>
+                                <input type="checkbox" name="competence" value="8"> Aide à la personne</input> </br>					
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
 
                     <div class="af-outer">
                         <div class="af-inner">
@@ -143,14 +151,59 @@ and open the template in the editor.
                         <div class="af-inner">
 
                             <label id="box"><input type="checkbox" name="remember_me" /></label>
-                            Je certifie avoir lu et accepté les <a href="#">conditions générales</a> d'utilisation du site BlablaJob.  
+                            Je certifie avoir lu et accepté les <a href="#">conditions générales</a> 
+                                d'utilisation du site BlablaJob.  
                         </div>
                     </div>	
 
-                    <input type="submit" name="confirm" value="Poster" /> 
+                    <input type="submit" name="submit_tache" value="Poster" /> 
 
                 </form>
             </section>
         </div>
+        
+        <!-- Footer PAREIL A mettre sur chaque page jsp/html-->
+        <footer id="footer">
+            <div class="container">
+                <div class="row double">
+                    <div class="6u">
+                        <div class="row collapse-at-2">
+                            <div class="6u">
+                                <h3>Infos pratiques</h3>
+                                <ul class="alt">
+                                    <li> Tel : </li>
+                                    <li> Email : </li>
+                                    <li> 1st line adress </li>
+                                    <li> 2nd line adress </li>
+                                </ul>
+                            </div>
+                            <div class="6u">
+                                <h3>À propos</h3>
+                                <ul class="alt">
+                                    <li><a href="#">Qui sommes-nous ?</a></li>
+                                    <li><a href="#">Conditions générales et confidentialité</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="6u">
+                        <h3>Suivez-nous</h3>
+                        <p> Retrouvez toutes nos dernières actualités sur les réseaux sociaux. </p>
+                        <ul class="icons">
+                            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                            <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+                            <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                            <li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="copyright">
+                    <li>BlablaJob. Tous droits réservés.</li>
+                </ul>
+            </div>
+        </footer>
     </body>
+    
+    
 </html>

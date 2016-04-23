@@ -40,11 +40,6 @@ public class Creation_tache extends HttpServlet {
         }
     }
     
-    /* pages d’erreurs */
-    private void invalidParameters(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/controleurErreur.jsp").forward(request, response);        
-    }
     private void erreurBD(HttpServletRequest request,
                 HttpServletResponse response, DAOException e)
             throws ServletException, IOException {
@@ -68,17 +63,22 @@ public class Creation_tache extends HttpServlet {
         processRequest(request, response);
         
         request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
-        UserDAO userDAO = new UserDAO(ds);
+        String submit_tache = request.getParameter("submit_tache");
 
         try {
-            if (action == null) {
-               
-            } else if (action.equals("inscrire")){
-               
-            } else {
-                invalidParameters(request, response);
-            }
+            
+            String idTaches;
+            String titre = request.getParameter("title");
+            String description = request.getParameter("description");
+            String rémunération = request.getParameter("price");
+            Competance competance = request.getParameter("competence");
+            float longitude = request.getParameter("");
+            float latitude; 
+            String datedébut;
+            String datefin;
+            String email = request.getParameter();
+            
+            
         } catch (DAOException e) {
             erreurBD(request, response, e);
         }
