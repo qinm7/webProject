@@ -62,15 +62,7 @@ public class Creation_tache extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-   
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        
+      
             request.setCharacterEncoding("UTF-8");
             
             // Reagrder par rapport a la duree de vie de la servlet pour incrementer idTaches
@@ -137,6 +129,13 @@ public class Creation_tache extends HttpServlet {
             
            this.getServletContext().getRequestDispatcher("/WEB-INF/affiche_tache.jsp").forward(request,response);
         
+    }
+
+   
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
     
    

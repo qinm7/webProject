@@ -1,7 +1,7 @@
 <%-- 
     Document   : creation_tache
     Created on : 23 avr. 2016, 15:08:51
-    Author     : utilisateur
+    Author     : charles
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -78,7 +78,7 @@
         <div class="container">
             <section class="af-wrapper">
                 <h3>Poster une annonce sur BlablaJob</h3>			
-                <form class="af-form" id="af-form" method="get" action="#">
+                <form class="af-form" id="af-form" method="get" action="/projet_web/creation_tache">
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-title">Titre</label>
