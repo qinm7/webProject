@@ -33,7 +33,7 @@ public class UserDAO extends AbstractDataBaseDAO {
         Connection conn = null ;
         try {
             conn = getConnection();
-            PreparedStatement st =
+            PreparedStatement st = 
                 conn.prepareStatement("INSERT INTO utilisateur (email, motdepasse, nom, "
                         + "prenom, sexe, datenaissance, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             st.setString(1, email);

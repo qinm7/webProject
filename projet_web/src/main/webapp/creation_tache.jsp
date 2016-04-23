@@ -14,6 +14,7 @@
         <title>Poster une annonce</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
@@ -50,7 +51,11 @@
                 color: inherit;
                 text-decoration: none;
             }
+            h4 {
+                text-align: center;
+            }
         </style>
+
     </head>
     
     
@@ -96,22 +101,87 @@
                         </div>
                     </div>					
 
-                    <fieldset>
-                        <legend>Compétences nécessaires</legend>
-                        <div class="af-outer">
-                            <div class="af-inner">
-                                <input type="checkbox" name="competence" value="1"> Bricolage</input> </br>
-                                <input type="checkbox" name="competence" value="2"> Ménage</input> </br>
-                                <input type="checkbox" name="competence" value="3"> Jardinage</input> </br>
-                                <input type="checkbox" name="competence" value="4"> Pyrogravure sur boîte de camembert</input> </br>
-                                <input type="checkbox" name="competence" value="5"> Peinture</input> </br>
-                                <input type="checkbox" name="competence" value="6"> Réparation</input> </br>
-                                <input type="checkbox" name="competence" value="7"> Cuisine</input> </br>
-                                <input type="checkbox" name="competence" value="8"> Aide à la personne</input> </br>					
-                            </div>
-                        </div>
-                    </fieldset>
 
+ 
+                    <h4>
+                        Compétances
+                    </h4>
+                      
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Bricolage</label>
+                                <select name="Bricolage">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Menage</label>
+                                <select name="Menage">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Jardinage</label>
+                                <select name="Jardinage">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Pyrogravure sur boîte de camembert</label>
+                                <select name="Pyrogravure">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Peinture</label>
+                                <select name="peinture">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Réparation</label>
+                                <select name="Reparation">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Cuisine</label>
+                                <select name="Cuisine">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="af-outer">	
+                            <div class="af-inner">				
+                                <label >Aide à la personne</label>
+                                <select name="Aide">
+                                    <option value="true">Oui</option>
+                                    <option value="false">Non</option>
+                                </select>
+                            </div>
+                    </div>
+                   
+                  
+                    
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-addr">Adresse</label>
@@ -122,7 +192,7 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-codeP">Code postal</label>	
-                            <input type="text" name="codeP" id="input-codeP" placeholder="Code postale" /> 
+                            <input type="text" name="codeP" id="input-codeP" placeholder="Code postal" /> 
                         </div>
                     </div>
 
@@ -155,55 +225,13 @@
                                 d'utilisation du site BlablaJob.  
                         </div>
                     </div>	
-
+                    
+                    
                     <input type="submit" name="submit_tache" value="Poster" /> 
 
                 </form>
             </section>
         </div>
         
-        <!-- Footer PAREIL A mettre sur chaque page jsp/html-->
-        <footer id="footer">
-            <div class="container">
-                <div class="row double">
-                    <div class="6u">
-                        <div class="row collapse-at-2">
-                            <div class="6u">
-                                <h3>Infos pratiques</h3>
-                                <ul class="alt">
-                                    <li> Tel : </li>
-                                    <li> Email : </li>
-                                    <li> 1st line adress </li>
-                                    <li> 2nd line adress </li>
-                                </ul>
-                            </div>
-                            <div class="6u">
-                                <h3>À propos</h3>
-                                <ul class="alt">
-                                    <li><a href="#">Qui sommes-nous ?</a></li>
-                                    <li><a href="#">Conditions générales et confidentialité</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="6u">
-                        <h3>Suivez-nous</h3>
-                        <p> Retrouvez toutes nos dernières actualités sur les réseaux sociaux. </p>
-                        <ul class="icons">
-                            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                            <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                            <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                            <li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <ul class="copyright">
-                    <li>BlablaJob. Tous droits réservés.</li>
-                </ul>
-            </div>
-        </footer>
-    </body>
-    
-    
+        
 </html>

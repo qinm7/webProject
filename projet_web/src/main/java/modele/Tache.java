@@ -11,10 +11,10 @@ package modele;
  */
 public class Tache {
     
-    private String idTaches;
+    private float idTaches;
     private String titre;
     private String description;
-    private String rémunération;
+    private String remuneration;
     private float longitude;
     private float latitude; 
     private String datedébut;
@@ -28,13 +28,13 @@ public class Tache {
        super();       
    }
 
-   public Tache(String idTaches, String titre, String description, String rémunération,
+   public Tache(float idTaches, String titre, String description, String remuneration,
            float longitude, float latitude,String datedébut,String datefin,String email) {
        
       this.idTaches = idTaches;
       this.titre = titre;
       this.description = description; 
-      this.rémunération = rémunération;
+      this.remuneration = remuneration;
       this.longitude = longitude;
       this.latitude = latitude;
       this.datedébut = datedébut;
@@ -42,7 +42,7 @@ public class Tache {
       this.email = email;
    }
    
-   public String getIdTaches(){
+   public float getIdTaches(){
        return this.idTaches;
    }
    
@@ -54,8 +54,8 @@ public class Tache {
        return this.description;
    }
    
-   public String getRémunération() {
-        return rémunération;
+   public String getRemuneration() {
+        return remuneration;
     }
 
     public float getLongitude() {
@@ -78,7 +78,7 @@ public class Tache {
         return email;
     }
 
-    public void setIdTaches(String idTaches) {
+    public void setIdTaches(float idTaches) {
         this.idTaches = idTaches;
     }
 
@@ -90,8 +90,8 @@ public class Tache {
         this.description = description;
     }
 
-    public void setRémunération(String rémunération) {
-        this.rémunération = rémunération;
+    public void setRemuneration(String remuneration) {
+        this.remuneration = remuneration;
     }
 
     public void setLongitude(float longitude) {

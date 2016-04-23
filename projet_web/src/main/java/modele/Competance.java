@@ -13,6 +13,7 @@ public class Competance {
     private boolean bricolage;
     private boolean menage;
     private boolean jardinage;
+    private boolean pyro;
     private boolean peinture;
     private boolean reparation;
     private boolean cuisine;
@@ -73,5 +74,13 @@ public class Competance {
     public void setAide(boolean aide) {
         this.aide = aide;
     }
-    
+
+    public boolean isPyro() {
+        return pyro;
+    }
+
+    public void setPyro(boolean pyro) {
+        this.pyro = pyro;
+    }
+
 }
