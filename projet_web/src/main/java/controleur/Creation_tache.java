@@ -71,12 +71,19 @@ public class Creation_tache extends HttpServlet {
             String titre = request.getParameter("title");
             String description = request.getParameter("description");
             String rémunération = request.getParameter("price");
-            Competance competance = request.getParameter("competence");
-            float longitude = request.getParameter("");
-            float latitude; 
-            String datedébut;
-            String datefin;
-            String email = request.getParameter();
+            String[] competance = request.getParameterValues("competence");
+            
+            String adresse = request.getParameter("adress");
+            String cp = request.getParameter("CodeP");
+            String ville = request.getParameter("city");
+            //La il va falloir convertir l'adresse, le CP et la ville en une longitude et une latitude
+            //float longitude = ;
+            //float latitude = ;
+               
+            String datedébut = request.getParameter("begin_date");
+            String datefin = request.getParameter("end_date");
+            String email = request.getParameter("email");
+            
             
             
         } catch (DAOException e) {
