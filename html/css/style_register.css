@@ -396,11 +396,11 @@
 			position: relative;
 		}
 
-			#header h1 {
+			#header .container h1 {
 				left: 0;
 			}
 
-			#header nav {
+			#header .container nav {
 				right: 0;
 			}
 
