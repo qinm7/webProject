@@ -28,12 +28,14 @@ public class UserDAO extends AbstractDataBaseDAO {
      * Ajoute le nouveau utilisateur dans la table
      * utilisateur.
      */
-    public void ajouterUser(String email, String password, String name, String Fname, String gender, String birthdate, float longitude, float latitude) throws DAOException {
+    public void ajouterUser(String email, String password, String name, String Fname,
+            String gender, String birthdate, float longitude, float latitude) throws DAOException {
         Connection conn = null ;
         try {
             conn = getConnection();
-            PreparedStatement st =
-                conn.prepareStatement("INSERT INTO utilisateur (email, motdepasse, nom, prenom, sexe, datenaissance, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement st = 
+                conn.prepareStatement("INSERT INTO utilisateur (email, motdepasse, nom, "
+                        + "prenom, sexe, datenaissance, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             st.setString(1, email);
             st.setString(2, password);
             st.setString(3, name);

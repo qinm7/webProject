@@ -90,6 +90,7 @@ public class Controleur extends HttpServlet {
      * @throws IOException
      * @throws ServletException 
      */
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         
@@ -118,6 +119,7 @@ public class Controleur extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -232,9 +234,9 @@ public class Controleur extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

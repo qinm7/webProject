@@ -40,7 +40,8 @@ public class User {
    }
    
    public User(User user) {
-       this(user.email, user.password, user.nom, user.prenom, user.genre, user.birth, user.longitude, user.latitude, user.skill);
+       this(user.email, user.password, user.nom, user.prenom, user.genre, 
+               user.birth, user.longitude, user.latitude, user.skill);
    }
 
    public String getEmail() {
