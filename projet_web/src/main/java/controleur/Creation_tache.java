@@ -125,9 +125,9 @@ public class Creation_tache extends HttpServlet {
             Logger.getLogger(Creation_tache.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-            request.setAttribute("nouvelleTache",tache);
-            
-           this.getServletContext().getRequestDispatcher("/WEB-INF/affiche_tache.jsp").forward(request,response);
+           request.setAttribute("nouvelleTache",tache);
+           
+           getServletContext().getRequestDispatcher("/WEB-INF/affiche_tache.jsp").forward(request,response);
         
     }
 
