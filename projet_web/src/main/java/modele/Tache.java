@@ -76,4 +76,46 @@ public class Tache {
     public String getEmail() {
         return email;
     }
+
+    public void setIdTache(int idTache) {
+        this.idTache = idTache;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRemuneration(int remuneration) {
+        this.remuneration = remuneration;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setDatedebut(String datedebut) {
+        this.datedebut = datedebut;
+    }
+
+    public void setDatefin(String datefin) {
+        this.datefin = datefin;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCompetance(Competance competance) {
+        this.competance = competance;
+    }
+
+    
 }

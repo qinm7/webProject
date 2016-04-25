@@ -5,8 +5,8 @@
  */
 package controleur;
 
-import dao.Creation_tache_DAO;
 import dao.DAOException;
+import dao.TacheDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Boolean.valueOf;
@@ -22,10 +22,7 @@ import javax.sql.DataSource;
 import modele.Competance;
 import modele.Tache;
 
-/**
- *
- * @author qinm
- */
+
 @WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
 public class ControleurTache extends HttpServlet {
     
@@ -126,27 +123,27 @@ public class ControleurTache extends HttpServlet {
             //La il va falloir convertir l'adresse, le CP et la ville en une longitude et une latitude
             float longitude = 0;
             float latitude = 0;   
-            String datedébut = request.getParameter("begin_date");
-            String datefin = request.getParameter("end_date");
+            String begin_date = request.getParameter("begin_date");
+            String end_date = request.getParameter("end_date");
             String email = request.getParameter("email");
         
             Tache tache = new Tache();
             
             tache.setTitre(titre);
             tache.setDescription(description);
-            tache.setRemuneration(remuneration);
-            tache.setDatedébut(datedébut);
-            tache.setDatefin(datefin);
+            tache.setRemuneration(Integer.parseInt(remuneration));
+            tache.setDatedebut(begin_date);
+            tache.setDatefin(end_date);
             tache.setEmail(email);
             tache.setCompetance(competance);
             
-            Creation_tache_DAO ctDAO = new Creation_tache_DAO(ds);
+            TacheDAO ctDAO = new TacheDAO(ds);
             
         try {
             ctDAO.ajoutTacheDAO(idTaches,titre,description,remuneration,longitude, latitude,
-                    datedébut, datefin, email);
+                    begin_date, end_date, email);
         } catch (DAOException ex) {
-            Logger.getLogger(Creation_tache.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControleurTache.class.getName()).log(Level.SEVERE, null, ex);
         }
             
             request.setAttribute("nouvelleTache",tache);
