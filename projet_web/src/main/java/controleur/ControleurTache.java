@@ -5,8 +5,8 @@
  */
 package controleur;
 
-import dao.Creation_tache_DAO;
 import dao.DAOException;
+import dao.TacheDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Boolean.valueOf;
@@ -94,7 +94,7 @@ public class ControleurTache extends HttpServlet {
             idTaches++;
             String titre = request.getParameter("title");
             String description = request.getParameter("description");
-            String remuneration = request.getParameter("price");
+            int remuneration = Integer.parseInt(request.getParameter("price"));
             
             
         //Partie sur le sous bean compétance
@@ -132,21 +132,13 @@ public class ControleurTache extends HttpServlet {
         
             Tache tache = new Tache();
             
-            tache.setTitre(titre);
-            tache.setDescription(description);
-            tache.setRemuneration(remuneration);
-            tache.setDatedébut(datedébut);
-            tache.setDatefin(datefin);
-            tache.setEmail(email);
-            tache.setCompetance(competance);
-            
-            Creation_tache_DAO ctDAO = new Creation_tache_DAO(ds);
+            TacheDAO ctDAO = new TacheDAO(ds);
             
         try {
-            ctDAO.ajoutTacheDAO(idTaches,titre,description,remuneration,longitude, latitude,
+            ctDAO.ajouterTache(idTaches,titre,description,remuneration,longitude, latitude,
                     datedébut, datefin, email);
         } catch (DAOException ex) {
-            Logger.getLogger(Creation_tache.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControleurTache.class.getName()).log(Level.SEVERE, null, ex);
         }
             
             request.setAttribute("nouvelleTache",tache);
