@@ -13,26 +13,9 @@
         <link type="text/css" rel="stylesheet" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
-        <style>
-            body, p, legend, label, input {
-                font-family: "Roboto", Helvetica, sans-serif;
-                font-weight: 300;
-            }		
-
-            h1{
-                color: #666f77;
-                font-weight: 300;
-                line-height: 1em;
-                margin: 0 0 1em 0;
-                text-transform: uppercase;
-                letter-spacing: 0.125em;
-            }
-
-            h1 a {
-                color: inherit;
-                text-decoration: none;
-            }
-        </style>    
+        
+        <link rel="stylesheet" type="text/css" href="css/accueil_user.css" />
+        
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">

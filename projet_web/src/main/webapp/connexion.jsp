@@ -1,8 +1,3 @@
-<%-- 
-    Document   : connexion
-    Created on : 21 avr. 2016, 11:48:42
-    Author     : qinm
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,34 +25,10 @@
         <link rel="stylesheet" href="css/xlarge.css">
         </noscript>
         
-        <!-- Quitte a que du code DEGEULASSE soit la autant 
-            le mettre au même endroit #OnEnAGros-->
+        <link rel="stylesheet" href="css/connexion.css">
         
-        <style>
-            .info {
-                font-size : 10pt;
-                color : red;
-            }
-        </style>
-        <script>
-        $(document).ready(function () {
-            $('#logo').addClass('animated fadeInDown');
-            $("input:text:visible:first").focus();
-        });
-        $('#username').focus(function () {
-            $('label[for="username"]').addClass('selected');
-        });
-        $('#username').blur(function () {
-            $('label[for="username"]').removeClass('selected');
-        });
-        $('#password').focus(function () {
-            $('label[for="password"]').addClass('selected');
-        });
-        $('#password').blur(function () {
-            $('label[for="password"]').removeClass('selected');
-        });
-    </script>
-        
+        <script src="js/connexion.js"></script>
+    
     </head>
     
     
