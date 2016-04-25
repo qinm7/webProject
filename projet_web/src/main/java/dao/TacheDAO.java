@@ -1,24 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import modele.Tache;
 
 
-/**
- *
- * @author utilisateur
- */
-public class Creation_tache_DAO extends AbstractDataBaseDAO {
-    
-    public Creation_tache_DAO(DataSource ds) {
+public class TacheDAO extends AbstractDataBaseDAO {
+
+    public TacheDAO(DataSource ds) {
         super(ds);
     }
     
@@ -31,8 +22,8 @@ public class Creation_tache_DAO extends AbstractDataBaseDAO {
         try{
             co = getConnection();
             PreparedStatement st = 
-                co.prepareStatement("INSERT INTO taches (idtaches, titre, description,"+
-                        " remuneration, longitude, latitude, datedébut, datefin, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                co.prepareStatement("INSERT INTO tache(idtache, titre, description,"+
+                        " remuneration, longitude, latitude, datebegin, dateend, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             st.setFloat(1,idTaches);
             st.setString(2,titre);
@@ -51,6 +42,5 @@ public class Creation_tache_DAO extends AbstractDataBaseDAO {
         }
         
     }
+}    
 
-    
-}

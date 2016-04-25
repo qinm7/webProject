@@ -69,26 +69,23 @@ public class CheckUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         UserDAO userDAO = new UserDAO(ds);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        try {
-            if (isLoginValid (username, password, userDAO)) {
-                HttpSession session = request.getSession();
-                session.setAttribute("utilisateur", username);
-                response.sendRedirect("index.html");
-            } else {
-                String message = "Votre e-mail ou votre mot de passe sont erronés";
-                request.setAttribute("messageErr", message);
-                request.getRequestDispatcher("/connexion.jsp").forward(request, response);
-            }
-        } catch (DAOException e) {
-            erreurBD(request, response, e);
+        if (isLoginValid(username, password, userDAO)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", username);
+            //response.sendRedirect("/WEB-INF/accueil_user.jsp");
+            request.getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
+        } else {
+            String message = "Votre e-mail ou votre mot de passe sont erronés";
+            request.setAttribute("messageErr", message);
+            request.getRequestDispatcher("/connexion.jsp").forward(request, response);
         }
     }
     
-    private boolean isLoginValid(String username, String password, UserDAO userDAO) throws DAOException {
+    private boolean isLoginValid(String username, String password, UserDAO userDAO) {
         User user;
         try {
             user = userDAO.getUser(username);

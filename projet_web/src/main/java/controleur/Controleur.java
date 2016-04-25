@@ -72,13 +72,46 @@ public class Controleur extends HttpServlet {
         }
     }
 
-    
+
+    /** 
+     * Méthode utilisée après connexion de l'utilisateur
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        processRequest(request, response);
+        
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        UserDAO userDAO = new UserDAO(ds);
+        try {
+            if (action == null) {
+                actionAfficher(request, response, userDAO);
+            } else if (action.equals("getPage")){
+                actionGetPage(request, response, userDAO);
+            } else {
+                invalidParameters(request, response);
+            }
+        } catch (DAOException e) {
+            erreurBD(request, response, e);
+        }
     }
 
-    
+    /**
+     * Méthode utilisée pour gérer l'inscription de l'utilisateur
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -103,15 +136,18 @@ public class Controleur extends HttpServlet {
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO) 
             throws DAOException, ServletException, IOException {
         String action = request.getParameter("action");
-        if(action == null) {
+        if (action == null) {
             getServletContext().getRequestDispatcher("/index.html").forward(request, response);
         }
-        if(action.equals("inscrire")) {
+        else if (action.equals("inscrire")) {
             String email = request.getParameter("email");
             request.setAttribute("utilisateur", userDAO.getUser(email)); 
             request.setAttribute("skills", userDAO.getUser(email).getSkill());
             request.getRequestDispatcher("/WEB-INF/indexUser.jsp").forward(request, response);
-        }    
+        }
+        else {
+            getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+        }
     }
 
     /**
@@ -162,6 +198,35 @@ public class Controleur extends HttpServlet {
         }
     }
     
+    private void actionGetPage(HttpServletRequest request, 
+            HttpServletResponse response, 
+            UserDAO userDAO) throws DAOException, ServletException, IOException {
+        String vue = request.getParameter("view");
+        if (vue.equals("accueil")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
+        }
+        else if (vue.equals("profil")) {
+            String username = request.getParameter("id");
+            User user = userDAO.getUser(username);
+            request.setAttribute("utilisateur", user);
+            request.setAttribute("skills", userDAO.getUser(username).getSkill());
+            getServletContext().getRequestDispatcher("/WEB-INF/profil.jsp").forward(request, response);
+        }
+        else if (vue.equals("poster")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
+        }
+        else if (vue.equals("historique")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
+        }   
+        else invalidParameters(request, response);
+    }
+    
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+
     @Override
     public String getServletInfo() {
         return "Short description";

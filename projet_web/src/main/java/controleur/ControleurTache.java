@@ -5,8 +5,8 @@
  */
 package controleur;
 
-import dao.Creation_tache_DAO;
 import dao.DAOException;
+import dao.TacheDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Boolean.valueOf;
@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,34 +22,20 @@ import javax.sql.DataSource;
 import modele.Competance;
 import modele.Tache;
 
-/**
- *
- * @author utilisateur
- */
-public class Creation_tache extends HttpServlet {
+
+@WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
+public class ControleurTache extends HttpServlet {
+    
     
     @Resource(name = "jdbc/blablajob")
     private DataSource ds;
     
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        response.setContentType("text/html;charset=UTF-8");
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet creation_tache</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet creation_tache at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    /* pages d’erreurs */
+    private void invalidParameters(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/controleurErreur.jsp").forward(request, response);        
     }
-    
+
     private void erreurBD(HttpServletRequest request,
                 HttpServletResponse response, DAOException e)
             throws ServletException, IOException {
@@ -57,8 +44,42 @@ public class Creation_tache extends HttpServlet {
         request.setAttribute("action", action);
         request.getRequestDispatcher("/WEB-INF/bdErreur.jsp").forward(request, response);
     }
+    
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ControleurTache</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ControleurTache at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
-   
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,7 +87,7 @@ public class Creation_tache extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             
             // Reagrder par rapport a la duree de vie de la servlet pour incrementer idTaches
-            float idTaches = 0;
+            int idTaches = 0;
             idTaches++;
             String titre = request.getParameter("title");
             String description = request.getParameter("description");
@@ -102,27 +123,27 @@ public class Creation_tache extends HttpServlet {
             //La il va falloir convertir l'adresse, le CP et la ville en une longitude et une latitude
             float longitude = 0;
             float latitude = 0;   
-            String datedébut = request.getParameter("begin_date");
-            String datefin = request.getParameter("end_date");
+            String begin_date = request.getParameter("begin_date");
+            String end_date = request.getParameter("end_date");
             String email = request.getParameter("email");
         
             Tache tache = new Tache();
             
             tache.setTitre(titre);
             tache.setDescription(description);
-            tache.setRemuneration(remuneration);
-            tache.setDatedébut(datedébut);
-            tache.setDatefin(datefin);
+            tache.setRemuneration(Integer.parseInt(remuneration));
+            tache.setDatedebut(begin_date);
+            tache.setDatefin(end_date);
             tache.setEmail(email);
             tache.setCompetance(competance);
             
-            Creation_tache_DAO ctDAO = new Creation_tache_DAO(ds);
+            TacheDAO ctDAO = new TacheDAO(ds);
             
         try {
             ctDAO.ajoutTacheDAO(idTaches,titre,description,remuneration,longitude, latitude,
-                    datedébut, datefin, email);
+                    begin_date, end_date, email);
         } catch (DAOException ex) {
-            Logger.getLogger(Creation_tache.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControleurTache.class.getName()).log(Level.SEVERE, null, ex);
         }
             
             request.setAttribute("nouvelleTache",tache);
@@ -131,12 +152,28 @@ public class Creation_tache extends HttpServlet {
         
     }
 
-   
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-   
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

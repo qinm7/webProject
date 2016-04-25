@@ -10,51 +10,50 @@ package modele;
  * @author charles
  */
 public class Tache {
-    
-    private float idTaches;
+
+    private int idTache;
     private String titre;
     private String description;
-    private String remuneration;
+    private int remuneration;
     private float longitude;
-    private float latitude; 
-    private String datedébut;
+    private float latitude;
+    private String datedebut;
     private String datefin;
     private String email;
-    
+
     private Competance competance;
 
-    
     public Tache() {
-       super();       
-   }
+        super();
+    }
 
-   public Tache(float idTaches, String titre, String description, String remuneration,
-           float longitude, float latitude,String datedébut,String datefin,String email) {
-       
-      this.idTaches = idTaches;
-      this.titre = titre;
-      this.description = description; 
-      this.remuneration = remuneration;
-      this.longitude = longitude;
-      this.latitude = latitude;
-      this.datedébut = datedébut;
-      this.datefin = datefin;
-      this.email = email;
-   }
-   
-   public float getIdTaches(){
-       return this.idTaches;
-   }
-   
-   public String getTitre(){
-       return this.titre;
-   }
-   
-   public String getDescription(){
-       return this.description;
-   }
-   
-   public String getRemuneration() {
+    public Tache(int idTache, String titre, String description, int remuneration,
+            float longitude, float latitude, String datedebut, String datefin, String email) {
+
+        this.idTache = idTache;
+        this.titre = titre;
+        this.description = description;
+        this.remuneration = remuneration;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.datedebut = datedebut;
+        this.datefin = datefin;
+        this.email = email;
+    }
+
+    public int getIdTache() {
+        return this.idTache;
+    }
+
+    public String getTitre() {
+        return this.titre;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public int getRemuneration() {
         return remuneration;
     }
 
@@ -67,7 +66,7 @@ public class Tache {
     }
 
     public String getDatedébut() {
-        return datedébut;
+        return datedebut;
     }
 
     public String getDatefin() {
@@ -78,8 +77,8 @@ public class Tache {
         return email;
     }
 
-    public void setIdTaches(float idTaches) {
-        this.idTaches = idTaches;
+    public void setIdTache(int idTache) {
+        this.idTache = idTache;
     }
 
     public void setTitre(String titre) {
@@ -90,7 +89,7 @@ public class Tache {
         this.description = description;
     }
 
-    public void setRemuneration(String remuneration) {
+    public void setRemuneration(int remuneration) {
         this.remuneration = remuneration;
     }
 
@@ -102,8 +101,8 @@ public class Tache {
         this.latitude = latitude;
     }
 
-    public void setDatedébut(String datedébut) {
-        this.datedébut = datedébut;
+    public void setDatedebut(String datedebut) {
+        this.datedebut = datedebut;
     }
 
     public void setDatefin(String datefin) {
@@ -113,14 +112,10 @@ public class Tache {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public Competance getCompetance() {
-        return competance;
-    }
 
     public void setCompetance(Competance competance) {
         this.competance = competance;
     }
-    
+
     
 }
