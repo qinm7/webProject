@@ -24,38 +24,9 @@
         <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
-        <script>
-            $(function () {
-                $("#input-begin").datepicker();
-            });
-            $(function () {
-                $("#input-end").datepicker();
-            });
-        </script>
-        <style>
-            body, p, legend, label, input {
-                font-family: "Roboto", Helvetica, sans-serif;
-                font-weight: 300;
-            }		
-
-            h1{
-                color: #666f77;
-                font-weight: 300;
-                line-height: 1em;
-                margin: 0 0 1em 0;
-                text-transform: uppercase;
-                letter-spacing: 0.125em;
-            }
-
-            h1 a {
-                color: inherit;
-                text-decoration: none;
-            }
-            h4 {
-                text-align: center;
-            }
-        </style>
-
+        <script type="text/javascript" src="js/creation_tache.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="css/creation_tache.css" />
     </head>
     
     
