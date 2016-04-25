@@ -22,10 +22,7 @@ import javax.sql.DataSource;
 import modele.Competance;
 import modele.Tache;
 
-/**
- *
- * @author qinm
- */
+
 @WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
 public class ControleurTache extends HttpServlet {
     
@@ -126,17 +123,18 @@ public class ControleurTache extends HttpServlet {
             //La il va falloir convertir l'adresse, le CP et la ville en une longitude et une latitude
             float longitude = 0;
             float latitude = 0;   
-            String datedébut = request.getParameter("begin_date");
-            String datefin = request.getParameter("end_date");
+            String begin_date = request.getParameter("begin_date");
+            String end_date = request.getParameter("end_date");
             String email = request.getParameter("email");
         
             Tache tache = new Tache();
             
+
             TacheDAO ctDAO = new TacheDAO(ds);
             
         try {
             ctDAO.ajouterTache(idTaches,titre,description,remuneration,longitude, latitude,
-                    datedébut, datefin, email);
+                    begin_date, end_date, email);
         } catch (DAOException ex) {
             Logger.getLogger(ControleurTache.class.getName()).log(Level.SEVERE, null, ex);
         }
