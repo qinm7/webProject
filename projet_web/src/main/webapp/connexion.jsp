@@ -14,8 +14,8 @@
 
         <!-- Google Fonts -->
         <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
-
         <link rel="stylesheet" href="css/animate.css">
+        
         <!-- Custom Stylesheet -->
         <link rel="stylesheet" href="css/style_log_in.css">
 
@@ -25,8 +25,8 @@
         <link rel="stylesheet" href="css/xlarge.css">
         </noscript>
         
+        <!--Scrit et css propre à la page connexion -->
         <link rel="stylesheet" href="css/connexion.css">
-        
         <script src="js/connexion.js"></script>
     
     </head>

@@ -223,6 +223,21 @@
     border-radius: 6px;
 }
 
+.styled-select1 {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    margin-left: 10px;
+    width: 70px;
+    height: 34px;
+    overflow: hidden;
+    background: url(../images/down_arrow_select.jpg) no-repeat right #ddd;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
 #s1 {
     width: 64%;
 }   	

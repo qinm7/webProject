@@ -10,15 +10,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>S'inscrire</title>
-
+        <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
-
-        <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
-        
-        <link rel="stylesheet" type="text/css" href="css/inscrire.css" />		
+        <link rel="stylesheet" type="text/css" href="css/inscrire.css" />
+        <!--Srcipt-->
+        <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>		
         <script type="text/javascript" src="js/inscrire.js"> </script>
 
     </head>
