@@ -74,9 +74,8 @@ public class Controleur extends HttpServlet {
     }
 
     /**
-     * Méthode utilisée après connexion de l'utilisateur
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Méthode utilisée après connexion de l'utilisateur 
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
