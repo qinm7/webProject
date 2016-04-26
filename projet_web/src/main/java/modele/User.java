@@ -75,6 +75,7 @@ public class User {
    public float getLatitude() {
        return this.latitude;
    }
+   
    public List<String> getSkill() {
        return this.skill;
    }

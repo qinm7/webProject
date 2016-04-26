@@ -5,8 +5,12 @@
  */
 package controleur;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
 import dao.DAOException;
 import dao.TacheDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Boolean.valueOf;
@@ -21,30 +25,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.Competance;
 import modele.Tache;
-
+import modele.User;
 
 @WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
 public class ControleurTache extends HttpServlet {
-    
-    
+
     @Resource(name = "jdbc/blablajob")
     private DataSource ds;
-    
+
     /* pages d’erreurs */
     private void invalidParameters(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/controleurErreur.jsp").forward(request, response);        
+        request.getRequestDispatcher("/WEB-INF/controleurErreur.jsp").forward(request, response);
     }
 
     private void erreurBD(HttpServletRequest request,
-                HttpServletResponse response, DAOException e)
+            HttpServletResponse response, DAOException e)
             throws ServletException, IOException {
         request.setAttribute("erreurMessage", e.getMessage());
         String action = request.getParameter("action");
         request.setAttribute("action", action);
         request.getRequestDispatcher("/WEB-INF/bdErreur.jsp").forward(request, response);
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,7 +65,7 @@ public class ControleurTache extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControleurTache</title>");            
+            out.println("<title>Servlet ControleurTache</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControleurTache at " + request.getContextPath() + "</h1>");
@@ -83,66 +86,22 @@ public class ControleurTache extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
-            request.setCharacterEncoding("UTF-8");
-            
-            // Reagrder par rapport a la duree de vie de la servlet pour incrementer idTaches
-            int idTaches = 0;
-            idTaches++;
-            String titre = request.getParameter("title");
-            String description = request.getParameter("description");
-            int remuneration = Integer.parseInt(request.getParameter("price"));
-            
-            
-        //Partie sur le sous bean compétance
-            boolean bricolage = valueOf(request.getParameter("Bricolage"));
-            boolean menage = valueOf(request.getParameter("Menage"));
-            boolean jardinage = valueOf(request.getParameter("Jardinage"));
-            boolean pyro = valueOf(request.getParameter("Pyrogravure"));
-            boolean peinture = valueOf(request.getParameter("peinture"));
-            boolean reparation = valueOf(request.getParameter("Reparation"));
-            boolean cuisine = valueOf(request.getParameter("Cuisine"));
-            boolean aide = valueOf(request.getParameter("Aide"));
-            
-            Competance competance = new Competance();
-            
-            competance.setBricolage(bricolage);
-            competance.setMenage(menage);
-            competance.setJardinage(jardinage);
-            competance.setPyro(pyro);
-            competance.setPeinture(peinture);
-            competance.setReparation(reparation);
-            competance.setCuisine(cuisine);
-            competance.setAide(aide);
-        //Fin de la sous partie
-            
-            
-            String adresse = request.getParameter("adress");
-            String cp = request.getParameter("CodeP");
-            String ville = request.getParameter("city");
-            //La il va falloir convertir l'adresse, le CP et la ville en une longitude et une latitude
-            float longitude = 0;
-            float latitude = 0;   
-            String begin_date = request.getParameter("begin_date");
-            String end_date = request.getParameter("end_date");
-            String email = request.getParameter("email");
-        
-            Tache tache = new Tache();
-            
 
-            TacheDAO ctDAO = new TacheDAO(ds);
-            
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        TacheDAO tacheDAO = new TacheDAO(ds);
+        UserDAO userDAO = new UserDAO(ds);
         try {
-            ctDAO.ajouterTache(idTaches,titre,description,remuneration,longitude, latitude,
-                    begin_date, end_date, email);
-        } catch (DAOException ex) {
-            Logger.getLogger(ControleurTache.class.getName()).log(Level.SEVERE, null, ex);
+            if (action == null) {
+                actionAfficher(request, response, tacheDAO);
+            } else if (action.equals("poster")) {
+                actionAjouter(request, response, userDAO, tacheDAO);
+            } else {
+                invalidParameters(request, response);
+            }
+        } catch (DAOException e) {
+            erreurBD(request, response, e);
         }
-            
-            request.setAttribute("nouvelleTache",tache);
-            
-           this.getServletContext().getRequestDispatcher("/WEB-INF/affiche_tache.jsp").forward(request,response);
-        
     }
 
     /**
@@ -157,6 +116,63 @@ public class ControleurTache extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    private void actionAfficher(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+        } else if (action.equals("poster")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/indexTache.jsp").forward(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+        }
+    }
+
+    /**
+     * Ajout d'un ouvrage.
+     */
+    private void actionAjouter(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws IOException, ServletException, DAOException {
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
+        GeocodingResult[] results = null;
+        float latitude = 0;
+        float longitude = 0;
+        String adresse = request.getParameter("address") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
+        request.setAttribute("adresse", adresse);
+        try {
+            //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
+            results = GeocodingApi.geocode(context, adresse).await();
+            //System.out.println(results[0].formattedAddress);
+            latitude = (float) (results[0].geometry.location.lat);
+            longitude = (float) (results[0].geometry.location.lng);
+        } catch (Exception e) {
+            //on rattrape l'exception dans le cas où l'API de Google n'arrive pas à associer une coordonnée géographique à l'adresse saisie
+            String adr = "Adresse mal saisie";
+            request.setAttribute("AdrErreur", adr);
+            request.getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+        }
+        String titre = request.getParameter("title");
+        String description = request.getParameter("description");
+        int remuneration = Integer.parseInt(request.getParameter("price"));
+        String datebegin = request.getParameter("begin_date");
+        String dateend = request.getParameter("end_date");
+        String email = request.getParameter("email");
+        String[] skill = request.getParameterValues("skill");
+        try {
+            userDAO.ajouterCommanditaire(email);
+        } catch (DAOException e) {            
+        };
+        int idtache = tacheDAO.creerTache(titre, description, remuneration,
+                longitude, latitude, datebegin, dateend, email,skill);
+        Tache tache = tacheDAO.getTache(idtache);
+        request.setAttribute("tache", tache);
+        request.setAttribute("skills", tache.getSkill());
+        /*Tache tache = new Tache(idtache, titre, description, remuneration,
+            longitude, latitude, datebegin, dateend, email);
+        request.setAttribute("tache", tache);*/
+        actionAfficher(request, response, tacheDAO);
     }
 
     /**

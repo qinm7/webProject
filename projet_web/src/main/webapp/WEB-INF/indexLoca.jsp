@@ -1,18 +1,15 @@
 <%-- 
-    Document   : profil
-    Created on : 22 avr. 2016, 23:39:18
+    Document   : indexLoca
+    Created on : 26 avr. 2016, 08:53:42
     Author     : qinm
 --%>
 
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Profil utilisateur</title>
+        <title>Modification d'une localisation</title>
         <link type="text/css" rel="stylesheet" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
@@ -38,8 +35,8 @@
         </style>    
     </head>
     <body>
-        <header id="header" class="skel-layers-fixed">
-            <h1><a href="#">BlablaJob</a></h1>
+        <header id="header">
+            <h1><a>BlablaJob</a></h1>
             <nav id="nav">
                 <ul>
                     <li><a href="controleur?action=getPage&view=accueil&id=${user}">Page d'accueil</a></li>
@@ -56,34 +53,12 @@
         </header>
         <br/>
         <div class="container">
-            <h1>Profil</h1>
+            <h1>Localisation modifée avec succès !</h1>
+            Voici un récapitulatif de vos données :<br/>
             <%--affichage des données clients --%>
-            Nom : ${utilisateur.nom} <br/>
-            Prénom : ${utilisateur.prenom} <br/> 
-            Email : ${utilisateur.email} <br/>
-            Genre : ${utilisateur.genre} <br/> 
-            Date de naissance : ${utilisateur.birth} <br/>
-            <tr>
-                <td>Localisation : (${utilisateur.latitude}, ${utilisateur.longitude})</td> 
-                <td><a href="controleur?action=getProfil&view=localisation&id=${user}">modifier</a></td>
-            </tr>
-            <br/>
-            <tr>
-                <td>Compétences : 
-            <%
-                List<String> listSkill = new ArrayList();
-                listSkill = (ArrayList<String>) request.getAttribute("skills");
-                for (Iterator<String> it = listSkill.iterator(); it.hasNext();) {
-                    String skill = it.next();
-                    out.println("<tr><td>" + skill + "</td></tr>");
-                    if (it.hasNext()) {
-                        out.println(" / ");
-                    }
-                }
-            %>
-                </td>
-                <td><a href="controleur?action=getProfil&view=skill&id=${user}">modifier</a></td>
-            </tr>    
+            Adresse : ${adresse}<br/>
+            Longitude : ${longitude}<br/>
+            Latitude : ${latitude}<br/>
         </div>
     </body>
 </html>

@@ -1,17 +1,19 @@
-
 package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
-
+import modele.Tache;
+import modele.User;
 
 /**
  *
  * @author qinm
  */
-
 public class TacheDAO extends AbstractDataBaseDAO {
 
     public TacheDAO(DataSource ds) {
@@ -21,18 +23,21 @@ public class TacheDAO extends AbstractDataBaseDAO {
     /**
      * Ajoute la nouvelle tache dans la table tache.
      */
-    public void ajouterTache(int idTache, String titre, String description, int remuneration,
+    public int ajouterTache(String titre, String description, int remuneration,
             float longitude, float latitude, String datedebut, String datefin, String email)
             throws DAOException {
 
         Connection conn = null;
-
+        int idTache = 0;
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("INSERT INTO tache (idtache, titre, description,"
-                            + " remuneration, longitude, latitude, datebein, dateend, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+                    = conn.prepareStatement("SELECT id_seq.nextval FROM dual");
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            idTache = rs.getInt("nextval");
+            st = conn.prepareStatement("INSERT INTO tache (idtache, titre, description,"
+                    + "remuneration, longitude, latitude, datebegin, dateend, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             st.setInt(1, idTache);
             st.setString(2, titre);
             st.setString(3, description);
@@ -42,12 +47,98 @@ public class TacheDAO extends AbstractDataBaseDAO {
             st.setString(7, datedebut);
             st.setString(8, datefin);
             st.setString(9, email);
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erreur BD " + e.getMessage(), e);
         } finally {
             closeConnection(conn);
         }
+        return idTache;
 
     }
-}
 
+    /**
+     * Récupère la tâche d'identifiant idTache dans la table tache.
+     */
+    public Tache getTache(int idtache) throws DAOException {
+        Connection conn = null;
+        String titre, description, datebegin, dateend, email;
+        float longitude, latitude;
+        int remuneration;
+        List<String> skill = new ArrayList<>();
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT titre, description, remuneration, longitude, latitude, datebegin, dateend, email FROM tache WHERE idtache = ?");
+            st.setInt(1, idtache);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            titre = rs.getString("titre");
+            description = rs.getString("description");
+            remuneration = rs.getInt("remuneration");
+            longitude = rs.getFloat("longitude");
+            latitude = rs.getFloat("latitude");
+            datebegin = rs.getString("datebegin");
+            dateend = rs.getString("dateend");
+            email = rs.getString("email");
+            PreparedStatement st2 = conn.prepareStatement(
+             "SELECT idskill FROM necessite WHERE idtache = ? ");
+             st2.setInt(1, idtache);
+             ResultSet rs2 = st2.executeQuery();
+             while (rs2.next()) {
+             PreparedStatement st3 = conn.prepareStatement(
+             "SELECT skill FROM competence WHERE idskill = ? ");
+             st3.setInt(1,rs2.getInt("idskill"));
+             ResultSet rs3 = st3.executeQuery();
+             rs3.next();
+             skill.add(rs3.getString("skill"));
+             }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return new Tache(idtache, titre, description, remuneration,
+                longitude, latitude, datebegin, dateend, email, skill);
+    }
+
+    /**
+     * Ajoute une nouvelle compétence dans la table COMPETENCE associé à
+     * l'utilisateur.
+     */
+    public void ajouterSkill(int idtache, int idskill) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("INSERT INTO necessite (idtache, idskill) VALUES (?, ?)");
+            st.setInt(1, idtache);
+            st.setInt(2, idskill);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+
+    public int creerTache(String titre, String description, int remuneration,
+            float longitude, float latitude, String datedebut, String datefin, String email, String[] skill) throws DAOException {
+        // on fait un bloc try pour faire un ajout d'un utilisateur dans la BD en mode tout ou rien
+        int idtache;
+        try {
+            idtache = ajouterTache(titre, description, remuneration,
+                    longitude, latitude, datedebut, datefin, email);
+
+            if (skill != null) {
+                for (int i = 0; i < skill.length; i++) {
+                    int j = Integer.parseInt(skill[i]);
+                    ajouterSkill(idtache, j);
+                }
+            }
+        } catch (DAOException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        };
+        return idtache;
+    }
+}

@@ -5,6 +5,8 @@
  */
 package modele;
 
+import java.util.List;
+
 /**
  *
  * @author charles
@@ -20,15 +22,14 @@ public class Tache {
     private String datedebut;
     private String datefin;
     private String email;
-
-    private Competance competance;
+    private List<String> skill;
 
     public Tache() {
         super();
     }
 
     public Tache(int idTache, String titre, String description, int remuneration,
-            float longitude, float latitude, String datedebut, String datefin, String email) {
+            float longitude, float latitude, String datedebut, String datefin, String email, List<String> skill) {
 
         this.idTache = idTache;
         this.titre = titre;
@@ -39,6 +40,7 @@ public class Tache {
         this.datedebut = datedebut;
         this.datefin = datefin;
         this.email = email;
+        this.skill = skill;
     }
 
     public int getIdTache() {
@@ -65,7 +67,7 @@ public class Tache {
         return latitude;
     }
 
-    public String getDatedébut() {
+    public String getDatedebut() {
         return datedebut;
     }
 
@@ -76,46 +78,8 @@ public class Tache {
     public String getEmail() {
         return email;
     }
-
-    public void setIdTache(int idTache) {
-        this.idTache = idTache;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setRemuneration(int remuneration) {
-        this.remuneration = remuneration;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setDatedebut(String datedebut) {
-        this.datedebut = datedebut;
-    }
-
-    public void setDatefin(String datefin) {
-        this.datefin = datefin;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setCompetance(Competance competance) {
-        this.competance = competance;
-    }
-
     
+    public List<String> getSkill() {
+       return this.skill;
+   }
 }

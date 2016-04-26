@@ -27,25 +27,25 @@ import modele.User;
  */
 @WebServlet(name = "Controleur", urlPatterns = {"/controleur"})
 public class Controleur extends HttpServlet {
-    
+
     @Resource(name = "jdbc/blablajob")
     private DataSource ds;
-    
+
     /* pages d’erreurs */
     private void invalidParameters(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/controleurErreur.jsp").forward(request, response);        
+        request.getRequestDispatcher("/WEB-INF/controleurErreur.jsp").forward(request, response);
     }
 
     private void erreurBD(HttpServletRequest request,
-                HttpServletResponse response, DAOException e)
+            HttpServletResponse response, DAOException e)
             throws ServletException, IOException {
         request.setAttribute("erreurMessage", e.getMessage());
         String action = request.getParameter("action");
         request.setAttribute("action", action);
         request.getRequestDispatcher("/WEB-INF/bdErreur.jsp").forward(request, response);
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,7 +63,7 @@ public class Controleur extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Controleur</title>");            
+            out.println("<title>Servlet Controleur</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Controleur at " + request.getContextPath() + "</h1>");
@@ -72,28 +72,28 @@ public class Controleur extends HttpServlet {
         }
     }
 
-
-    /** 
-     * Méthode utilisée après connexion de l'utilisateur
-     * Handles the HTTP <code>GET</code> method.
+    /**
+     * Méthode utilisée après connexion de l'utilisateur Handles the HTTP
+     * <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         UserDAO userDAO = new UserDAO(ds);
         try {
             if (action == null) {
                 actionAfficher(request, response, userDAO);
-            } else if (action.equals("getPage")){
+            } else if (action.equals("getPage")) {
                 actionGetPage(request, response, userDAO);
+            } else if (action.equals("getProfil")) {
+                actionGetProfil(request, response, userDAO);
             } else {
                 invalidParameters(request, response);
             }
@@ -103,19 +103,18 @@ public class Controleur extends HttpServlet {
     }
 
     /**
-     * Méthode utilisée pour gérer l'inscription de l'utilisateur
-     * Handles the HTTP <code>POST</code> method.
+     * Méthode utilisée pour gérer l'inscription de l'utilisateur Handles the
+     * HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         UserDAO userDAO = new UserDAO(ds);
@@ -123,8 +122,12 @@ public class Controleur extends HttpServlet {
         try {
             if (action == null) {
                 actionAfficher(request, response, userDAO);
-            } else if (action.equals("inscrire")){
-                actionAjouter(request, response, userDAO);               
+            } else if (action.equals("inscrire")) {
+                actionAjouter(request, response, userDAO);
+            } else if (action.equals("modifier_loca")) {
+                actionModifierLoca(request, response, userDAO);
+            } else if (action.equals("modifier_skill")) {
+                actionModifierSkill(request, response, userDAO);
             } else {
                 invalidParameters(request, response);
             }
@@ -132,20 +135,24 @@ public class Controleur extends HttpServlet {
             erreurBD(request, response, e);
         }
     }
-    
-    private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO) 
+
+    private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws DAOException, ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
             getServletContext().getRequestDispatcher("/index.html").forward(request, response);
-        }
-        else if (action.equals("inscrire")) {
+        } else if (action.equals("inscrire")) {
             String email = request.getParameter("email");
-            request.setAttribute("utilisateur", userDAO.getUser(email)); 
+            request.setAttribute("utilisateur", userDAO.getUser(email));
             request.setAttribute("skills", userDAO.getUser(email).getSkill());
             request.getRequestDispatcher("/WEB-INF/indexUser.jsp").forward(request, response);
-        }
-        else {
+        } else if (action.equals("modifier_loca")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/indexLoca.jsp").forward(request, response);
+        } else if (action.equals("modifier_skill")) {           
+            String email = request.getParameter("email");
+            request.setAttribute("skills", userDAO.getUser(email).getSkill());
+            getServletContext().getRequestDispatcher("/WEB-INF/indexSkill.jsp").forward(request, response);
+        } else {
             getServletContext().getRequestDispatcher("/index.html").forward(request, response);
         }
     }
@@ -157,16 +164,16 @@ public class Controleur extends HttpServlet {
             throws IOException, ServletException, DAOException {
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
         GeocodingResult[] results = null;
-        float latitude = 0; 
+        float latitude = 0;
         float longitude = 0;
         String adresse = request.getParameter("address") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
         request.setAttribute("adresse", adresse);
         try {
-           //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
-           results =  GeocodingApi.geocode(context, adresse).await();
-           //System.out.println(results[0].formattedAddress);
-           latitude = (float) (results[0].geometry.location.lat);
-           longitude = (float) (results[0].geometry.location.lng);
+            //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
+            results = GeocodingApi.geocode(context, adresse).await();
+            //System.out.println(results[0].formattedAddress);
+            latitude = (float) (results[0].geometry.location.lat);
+            longitude = (float) (results[0].geometry.location.lng);
         } catch (Exception e) {
             //on rattrape l'exception dans le cas où l'API de Google n'arrive pas à associer une coordonnée géographique à l'adresse saisie
             String adr = "Adresse mal saisie";
@@ -180,8 +187,8 @@ public class Controleur extends HttpServlet {
         } catch (DAOException e) {
             //on rattrappe l'exception levée par getUser dans le cas où l'utilisateur n'existe pas encore dans la BD
             user = null;
-        }     
-        if(user == null) {    
+        }
+        if (user == null) {
             String password = request.getParameter("password");
             String nom = request.getParameter("lastname");
             String prenom = request.getParameter("firstname");
@@ -190,43 +197,91 @@ public class Controleur extends HttpServlet {
             String[] skill = request.getParameterValues("skill");
             userDAO.creerUser(email, password, nom, prenom, genre, birth, longitude, latitude, adresse, skill);
             actionAfficher(request, response, userDAO);
-        }
-        else { 
-            String EmailErr = email +" est déjà utilisé";
+        } else {
+            String EmailErr = email + " est déjà utilisé";
             request.setAttribute("EmailErr", EmailErr);
             request.getRequestDispatcher("/inscrire.jsp").forward(request, response);
         }
     }
-    
-    private void actionGetPage(HttpServletRequest request, 
-            HttpServletResponse response, 
+
+    private void actionGetPage(HttpServletRequest request,
+            HttpServletResponse response,
             UserDAO userDAO) throws DAOException, ServletException, IOException {
         String vue = request.getParameter("view");
         if (vue.equals("accueil")) {
             getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
-        }
-        else if (vue.equals("profil")) {
+        } else if (vue.equals("profil")) {
             String username = request.getParameter("id");
             User user = userDAO.getUser(username);
             request.setAttribute("utilisateur", user);
             request.setAttribute("skills", userDAO.getUser(username).getSkill());
             getServletContext().getRequestDispatcher("/WEB-INF/profil.jsp").forward(request, response);
-        }
-        else if (vue.equals("poster")) {
+        } else if (vue.equals("poster")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+        } else if (vue.equals("historique")) {
             getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
+        } else {
+            invalidParameters(request, response);
         }
-        else if (vue.equals("historique")) {
-            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
-        }   
-        else invalidParameters(request, response);
     }
-    
+
+    private void actionGetProfil(HttpServletRequest request,
+            HttpServletResponse response,
+            UserDAO userDAO) throws DAOException, ServletException, IOException {
+        String vue = request.getParameter("view");
+        if (vue.equals("localisation")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/modifier_adresse.jsp").forward(request, response);
+        } else if (vue.equals("skill")) {
+            String username = request.getParameter("id");
+            User user = userDAO.getUser(username);
+            request.setAttribute("utilisateur", user);
+            request.setAttribute("skills", userDAO.getUser(username).getSkill());
+            getServletContext().getRequestDispatcher("/WEB-INF/modifier_skill.jsp").forward(request, response);
+        } else {
+            invalidParameters(request, response);
+        }
+    }
+
+    private void actionModifierLoca(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
+            throws IOException, ServletException, DAOException {
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
+        GeocodingResult[] results = null;
+        float latitude = 0;
+        float longitude = 0;
+        String adresse = request.getParameter("address") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
+        request.setAttribute("adresse", adresse);
+        try {
+            //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
+            results = GeocodingApi.geocode(context, adresse).await();
+            //System.out.println(results[0].formattedAddress);
+            latitude = (float) (results[0].geometry.location.lat);
+            longitude = (float) (results[0].geometry.location.lng);
+        } catch (Exception e) {
+            //on rattrape l'exception dans le cas où l'API de Google n'arrive pas à associer une coordonnée géographique à l'adresse saisie
+            String adr = "Adresse mal saisie";
+            request.setAttribute("AdrErreur", adr);
+            request.getRequestDispatcher("/WEB-INF/modifer_adresse.jsp").forward(request, response);
+        }
+        String email = request.getParameter("email");
+        userDAO.modifierLoca(email, longitude, latitude);
+        request.setAttribute("longitude", longitude);
+        request.setAttribute("latitude", latitude);
+        actionAfficher(request, response, userDAO);
+    }
+
+    private void actionModifierSkill(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
+            throws IOException, ServletException, DAOException {
+        String email = request.getParameter("email");
+        String[] skill = request.getParameterValues("skill");
+        userDAO.modifierListSkill(email, skill);
+        actionAfficher(request, response, userDAO);
+    }
+
     /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */
-
     @Override
     public String getServletInfo() {
         return "Short description";
