@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.Tache;
-import modele.User;
 
 /**
  *
@@ -101,6 +100,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         return new Tache(idtache, titre, description, remuneration,
                 longitude, latitude, datebegin, dateend, email, skill);
     }
+    
 
     /**
      * Ajoute une nouvelle compétence dans la table COMPETENCE associé à
@@ -140,5 +140,27 @@ public class TacheDAO extends AbstractDataBaseDAO {
             throw new DAOException("Erreur BD " + e.getMessage(), e);
         };
         return idtache;
+    }
+    
+    public List<Tache> getListTache(String email) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email = ?");
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
     }
 }

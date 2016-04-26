@@ -180,13 +180,13 @@ public class UserDAO extends AbstractDataBaseDAO {
             } catch (DAOException e) {
                 //executant existe deja
             };
-        }
-        for (int i = 0; i < skill.length; i++) {
-            int j = Integer.parseInt(skill[i]);
-            try {
-                ajouterSkill(email, j);
-            } catch (DAOException e) {
-                //skill déjà ajouté
+            for (int i = 0; i < skill.length; i++) {
+                int j = Integer.parseInt(skill[i]);
+                try {
+                    ajouterSkill(email, j);
+                } catch (DAOException e) {
+                    //skill déjà ajouté
+                }
             }
         }
     }

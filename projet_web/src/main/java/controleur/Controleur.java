@@ -9,6 +9,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import dao.DAOException;
+import dao.TacheDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,7 +74,8 @@ public class Controleur extends HttpServlet {
     }
 
     /**
-     * Méthode utilisée après connexion de l'utilisateur Handles the HTTP
+     * Méthode utilisée après connexion de l'utilisateur
+     * Handles the HTTP
      * <code>GET</code> method.
      *
      * @param request servlet request
@@ -87,11 +89,12 @@ public class Controleur extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         UserDAO userDAO = new UserDAO(ds);
+        TacheDAO tacheDAO = new TacheDAO(ds);
         try {
             if (action == null) {
                 actionAfficher(request, response, userDAO);
             } else if (action.equals("getPage")) {
-                actionGetPage(request, response, userDAO);
+                actionGetPage(request, response, userDAO, tacheDAO);
             } else if (action.equals("getProfil")) {
                 actionGetProfil(request, response, userDAO);
             } else {
@@ -156,7 +159,14 @@ public class Controleur extends HttpServlet {
             getServletContext().getRequestDispatcher("/index.html").forward(request, response);
         }
     }
-
+    
+    private void actionAfficherHistorique(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("id");
+        request.setAttribute("taches", tacheDAO.getListTache(email));
+        getServletContext().getRequestDispatcher("/WEB-INF/historique_tache.jsp").forward(request, response);    
+    }
+        
     /**
      * Ajout d'un ouvrage.
      */
@@ -206,7 +216,7 @@ public class Controleur extends HttpServlet {
 
     private void actionGetPage(HttpServletRequest request,
             HttpServletResponse response,
-            UserDAO userDAO) throws DAOException, ServletException, IOException {
+            UserDAO userDAO, TacheDAO tacheDAO) throws DAOException, ServletException, IOException {
         String vue = request.getParameter("view");
         if (vue.equals("accueil")) {
             getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
@@ -219,7 +229,7 @@ public class Controleur extends HttpServlet {
         } else if (vue.equals("poster")) {
             getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
         } else if (vue.equals("historique")) {
-            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
+            actionAfficherHistorique(request, response, tacheDAO);
         } else {
             invalidParameters(request, response);
         }

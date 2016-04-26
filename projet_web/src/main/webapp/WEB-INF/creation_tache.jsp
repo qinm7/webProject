@@ -98,7 +98,15 @@
                             <textarea name="description" id="input-description" rows="5" cols="30" required placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200" > 
                             </textarea>
                         </div>
-                    </div>	
+                    </div>
+                    <div class="af-outer">	
+                        <div class="af-inner">				
+                            <span>Est-ce que la tâche est décomposable en plusieurs sous-tâches ?</span>
+                            <select class="styled-select1" name="typetache" required>
+                                <option value="non">non</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="af-outer">
                         <div class="af-inner">	
                             <label id=prix for="input-price">Rémunération</label>
