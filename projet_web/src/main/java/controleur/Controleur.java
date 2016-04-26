@@ -130,6 +130,8 @@ public class Controleur extends HttpServlet {
                 actionModifierLoca(request, response, userDAO);
             } else if (action.equals("modifier_skill")) {
                 actionModifierSkill(request, response, userDAO);
+            } else if (action.equals("engager")) {
+                actionEngager(request, response, userDAO);    
             } else {
                 invalidParameters(request, response);
             }
@@ -137,7 +139,7 @@ public class Controleur extends HttpServlet {
             erreurBD(request, response, e);
         }
     }
-
+    
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws DAOException, ServletException, IOException {
         String action = request.getParameter("action");
@@ -164,6 +166,13 @@ public class Controleur extends HttpServlet {
         String email = request.getParameter("id");
         request.setAttribute("taches", tacheDAO.getListTache(email));
         getServletContext().getRequestDispatcher("/WEB-INF/historique_tache.jsp").forward(request, response);    
+    }
+    
+    private void actionAfficherTaches(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("id");
+        request.setAttribute("taches", tacheDAO.getListTacheExecutant(email));
+        getServletContext().getRequestDispatcher("/WEB-INF/ListeTacheBBJob.jsp").forward(request, response);    
     }
         
     /**
@@ -229,6 +238,8 @@ public class Controleur extends HttpServlet {
             getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
         } else if (vue.equals("historique")) {
             actionAfficherHistorique(request, response, tacheDAO);
+        } else if (vue.equals("taches")) {
+            actionAfficherTaches(request, response, tacheDAO);    
         } else {
             invalidParameters(request, response);
         }
@@ -279,6 +290,14 @@ public class Controleur extends HttpServlet {
     }
 
     private void actionModifierSkill(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
+            throws IOException, ServletException, DAOException {
+        String email = request.getParameter("email");
+        String[] skill = request.getParameterValues("skill");
+        userDAO.modifierListSkill(email, skill);
+        actionAfficher(request, response, userDAO);
+    }
+    
+    private void actionEngager(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws IOException, ServletException, DAOException {
         String email = request.getParameter("email");
         String[] skill = request.getParameterValues("skill");

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : historique_tache
-    Created on : 26 avr. 2016, 10:08:30
+    Document   : ListeTacheBBJob
+    Created on : 26 avr. 2016, 19:51:10
     Author     : qinm
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Page d'accueil</title>
+        <title>Liste des tâches</title>
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
@@ -67,7 +67,7 @@
         </header>
         <br/>            
         <div class="container">
-            <h1>Historique des tâches postées</h1>
+            <h1>Liste des tâches disponibles en tant qu'exécutant</h1>
             <table>
                 <c:forEach items="${taches}" var="tache">
                     <tr>
@@ -82,10 +82,16 @@
                         Date de fin : ${tache.datefin}<br/>
                         Email : ${tache.email}<br/>
                         Compétences : 
-                            <c:forEach items="${tache.skill}" var="skill">
-                                ${skill}
-                                <c:out value = "/" />  
-                            </c:forEach>    
+                        <c:forEach items="${tache.skill}" var="skill">
+                            ${skill}
+                            <c:out value = "/" />  
+                        </c:forEach>
+                        <form method="post" action="controleur">
+                            <input type="hidden" name="email" value=${user} />
+                            <input type="hidden" name="idtache" value=${tache.idTache} />
+                            <input type="hidden" name="action" value="engager" />
+                            <input style="margin-left : 45% " type="submit" name="confirm" value="S'engager" />
+                        </form>
                     </fieldset>
                     </tr>
                 </c:forEach>
