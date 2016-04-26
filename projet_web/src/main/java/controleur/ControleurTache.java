@@ -115,18 +115,32 @@ public class ControleurTache extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        TacheDAO tacheDAO = new TacheDAO(ds);
+        try {
+            if (action == null) {
+                actionAfficher(request, response, tacheDAO);
+            } else if (action.equals("rechercher")) {
+                actionRechercher(request, response, tacheDAO);
+            } else {
+                invalidParameters(request, response);
+            }
+        } catch (DAOException e) {
+            erreurBD(request, response, e);
+        }
     }
 
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
-            getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
         } else if (action.equals("poster")) {
             getServletContext().getRequestDispatcher("/WEB-INF/indexTache.jsp").forward(request, response);
         } else {
-            getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
         }
     }
 
@@ -174,7 +188,10 @@ public class ControleurTache extends HttpServlet {
         request.setAttribute("tache", tache);*/
         actionAfficher(request, response, tacheDAO);
     }
-
+    
+    private void actionRechercher(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+    }
     /**
      * Returns a short description of the servlet.
      *
