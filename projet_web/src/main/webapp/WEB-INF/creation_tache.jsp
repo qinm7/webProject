@@ -14,13 +14,16 @@
         <title>Poster une annonce</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        
+        <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
-
+        <link rel="stylesheet" type="text/css" href="css/creation_tache.css" />
+        
+        <!-- Script -->
         <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>

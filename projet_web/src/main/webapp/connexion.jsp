@@ -1,8 +1,3 @@
-<%-- 
-    Document   : connexion
-    Created on : 21 avr. 2016, 11:48:42
-    Author     : qinm
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,8 +14,8 @@
 
         <!-- Google Fonts -->
         <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
-
         <link rel="stylesheet" href="css/animate.css">
+        
         <!-- Custom Stylesheet -->
         <link rel="stylesheet" href="css/style_log_in.css">
 
@@ -30,34 +25,10 @@
         <link rel="stylesheet" href="css/xlarge.css">
         </noscript>
         
-        <!-- Quitte a que du code DEGEULASSE soit la autant 
-            le mettre au même endroit #OnEnAGros-->
-        
-        <style>
-            .info {
-                font-size : 10pt;
-                color : red;
-            }
-        </style>
-        <script>
-        $(document).ready(function () {
-            $('#logo').addClass('animated fadeInDown');
-            $("input:text:visible:first").focus();
-        });
-        $('#username').focus(function () {
-            $('label[for="username"]').addClass('selected');
-        });
-        $('#username').blur(function () {
-            $('label[for="username"]').removeClass('selected');
-        });
-        $('#password').focus(function () {
-            $('label[for="password"]').addClass('selected');
-        });
-        $('#password').blur(function () {
-            $('label[for="password"]').removeClass('selected');
-        });
-    </script>
-        
+        <!--Scrit et css propre à la page connexion -->
+        <link rel="stylesheet" href="css/connexion.css">
+        <script src="js/connexion.js"></script>
+    
     </head>
     
     
@@ -121,7 +92,7 @@
                             <div class="6u">
                                 <h3>À propos</h3>
                                 <ul class="alt">
-                                    <li><a href="#">Qui sommes-nous ?</a></li>
+                                    <li><a href="quisommesnous.html">Qui sommes-nous ?</a></li>
                                     <li><a href="#">Conditions générales et confidentialité</a></li>
                                 </ul>
                             </div>

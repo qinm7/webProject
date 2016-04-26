@@ -10,101 +10,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>S'inscrire</title>
-
+        <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
-
-        <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
-        
-        <style>
-            body, p, legend, label, input {
-                font-family: "Roboto", Helvetica, sans-serif;
-                font-weight: 300;
-            }		
-
-            h1{
-                color: #666f77;
-                font-weight: 300;
-                line-height: 1em;
-                margin: 0 0 1em 0;
-                text-transform: uppercase;
-                letter-spacing: 0.125em;
-            }
-
-            h1 a {
-                color: inherit;
-                text-decoration: none;
-            }	
-
-            fieldset {
-                padding: 10px;
-                border: 1px #0568CD solid;
-                margin: 10px;
-            }
-
-            legend {
-                font-weight: bold;
-                color: #0568CD;
-            }
-
-            .info {
-                font-size : 8pt;
-            }
-        </style>		
-        <script type="text/javascript">
-            document.forms[0].elements[0].focus();
-            function verifForm(f) {
-                if (f.elements['input-password'].value == f.elements['input-confirm'].value)
-                    return true;
-                return false;
-            }
-            function verifForm1(f) {
-                if (f.elements['gender'].value != -1)
-                    return true;
-                return false;
-            }
-            function verifForm2(f) {
-                if (f.elements['day'].value != -1)
-                    return true;
-                return false;
-            }
-            function verifForm3(f) {
-                if (f.elements['month'].value != -1)
-                    return true;
-                return false;
-            }
-            function verifForm4(f) {
-                if (f.elements['year'].value != -1)
-                    return true;
-                return false;
-            }
-            function verif(f) {
-                var verif = verifForm(f) && verifForm1(f) && verifForm2(f) && verifForm3(f) && verifForm4(f);
-                if (!verifForm(f)) {
-                    mySpan.innerHTML = "Les mots de passe sont différents !";
-                    mySpan1.innerHTML = "Les mots de passe sont différents !";
-                }
-                else {
-                    mySpan.innerHTML = "";
-                    mySpan1.innerHTML = "";
-                }
-                if (!verifForm1(f)) {
-                    mySex.innerHTML = "Veuillez préciser votre sexe !";
-                }
-                else {
-                    mySex.innerHTML = "";
-                }
-                if (!(verifForm2(f) && verifForm3(f) && verifForm4(f))) {
-                    myBirth.innerHTML = "Veuillez préciser votre date de naissance !";
-                }
-                else {
-                    myBirth.innerHTML = ""
-                }
-                return verif;
-            }
-        </script>
+        <link rel="stylesheet" type="text/css" href="css/inscrire.css" />
+        <!--Srcipt-->
+        <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>		
+        <script type="text/javascript" src="js/inscrire.js"> </script>
 
     </head>
     <body>
