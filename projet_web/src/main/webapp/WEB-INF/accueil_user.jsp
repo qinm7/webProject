@@ -37,6 +37,9 @@
                 margin-right: auto;
             }
         </style>
+        
+        
+        
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
@@ -58,26 +61,28 @@
                 </ul>
             </nav>
         </header>
-        <br/>
+                    
         <div class="container">
             <div class="row">
                 <div id="section_1">
                     <form method="post" action="controleurtache">
                         <div class="form_row"> 
                             <label class="main">Ville : </label>
-                            <input class="main" type="text" name="city" value="" placeholder="Entrez une ville" /> </div>
+                            <input class="main" type="text" name="city" value="ville" placeholder="Entrez une ville" /> </div>
+
+                            
                         <div class="form_row"> 
                             <label class="main">Compétence : </label>
                             <select class="main" name="skill">
                                 <option value="-1">Sélectionnez une compétence...</option>
-                                <option value="bricolage">Bricolage</option>
-                                <option value="menage">Ménage</option>
-                                <option value="jardinage">Jardinage</option>
-                                <option value="pyrogravure">Pyrogravure sur boîte de camembert</option>
-                                <option value="peinture">Peinture</option>
-                                <option value="reparation">Réparation</option>
-                                <option value="cuisine">Cuisine</option>
-                                <option value="aide">Aide à la personne</option>
+                                <option value="1">Bricolage</option>
+                                <option value="2">Ménage</option>
+                                <option value="3">Jardinage</option>
+                                <option value="4">Pyrogravure sur boîte de camembert</option>
+                                <option value="5">Peinture</option>
+                                <option value="6">Réparation</option>
+                                <option value="7">Cuisine</option>
+                                <option value="8">Aide à la personne</option>
                             </select>
                         </div>
                         <div class="form_row" id="recherche"> 

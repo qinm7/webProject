@@ -14,6 +14,7 @@ import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Boolean.valueOf;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.Tache;
 import modele.User;
+
 
 @WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
 public class ControleurTache extends HttpServlet {
@@ -130,6 +132,8 @@ public class ControleurTache extends HttpServlet {
             }
         } catch (DAOException e) {
             erreurBD(request, response, e);
+        } catch (Exception ex) {
+            Logger.getLogger(ControleurTache.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -191,7 +195,23 @@ public class ControleurTache extends HttpServlet {
     }
     
     private void actionRechercher(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
-            throws DAOException, ServletException, IOException {
+            throws DAOException, ServletException, IOException, Exception {
+        
+        String cityV = request.getParameter("city");
+        int skill = Integer.parseInt(request.getParameter("skill"));
+       
+        float longitude = 0, latitude = 0;
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
+        GeocodingResult[] results = GeocodingApi.geocode(context, cityV).await(); 
+        latitude = (float) (results[0].geometry.location.lat);
+        longitude = (float) (results[0].geometry.location.lng);
+        
+        List<Tache> taches = tacheDAO.getTacheCityJob(longitude,latitude,skill);
+        
+        request.setAttribute("taches",taches);
+        
+        getServletContext().getRequestDispatcher("/WEB-INF/afficheTache.jsp").forward(request, response);
+        
     }
     
     private void actionSuppTache(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
