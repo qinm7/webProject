@@ -6,9 +6,12 @@
 package controleur;
 
 import dao.DAOException;
+import dao.TacheDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -69,14 +72,21 @@ public class CheckUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         request.setCharacterEncoding("UTF-8");
         UserDAO userDAO = new UserDAO(ds);
+        TacheDAO tacheDAO = new TacheDAO(ds);
+        
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (isLoginValid(username, password, userDAO)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
-            //response.sendRedirect("/WEB-INF/accueil_user.jsp");
+            try {
+                actionRecommander(request,response,userDAO,tacheDAO);
+            } catch (DAOException e) {
+                erreurBD(request, response, e);
+            }
             request.getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
         } else {
             String message = "Votre e-mail ou votre mot de passe sont erronés";
@@ -103,7 +113,18 @@ public class CheckUser extends HttpServlet {
             }
         }
     }
-
+    
+    private void actionRecommander(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("username");
+        User user = userDAO.getUser(email);
+        float latitudeUser = user.getLatitude(), longitudeUser = user.getLongitude();
+        List<String> skillUser = new ArrayList<String>();
+        skillUser = user.getSkill();
+        //List<Tache> taches = tacheDAO.getListTache(skillUser);
+    }
+    
+    
     @Override
     public String getServletInfo() {
         return "Short description";

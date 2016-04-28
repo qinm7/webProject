@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.sql.DataSource;
 import modele.Tache;
 
@@ -166,19 +168,42 @@ public class TacheDAO extends AbstractDataBaseDAO {
     }
     
 
+public List<Tache> getListTacheExecutant(String email) throws DAOException {
+
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT idtache FROM tache WHERE email <> ?");
+            st.setString(1, email);ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+
+    }
+
+    
     public List<Tache> getTacheCityJob(float longitude, float latitude, int skill) throws DAOException {
-        
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
         try {
             conn = getConnection();
             PreparedStatement st
+
                     = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite "+
                             "WHERE longitude < ? + 1 AND latitude < ? +1 AND idskill = ?");
             st.setFloat(1,longitude);
             st.setFloat(2,latitude);
             st.setInt(3,skill);
-      
+     
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Tache tache =
@@ -191,6 +216,39 @@ public class TacheDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
         return taches;
-    
     }
+    
+    /*public Set<Tache> getListTache(List<String> skill) throws DAOException {
+        Connection conn = null;
+        Set<Tache> taches = new HashSet<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT idtache FROM tache");
+            ResultSet rs = st.executeQuery();
+            PreparedStatement st1; 
+            while (rs.next()) {     
+                int idtache = rs.getInt("idtache");
+                st1 = conn.prepareStatement("SELECT i FROM necessite WHERE idtache = ? ");
+                st1.setInt(1,idtache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }PreparedStatement st2 = conn.prepareStatement(
+                    "SELECT idskill FROM possede WHERE email = ? ");
+            st2.setString(1, email);
+            ResultSet rs2 = st2.executeQuery();
+            while (rs2.next()) {
+                PreparedStatement st3 = conn.prepareStatement(
+                        "SELECT skill FROM competence WHERE idskill = ? ");
+                st3.setInt(1, rs2.getInt("idskill"));
+                ResultSet rs3 = st3.executeQuery();
+                rs3.next();
+                skill.add(rs3.getString("skill"));
+            }
+    */
 }

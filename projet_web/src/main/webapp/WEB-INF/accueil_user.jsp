@@ -50,6 +50,7 @@
                     <li><a href="controleur?action=getPage&view=profil&id=${user}">Profil</a></li>
                     <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>
                     <li><a href="controleur?action=getPage&view=historique&id=${user}">Historique de tâches</a></li>
+                    <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
                     <li>
                         <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>
@@ -89,6 +90,9 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="container">
+            
         </div>
 
     </body>
