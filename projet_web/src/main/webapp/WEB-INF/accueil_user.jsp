@@ -51,8 +51,8 @@
                     <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>                   
                     <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
                     <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
-                     <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
-                    <li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>
+                    <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
+                    <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
                     <li>
                         <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>

@@ -286,6 +286,7 @@ public class Controleur extends HttpServlet {
     private void actionAfficherExecutant(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("id");
+        request.setAttribute("tache", Integer.parseInt(request.getParameter("idtache")));
         request.setAttribute("utilisateur", userDAO.getUser(email));
         request.setAttribute("skills", userDAO.getUser(email).getSkill());
         getServletContext().getRequestDispatcher("/WEB-INF/profil_executant.jsp").forward(request, response);

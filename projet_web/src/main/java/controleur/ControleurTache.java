@@ -13,7 +13,6 @@ import dao.TacheDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.Boolean.valueOf;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.Tache;
-import modele.User;
 
 
 @WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
@@ -97,6 +95,8 @@ public class ControleurTache extends HttpServlet {
                 actionAfficher(request, response, tacheDAO);
             } else if (action.equals("poster")) {
                 actionAjouter(request, response, userDAO, tacheDAO);
+            } else if (action.equals("supprimer")) {
+                actionSuppTache(request, response, tacheDAO);    
             } else {
                 invalidParameters(request, response);
             }
@@ -124,9 +124,7 @@ public class ControleurTache extends HttpServlet {
             if (action == null) {
                 actionAfficher(request, response, tacheDAO);
             } else if (action.equals("rechercher")) {
-                actionRechercher(request, response, tacheDAO);
-            } else if (action.equals("SuppTache")) {
-                actionSuppTache(request, response, tacheDAO);    
+                actionRechercher(request, response, tacheDAO);    
             } else {
                 invalidParameters(request, response);
             }
@@ -218,6 +216,17 @@ public class ControleurTache extends HttpServlet {
             throws DAOException, ServletException, IOException {
         int idtache = Integer.parseInt(request.getParameter("idtache"));
         tacheDAO.supprimerTache(idtache);
+        actionAfficherHistorique(request, response, tacheDAO); 
+        
+    }
+    
+    private void actionAfficherHistorique(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("id");
+        request.setAttribute("encours", tacheDAO.getListTachePosteeEnCours(email));
+        request.setAttribute("nonengager", tacheDAO.getListTachePosteeNonEngagee(email));
+        request.setAttribute("realiser", tacheDAO.getListTachePosteeRealisee(email));
+        getServletContext().getRequestDispatcher("/WEB-INF/historique_tache.jsp").forward(request, response);
     }
 
     /**

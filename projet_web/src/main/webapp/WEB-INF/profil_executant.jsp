@@ -36,7 +36,7 @@
         </header>
         <br/>
         <div class="container">
-            <h1>Profil de l'exécutant</h1>
+            <h1>Profil de l'exécutant : tache ${tache}</h1>
             <%--affichage des données clients --%>
             Nom : ${utilisateur.nom} <br/>
             Prénom : ${utilisateur.prenom} <br/> 

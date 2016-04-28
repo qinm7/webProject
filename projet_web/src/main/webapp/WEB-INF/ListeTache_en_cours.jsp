@@ -66,8 +66,8 @@
                     <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>                   
                     <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
                     <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
-                     <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
-                    <li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>
+                    <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
+                    <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
                     <li>
                         <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>
@@ -103,7 +103,7 @@
                         <br/>
                         <br/>
                         <span style="color: red">Exécutant : 
-                            <a href="controleur?action=getPage&view=afficheexecutant&id=${tache.executant}">${tache.executant}</a>
+                            <a href="controleur?action=getPage&view=afficheexecutant&id=${tache.executant}&idtache=${tache.idTache}">${tache.executant}</a>
                         </span>
                         <form method="post" action="controleur" onsubmit="return ConfirmMessage()">
                             <input type="hidden" name="view" value="tachesencours" />

@@ -28,18 +28,33 @@
                 }
                 if (j == 0) {
                     alert("Veuillez mettre une note, SVP !");
-                    return false;    
+                    return false;
                 } else if (j == 1) {
                     return true;
                 } else {
                     alert("Veuillez mettre qu'une SEULE note, SVP !");
                     return false;
-                }    
+                }
             }
         </script>    
     </head>    
     <body>
-        <!-- Corps du texte : creation d'une tache -->
+        <header id="header" class="skel-layers-fixed">
+            <h1><a href="#">BlablaJob</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li>
+                        <form method="get" action="controleur">
+                            <input type="hidden" name="action" value="getPage" />
+                            <input type="hidden" name="view" value="accueil" />
+                            <input type="hidden" name="id" value=${user} />
+                            <input type="submit" value="Retour" class="button special"/>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <br/>
         <div class="container">
             <section class="af-wrapper">
                 <h3>Donner votre avis sur la personne qui a réalisée la tâche</h3>			
@@ -52,14 +67,13 @@
                     </div>					
                     <div class="af-outer">
                         <div class="af-inner">
-                            <label>Note /5</label>
-                            <input type="checkbox" name="note" value="0"/>0<br/>
-                            <input type="checkbox" name="note" value="1"/>1<br/>
-                            <input type="checkbox" name="note" value="2"/>2<br/>
-                            <label></label>
-                            <input type="checkbox" name="note" value="3"/>3<br/>
-                            <input type="checkbox" name="note" value="4"/>4<br/>
-                            <input type="checkbox" name="note" value="5"/>5<br/>				
+                            <label style="margin-top: 4px">Note /5</label>
+                            <input style="margin-left: 20px" type="checkbox" name="note" value="0"/>0
+                            <input style="margin-left: 20px" type="checkbox" name="note" value="1"/>1
+                            <input style="margin-left: 20px" type="checkbox" name="note" value="2"/>2                            
+                            <input style="margin-left: 20px" type="checkbox" name="note" value="3"/>3
+                            <input style="margin-left: 20px" type="checkbox" name="note" value="4"/>4
+                            <input style="margin-left: 20px" type="checkbox" name="note" value="5"/>5				
                         </div>
                     </div>
                     <input type="hidden" name="view" value=${vue} />
