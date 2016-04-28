@@ -69,10 +69,12 @@
             <nav id="nav">
                 <ul>
                     <li><a href="controleur?action=getPage&view=accueil&id=${user}">Page d'accueil</a></li>
-                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Profil</a></li>
-                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>
-                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Historique de tâches</a></li>
+                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Mon profil</a></li>
+                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>                   
                     <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
+                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
+                     <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
+                    <li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>
                     <li>
                         <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>
@@ -96,8 +98,7 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-description">Description</label>
-                            <textarea name="description" id="input-description" rows="5" cols="30" required placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200" > 
-                            </textarea>
+                            <textarea name="description" id="input-description" rows="10" cols="20" required placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200" ></textarea>
                         </div>
                     </div>
                     <div class="af-outer">	
@@ -118,15 +119,15 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label>Compétences</label>
-                            <input type="checkbox" name="skill" value="1"> Bricolage</input> </br>
-                            <input type="checkbox" name="skill" value="2"> Ménage</input> </br>
-                            <input type="checkbox" name="skill" value="3"> Jardinage</input> </br>
-                            <input type="checkbox" name="skill" value="4"> Pyrogravure sur boîte de camembert</input> </br>
+                            <input type="checkbox" name="skill" value="1"/> Bricolage<br/>
+                            <input type="checkbox" name="skill" value="2"/> Ménage<br/>
+                            <input type="checkbox" name="skill" value="3"/> Jardinage<br/>
+                            <input type="checkbox" name="skill" value="4"/> Pyrogravure sur boîte de camembert<br/>
                             <label></label>
-                            <input type="checkbox" name="skill" value="5"> Peinture</input> </br>
-                            <input type="checkbox" name="skill" value="6"> Réparation</input> </br>
-                            <input type="checkbox" name="skill" value="7"> Cuisine</input> </br>
-                            <input type="checkbox" name="skill" value="8"> Aide à la personne</input> </br>					
+                            <input type="checkbox" name="skill" value="5"/> Peinture<br/>
+                            <input type="checkbox" name="skill" value="6"/> Réparation<br/>
+                            <input type="checkbox" name="skill" value="7"/> Cuisine<br/>
+                            <input type="checkbox" name="skill" value="8"/> Aide à la personne<br/>					
                         </div>
                     </div>
                     <div class="af-outer">

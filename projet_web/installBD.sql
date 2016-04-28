@@ -1,5 +1,7 @@
 CREATE SEQUENCE id_seq;
 
+CREATE SEQUENCE id_avis;
+
 CREATE TABLE Utilisateur (
     Email Varchar (30),
     Motdepasse Varchar (20),
@@ -57,12 +59,19 @@ CREATE TABLE TacheComposee (
         
 CREATE TABLE Avis (
     IdAvis Integer,
-    Email Varchar (30),
+    IdTache Integer,
     Note Integer,
     Commentaire Varchar (200),
-    PRIMARY KEY (IdAvis, Email),
-    FOREIGN KEY (Email)
-	REFERENCES Utilisateur (Email)
+    Emetteur Varchar (30),
+    Destinataire Varchar (30),
+    PRIMARY KEY (IdAvis, IdTache),
+    FOREIGN KEY (IdTache)
+	REFERENCES Tache (IdTache),
+    FOREIGN KEY (Emetteur)
+	REFERENCES Utilisateur (Email),
+    FOREIGN KEY (Destinataire)
+	REFERENCES Utilisateur (Email),
+    CHECK (Emetteur <> Destinataire)
 );
 
 CREATE TABLE Facture (
@@ -71,16 +80,6 @@ CREATE TABLE Facture (
     PRIMARY KEY (IdTache),
     FOREIGN KEY (IdTache)
     	REFERENCES Tache (IdTache)
-);
-        
-CREATE TABLE Emet (
-    IdAvis integer,
-    Email Varchar (30), 
-    PRIMARY KEY (IdAvis),
-    FOREIGN KEY (IdAvis)
-        REFERENCES Avis (IdAvis),
-    FOREIGN KEY (Email)
-	REFERENCES Utilisateur (Email)
 );	
 	       
 CREATE TABLE Engage (	

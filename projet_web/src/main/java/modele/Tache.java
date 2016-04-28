@@ -23,6 +23,7 @@ public class Tache {
     private String datefin;
     private String email;
     private List<String> skill;
+    private String executant;
 
     public Tache() {
         super();
@@ -41,6 +42,20 @@ public class Tache {
         this.datefin = datefin;
         this.email = email;
         this.skill = skill;
+    }
+    
+    public Tache(Tache tache, String executant) {
+        this.idTache = tache.idTache;
+        this.titre = tache.titre;
+        this.description = tache.description;
+        this.remuneration = tache.remuneration;
+        this.longitude = tache.longitude;
+        this.latitude = tache.latitude;
+        this.datedebut = tache.datedebut;
+        this.datefin = tache.datefin;
+        this.email = tache.email;
+        this.skill = tache.skill;
+        this.executant = executant;
     }
 
     public int getIdTache() {
@@ -77,6 +92,10 @@ public class Tache {
 
     public String getEmail() {
         return email;
+    }
+    
+    public String getExecutant() {
+        return this.executant;
     }
     
     public List<String> getSkill() {

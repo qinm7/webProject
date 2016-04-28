@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import modele.Competance;
 import modele.Tache;
 import modele.User;
 
@@ -115,7 +114,7 @@ public class ControleurTache extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         TacheDAO tacheDAO = new TacheDAO(ds);
@@ -124,6 +123,8 @@ public class ControleurTache extends HttpServlet {
                 actionAfficher(request, response, tacheDAO);
             } else if (action.equals("rechercher")) {
                 actionRechercher(request, response, tacheDAO);
+            } else if (action.equals("SuppTache")) {
+                actionSuppTache(request, response, tacheDAO);    
             } else {
                 invalidParameters(request, response);
             }
@@ -145,7 +146,7 @@ public class ControleurTache extends HttpServlet {
     }
 
     /**
-     * Ajout d'un ouvrage.
+     * Ajout d'une tache.
      */
     private void actionAjouter(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
             throws IOException, ServletException, DAOException {
@@ -176,22 +177,29 @@ public class ControleurTache extends HttpServlet {
         String[] skill = request.getParameterValues("skill");
         try {
             userDAO.ajouterCommanditaire(email);
-        } catch (DAOException e) {            
+        } catch (DAOException e) {
         };
         int idtache = tacheDAO.creerTache(titre, description, remuneration,
-                longitude, latitude, datebegin, dateend, email,skill);
+                longitude, latitude, datebegin, dateend, email, skill);
         Tache tache = tacheDAO.getTache(idtache);
         request.setAttribute("tache", tache);
         request.setAttribute("skills", tache.getSkill());
         /*Tache tache = new Tache(idtache, titre, description, remuneration,
-            longitude, latitude, datebegin, dateend, email);
-        request.setAttribute("tache", tache);*/
+         longitude, latitude, datebegin, dateend, email);
+         request.setAttribute("tache", tache);*/
         actionAfficher(request, response, tacheDAO);
     }
     
     private void actionRechercher(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
     }
+    
+    private void actionSuppTache(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        int idtache = Integer.parseInt(request.getParameter("idtache"));
+        tacheDAO.supprimerTache(idtache);
+    }
+
     /**
      * Returns a short description of the servlet.
      *

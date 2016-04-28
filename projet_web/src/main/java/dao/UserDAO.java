@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+import modele.Avis;
 import modele.User;
 
 /**
@@ -232,4 +233,105 @@ public class UserDAO extends AbstractDataBaseDAO {
             throw new DAOException("Erreur BD " + e.getMessage(), e);
         };
     }
+    
+    public void engagerTache(String email, int idtache) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("INSERT INTO engage (email, idtache) VALUES (?, ?)");
+            st.setString(1, email);
+            st.setInt(2, idtache);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public void genererFacture(int idtache) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("INSERT INTO facture (facture, idtache) VALUES (?, ?)");
+            st.setInt(1, 0);
+            st.setInt(2, idtache);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    /*public User getEngageExecutor(int idtache) throws DAOException {
+        Connection conn = null;
+        String email;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT email FROM engage WHERE idtache = ?");
+            st.setInt(1, idtache);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            email = rs.getString("email");
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return getUser(email);
+    }*/
+    
+    public void AjouterAvis(int idtache, int note, String commentaire, String emetteur, String destinataire) throws DAOException {
+        Connection conn = null;
+        int idAvis;
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT id_avis.nextval FROM dual");
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            idAvis = rs.getInt("nextval");
+            st = conn.prepareStatement("INSERT INTO avis (idavis, idtache, note, commentaire, emetteur, destinataire) VALUES (?, ?, ?, ?, ?, ?)");
+            st.setInt(1, idAvis);
+            st.setInt(2, idtache);
+            st.setInt(3, note);
+            st.setString(4, commentaire);
+            st.setString(5, emetteur);
+            st.setString(6, destinataire);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public Avis getAvis(int idTache) throws DAOException {
+        Connection conn = null;
+        int idAvis, note;
+        String commentaire, emetteur, destinataire;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT * FROM engage WHERE idtache = ?");
+            st.setInt(1, idTache);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            idAvis = rs.getInt("idAvis");
+            note = rs.getInt("note");
+            commentaire = rs.getString("commentaire");
+            emetteur = rs.getString("emetteur");
+            destinataire = rs.getString("destinataire");
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return new Avis(idAvis, idTache, note, commentaire, emetteur, destinataire);
+    }
+ 
 }
