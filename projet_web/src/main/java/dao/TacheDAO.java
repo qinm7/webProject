@@ -1,5 +1,6 @@
 package dao;
 
+import static java.lang.Math.sqrt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -162,5 +163,34 @@ public class TacheDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
         return taches;
+    }
+    
+
+    public List<Tache> getTacheCityJob(float longitude, float latitude, int skill) throws DAOException {
+        
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite "+
+                            "WHERE longitude < ? + 1 AND latitude < ? +1 AND idskill = ?");
+            st.setFloat(1,longitude);
+            st.setFloat(2,latitude);
+            st.setInt(3,skill);
+      
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    
     }
 }

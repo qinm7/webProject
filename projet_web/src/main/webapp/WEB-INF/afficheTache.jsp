@@ -1,7 +1,7 @@
 <%-- 
-    Document   : accueil_user
-    Created on : 22 avr. 2016, 22:57:12
-    Author     : qinm
+    Document   : afficheTache
+    Created on : 26 avr. 2016, 18:34:16
+    Author     : utilisateur
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,9 +37,6 @@
                 margin-right: auto;
             }
         </style>
-        
-        
-        
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
@@ -59,37 +56,32 @@
             </nav>
         </header>
                     
-        <div class="container">
-            <div class="row">
-                <div id="section_1">
-                    <form method="post" action="controleurtache">
-                        <div class="form_row"> 
-                            <label class="main">Ville : </label>
-                            <input class="main" type="text" name="city" value="ville" placeholder="Entrez une ville" /> </div>
-
-                            
-                        <div class="form_row"> 
-                            <label class="main">Compétence : </label>
-                            <select class="main" name="skill">
-                                <option value="-1">Sélectionnez une compétence...</option>
-                                <option value="1">Bricolage</option>
-                                <option value="2">Ménage</option>
-                                <option value="3">Jardinage</option>
-                                <option value="4">Pyrogravure sur boîte de camembert</option>
-                                <option value="5">Peinture</option>
-                                <option value="6">Réparation</option>
-                                <option value="7">Cuisine</option>
-                                <option value="8">Aide à la personne</option>
-                            </select>
-                        </div>
-                        <div class="form_row" id="recherche"> 
-                            <input type="hidden" name="action" value="rechercher" />
-                            <input class="main" type="submit" value="Rechercher" name="search" />
-                        </div>        
-                    </form>
-                </div>
-            </div>
-        </div>
-
+                    
+    <body>
+        <h1>Affiche les taches</h1>
+        
+        <c:forEach items="${taches}" var="tache">
+                    <tr>
+                    <fieldset>
+                        <legend>Tâche ${tache.idTache}</legend>
+                        Titre : ${tache.titre}<br/>
+                        Description : ${tache.description}<br/>
+                        Rémuneration : ${tache.remuneration} €<br/>
+                        Longitude : ${tache.longitude}<br/>
+                        Latitude : ${tache.latitude}<br/>
+                        Date de début : ${tache.datedebut}<br/>
+                        Date de fin : ${tache.datefin}<br/>
+                        Email : ${tache.email}<br/>
+                        Compétences : 
+                            <c:forEach items="${tache.skill}" var="skill">
+                                ${skill}
+                                <c:out value = "/" />  
+                            </c:forEach>    
+                    </fieldset>
+                    </tr>
+                </c:forEach>
+    
     </body>
+    
+    
 </html>
