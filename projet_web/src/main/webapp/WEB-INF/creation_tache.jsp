@@ -34,6 +34,12 @@
             $(function () {
                 $("#input-end").datepicker({dateFormat: "dd/mm/yy"});
             });
+            
+            function verifDate(f) {
+                if (f.elements['input-begin'].value < f.elements['input-end'].value)
+                    return true;
+                return false;
+            }
         </script>
         <style>
             body, p, legend, label, input {
