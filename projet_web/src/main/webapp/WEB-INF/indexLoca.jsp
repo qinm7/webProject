@@ -40,13 +40,15 @@
             <nav id="nav">
                 <ul>
                     <li><a href="controleur?action=getPage&view=accueil&id=${user}">Page d'accueil</a></li>
-                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Profil</a></li>
-                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>
-                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Historique de tâches</a></li>
-                    <li>
-                    	<form method="post" action="logout">
+                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Mon profil</a></li>
+                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>                   
+                    <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
+                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
+                    <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
+                    <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
+                        <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>
-                    	</form>
+                        </form>
                     </li>	
                 </ul>
             </nav>

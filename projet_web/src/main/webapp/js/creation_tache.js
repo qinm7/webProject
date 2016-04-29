@@ -8,3 +8,7 @@ $(function () {
         dateFormat: "dd-mm-yy"
     });
 });
+
+document.forms[0].elements[0].focus();
+
+

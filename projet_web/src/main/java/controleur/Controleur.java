@@ -121,6 +121,7 @@ public class Controleur extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         UserDAO userDAO = new UserDAO(ds);
+        TacheDAO tacheDAO = new TacheDAO(ds);
 
         try {
             if (action == null) {
@@ -132,7 +133,11 @@ public class Controleur extends HttpServlet {
             } else if (action.equals("modifier_skill")) {
                 actionModifierSkill(request, response, userDAO);
             } else if (action.equals("engager")) {
-                actionEngager(request, response, userDAO);
+                actionEngager(request, response, userDAO, tacheDAO);
+            } else if (action.equals("facture")) {
+                actionFacture(request, response, userDAO, tacheDAO);
+            } else if (action.equals("avis")) {
+                actionAvis(request, response, userDAO, tacheDAO);    
             } else {
                 invalidParameters(request, response);
             }
@@ -156,7 +161,7 @@ public class Controleur extends HttpServlet {
         } else if (action.equals("modifier_skill")) {
             String email = request.getParameter("email");
             request.setAttribute("skills", userDAO.getUser(email).getSkill());
-            getServletContext().getRequestDispatcher("/WEB-INF/indexSkill.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/indexSkill.jsp").forward(request, response);    
         } else {
             getServletContext().getRequestDispatcher("/index.html").forward(request, response);
         }
@@ -165,7 +170,12 @@ public class Controleur extends HttpServlet {
     private void actionAfficherHistorique(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("id");
+        //si il y a un soucis il y a eu un merge de là 
         request.setAttribute("taches", tacheDAO.getListTache(email));
+        //à là (ca veut dire virer ce qu'il y a entre les 2 )
+        request.setAttribute("encours", tacheDAO.getListTachePosteeEnCours(email));
+        request.setAttribute("nonengager", tacheDAO.getListTachePosteeNonEngagee(email));
+        request.setAttribute("realiser", tacheDAO.getListTachePosteeRealisee(email));
         getServletContext().getRequestDispatcher("/WEB-INF/historique_tache.jsp").forward(request, response);
     }
 
@@ -174,6 +184,31 @@ public class Controleur extends HttpServlet {
         String email = request.getParameter("id");
         request.setAttribute("taches", tacheDAO.getListTacheExecutant(email));
         getServletContext().getRequestDispatcher("/WEB-INF/ListeTacheBBJob.jsp").forward(request, response);
+    }
+    
+    private void actionAfficherTachesEnCours(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("id");
+        request.setAttribute("taches", tacheDAO.getListTachePosteeEnCours(email));
+        request.setAttribute("tachesEx", tacheDAO.getListTacheEngageeEnCours(email));
+        getServletContext().getRequestDispatcher("/WEB-INF/ListeTache_en_cours.jsp").forward(request, response);
+    }
+    
+    private void actionAfficherAvis(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        int idtache = Integer.parseInt(request.getParameter("idtache"));
+        request.setAttribute("idtache", idtache);
+        String vue = request.getParameter("view");
+        request.setAttribute("vue", vue);
+        getServletContext().getRequestDispatcher("/WEB-INF/AvisEx.jsp").forward(request, response);
+    }
+    
+    private void actionAfficherHistoriqueEx(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("id");
+        request.setAttribute("encours", tacheDAO.getListTacheEngageeEnCours(email));
+        request.setAttribute("realiser", tacheDAO.getListTacheEngageeRealisee(email));
+        getServletContext().getRequestDispatcher("/WEB-INF/tacheExecutant.jsp").forward(request, response);
     }
 
     /**
@@ -246,10 +281,26 @@ public class Controleur extends HttpServlet {
             actionAfficherHistorique(request, response, tacheDAO);
         } else if (vue.equals("taches")) {
             actionAfficherTaches(request, response, tacheDAO);
+        } else if (vue.equals("tachesencours")) {
+            actionAfficherTachesEnCours(request, response, tacheDAO);
+        } else if (vue.equals("historiqueEx")) {
+            actionAfficherHistoriqueEx(request, response, tacheDAO);
+        } else if (vue.equals("afficheexecutant")) {
+            actionAfficherExecutant(request, response, userDAO);    
         } else {
             invalidParameters(request, response);
         }
     }
+    
+    private void actionAfficherExecutant(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
+            throws DAOException, ServletException, IOException {
+        String email = request.getParameter("id");
+        request.setAttribute("tache", Integer.parseInt(request.getParameter("idtache")));
+        request.setAttribute("utilisateur", userDAO.getUser(email));
+        request.setAttribute("skills", userDAO.getUser(email).getSkill());
+        getServletContext().getRequestDispatcher("/WEB-INF/profil_executant.jsp").forward(request, response);
+    }    
+        
 
     private void actionGetProfil(HttpServletRequest request,
             HttpServletResponse response,
@@ -267,6 +318,7 @@ public class Controleur extends HttpServlet {
             invalidParameters(request, response);
         }
     }
+    
 
     private void actionModifierLoca(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws IOException, ServletException, DAOException {
@@ -303,12 +355,49 @@ public class Controleur extends HttpServlet {
         actionAfficher(request, response, userDAO);
     }
 
-    private void actionEngager(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
+    private void actionEngager(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
             throws IOException, ServletException, DAOException {
-        String email = request.getParameter("email");
-        String[] skill = request.getParameterValues("skill");
-        userDAO.modifierListSkill(email, skill);
-        actionAfficher(request, response, userDAO);
+        String email = request.getParameter("id");
+        int idtache = Integer.parseInt(request.getParameter("idtache"));
+        try {
+            userDAO.ajouterExecutant(email);
+        } catch (DAOException e) {
+        };
+        userDAO.engagerTache(email, idtache);
+        userDAO.genererFacture(idtache);
+        actionAfficherTaches(request, response, tacheDAO);
+    }
+    
+    private void actionFacture(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws IOException, ServletException, DAOException {
+        //int idtache = Integer.parseInt(request.getParameter("idtache"));
+        int facture = Integer.parseInt(request.getParameter("facture"));
+        request.setAttribute("price",facture);
+        /*tacheDAO.editerFacture(idtache, facture);
+        User user = userDAO.getEngageExecutor(idtache);
+        String executant = user.getEmail();
+        request.setAttribute("executant", executant);*/
+        actionAfficherAvis(request, response, tacheDAO);
+    }
+    
+    private void actionAvis(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws IOException, ServletException, DAOException {
+        int idtache = Integer.parseInt(request.getParameter("idtache"));
+        String commanditaire = request.getParameter("id");
+        String executant = request.getParameter("executant");
+        String commentaire = request.getParameter("commentaire");
+        int note = Integer.parseInt(request.getParameter("note"));
+        int facture = Integer.parseInt(request.getParameter("facture"));
+        tacheDAO.editerFacture(idtache, facture);
+        userDAO.AjouterAvis(idtache, note, commentaire, commanditaire, executant);
+        String vue = request.getParameter("view");
+        if (vue.equals("tachesencours")) {
+            actionAfficherTachesEnCours(request, response, tacheDAO);
+        } else if (vue.equals("historique")) {
+            actionAfficherHistorique(request, response, tacheDAO);
+        } else {
+            invalidParameters(request, response);
+        }   
     }
 
     /**

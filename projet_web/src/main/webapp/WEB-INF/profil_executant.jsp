@@ -1,6 +1,6 @@
 <%-- 
-    Document   : profil
-    Created on : 22 avr. 2016, 23:39:18
+    Document   : profil_executant
+    Created on : 28 avr. 2016, 21:14:28
     Author     : qinm
 --%>
 
@@ -23,35 +23,25 @@
             <h1><a href="#">BlablaJob</a></h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="controleur?action=getPage&view=accueil&id=${user}">Page d'accueil</a></li>
-                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Mon profil</a></li>
-                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>                   
-                    <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
-                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
-                    <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
-                    <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
                     <li>
-                        <form method="post" action="logout">
-                            <input type="submit" value="Se déconnecter" class="button special"/>
-                        </form>
-                    </li>	
+                    	<form method="get" action="controleur">
+                            <input type="hidden" name="action" value="getPage" />
+                            <input type="hidden" name="view" value="accueil" />
+                            <input type="hidden" name="id" value=${user} />
+                            <input type="submit" value="Retour" class="button special"/>
+                    	</form>
+                    </li>
                 </ul>
             </nav>
         </header>
         <br/>
         <div class="container">
-            <h1>Profil</h1>
+            <h1>Profil de l'exécutant : tache ${tache}</h1>
             <%--affichage des données clients --%>
             Nom : ${utilisateur.nom} <br/>
             Prénom : ${utilisateur.prenom} <br/> 
             Email : ${utilisateur.email} <br/>
             Genre : ${utilisateur.genre} <br/> 
-            Date de naissance : ${utilisateur.birth} <br/>
-            <tr>
-                <td>Localisation : (${utilisateur.latitude}, ${utilisateur.longitude})</td> 
-                <td><a href="controleur?action=getProfil&view=localisation&id=${user}">modifier</a></td>
-            </tr>
-            <br/>
             <tr>
                 <td>Compétences : 
             <%
@@ -66,7 +56,6 @@
                 }
             %>
                 </td>
-                <td><a href="controleur?action=getProfil&view=skill&id=${user}">modifier</a></td>
             </tr>    
         </div>
     </body>

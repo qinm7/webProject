@@ -1,6 +1,6 @@
 <%-- 
-    Document   : historique_tache
-    Created on : 26 avr. 2016, 10:08:30
+    Document   : tacheExecutant
+    Created on : 28 avr. 2016, 18:51:43
     Author     : qinm
 --%>
 
@@ -47,19 +47,6 @@
             }
         </style>
 
-        <script type="text/javascript">
-            function ConfirmMessage() {
-                if (!confirm("Vous allez générer une facture, confirmez-vous ce choix ?")) {
-                    return false;
-                }
-            }
-
-            function ConfirmMessageSupprimer() {
-                if (!confirm("Vous allez supprimer une tâche, confirmez-vous ce choix ?")) {
-                    return false;
-                }
-            }
-        </script>
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
@@ -83,7 +70,7 @@
         </header>
         <br/>            
         <div class="container">
-            <h1>Espace Commanditaire</h1>
+            <h1>Espace Exécutant</h1>
             <table>
                 <c:if test="${not empty encours}">
                     <h2 style="font-size : 3ex ; color : #007fff ; text-align: center">Tâche en cours</h2>
@@ -106,49 +93,6 @@
                             <c:out value = "/" />  
                         </c:forEach>
                         <br/>
-                        <br/>
-                        <span style="color: red">Exécutant : 
-                            <a href="controleur?action=getPage&view=afficheexecutant&id=${tache.executant}&idtache=${tache.idTache}">${tache.executant}</a>
-                        </span>    
-                        <br/>                            
-                        <form method="post" action="controleur" onsubmit="return ConfirmMessage()">
-                            <input type="hidden" name="view" value="historique" />
-                            <input type="hidden" name="id" value=${user} />
-                            <input type="hidden" name="idtache" value=${tache.idTache} />
-                            <input type="hidden" name="facture" value=${tache.remuneration} />
-                            <input type="hidden" name="action" value="facture" />
-                            <input style="margin-left : 42%" type="submit" name="confirm" value="Générer une facture" />
-                        </form>
-                    </fieldset>
-                    </tr>
-                </c:forEach>
-            </table>
-            </br>
-            <table>
-                <c:if test="${not empty nonengager}">
-                    <h2 style="font-size : 3ex ; color : #007fff ; text-align: center">Tâche en attente d'un exécutant</h2>
-                </c:if>    
-                <c:forEach items="${nonengager}" var="tacheEx">
-                    <tr>
-                    <fieldset>
-                        <legend>Tâche ${tacheEx.idTache} (disponible)</legend>
-                        Titre : ${tacheEx.titre}<br/>
-                        Description : ${tacheEx.description}<br/>
-                        Rémuneration : ${tacheEx.remuneration} €<br/>
-                        Longitude : ${tacheEx.longitude}<br/>
-                        Latitude : ${tacheEx.latitude}<br/>
-                        Date de début : ${tacheEx.datedebut}<br/>
-                        Date de fin : ${tacheEx.datefin}<br/>
-                        Email : ${tacheEx.email}<br/>
-                        Compétences : 
-                        <c:forEach items="${tacheEx.skill}" var="skillEx">
-                            ${skillEx}
-                            <c:out value = "/" />  
-                        </c:forEach>
-                        <br/>
-                        <span style="margin-left : 45.5%">
-                            <a href="controleurtache?action=supprimer&id=${user}&idtache=${tacheEx.idTache}" onclick="return ConfirmMessageSupprimer()">Supprimer</a>
-                        </span>    
                     </fieldset>
                     </tr>
                 </c:forEach>
@@ -175,11 +119,10 @@
                             ${skillEx}
                             <c:out value = "/" />  
                         </c:forEach>
-                        <br/>
-                        <br/>
-                        <span style="color: red">Exécutant : 
-                            <a href="controleur?action=getPage&view=afficheexecutant&id=${tacheEx.executant}&idtache=${tache.idTache}">${tacheEx.executant}</a>
-                        </span>
+                        <form method="post" action="controleur" >
+                            <input type="hidden" name="action" value="viewfacture" />
+                            <input style="margin-left : 42% " type="hidden" name="confirm" value="Voir la facture" />
+                        </form>
                     </fieldset>
                     </tr>
                 </c:forEach>

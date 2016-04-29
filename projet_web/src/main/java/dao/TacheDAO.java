@@ -1,5 +1,6 @@
 package dao;
 
+import static java.lang.Math.sqrt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -166,13 +167,15 @@ public class TacheDAO extends AbstractDataBaseDAO {
         return taches;
     }
     
-    public List<Tache> getListTacheExecutant(String email) throws DAOException {
+
+public List<Tache> getListTacheExecutant(String email) throws DAOException {
+
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email <> ?");
+                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email <> ? AND (idtache) NOT IN (SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -186,6 +189,201 @@ public class TacheDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
         return taches;
+
+    }
+
+    
+    public List<Tache> getTacheCityJob(float longitude, float latitude, int skill) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite "+
+                            "WHERE longitude < ? + 1 AND latitude < ? +1 AND idskill = ?");
+            st.setFloat(1,longitude);
+            st.setFloat(2,latitude);
+            st.setInt(3,skill);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }
+    
+    public String getEngageExecutor(int idtache) throws DAOException {
+        Connection conn = null;
+        String email;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT email FROM engage WHERE idtache = ?");
+            st.setInt(1, idtache);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            email = rs.getString("email");
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return email;
+    }
+    
+    public List<Tache> getListTachePosteeEnCours(String email) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache AND f.facture = 0 AND email = ?");
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int idtache = rs.getInt("idtache");
+                String executant = getEngageExecutor(idtache);
+                Tache tache =               
+                        new Tache(getTache(idtache), executant);
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }
+    
+    public List<Tache> getListTachePosteeNonEngagee(String email) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email = ? AND (idtache) NOT IN (SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache)");
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }
+    
+    public List<Tache> getListTachePosteeRealisee(String email) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache AND f.facture <> '0' AND email = ?");
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int idtache = rs.getInt("idtache");
+                String executant = getEngageExecutor(idtache);
+                Tache tache =               
+                        new Tache(getTache(idtache), executant);
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }
+    
+    public List<Tache> getListTacheEngageeEnCours(String email) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, engage e, facture f WHERE t.idtache = f.idtache AND t.idtache = e.idtache AND f.facture = '0' AND e.email = ?");
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }
+    
+    public List<Tache> getListTacheEngageeRealisee(String email) throws DAOException {
+        Connection conn = null;
+        List<Tache> taches = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, engage e, facture f WHERE t.idtache = f.idtache AND t.idtache = e.idtache AND f.facture <> '0' AND e.email = ?");
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Tache tache =
+                    getTache(rs.getInt("idtache"));
+                taches.add(tache);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return taches;
+    }
+    
+    public void editerFacture(int idtache, int facture) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st
+                    = conn.prepareStatement("UPDATE facture SET facture = ? WHERE idtache = ?");
+            st.setInt(1, facture);
+            st.setInt(2, idtache);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public void supprimerTache(int idtache) throws DAOException {
+        Connection conn = null ;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                "DELETE FROM necessite WHERE idtache = ?");
+            st.setInt(1, idtache);
+            st.executeUpdate();
+            st = conn.prepareStatement(
+                "DELETE FROM tache WHERE idtache = ?");
+            st.setInt(1, idtache);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
     }
     
     /*public Set<Tache> getListTache(List<String> skill) throws DAOException {

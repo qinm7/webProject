@@ -14,6 +14,13 @@
         <link rel="stylesheet" type="text/css" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
+        <script type="text/javascript">
+            function ConfirmMessage() {
+                if (!confirm("Vous allez vous engager pour une tâche, confirmez-vous ce choix ?")) { 
+                    return false;
+                }
+            }
+        </script>
 
         <style>
             body, p, legend, label, input {
@@ -53,10 +60,12 @@
             <nav id="nav">
                 <ul>
                     <li><a href="controleur?action=getPage&view=accueil&id=${user}">Page d'accueil</a></li>
-                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Profil</a></li>
-                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>
-                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Historique de tâches</a></li>
+                    <li><a href="controleur?action=getPage&view=profil&id=${user}">Mon profil</a></li>
+                    <li><a href="controleur?action=getPage&view=poster&id=${user}">Poster une tâche</a></li>                   
                     <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
+                    <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
+                    <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
+                    <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
                     <li>
                         <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>
@@ -67,7 +76,7 @@
         </header>
         <br/>            
         <div class="container">
-            <h1>Liste des tâches disponibles en tant qu'exécutant</h1>
+            <h1>Liste des tâches disponibles en tant qu'exécutant sur BlablaJob</h1>
             <table>
                 <c:forEach items="${taches}" var="tache">
                     <tr>
@@ -86,8 +95,9 @@
                             ${skill}
                             <c:out value = "/" />  
                         </c:forEach>
-                        <form method="post" action="controleur">
-                            <input type="hidden" name="email" value=${user} />
+                        <br/>
+                        <form method="post" action="controleur" onsubmit="return ConfirmMessage()">
+                            <input type="hidden" name="id" value=${user} />
                             <input type="hidden" name="idtache" value=${tache.idTache} />
                             <input type="hidden" name="action" value="engager" />
                             <input style="margin-left : 45% " type="submit" name="confirm" value="S'engager" />
