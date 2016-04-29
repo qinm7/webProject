@@ -138,7 +138,7 @@ public class UserDAO extends AbstractDataBaseDAO {
     }
 
     /**
-     * Ajoute une nouvelle compétence dans la table COMPETENCE associé à
+     * Ajoute une nouvelle compétence dans la table POSSEDE associé à
      * l'utilisateur.
      */
     public void ajouterSkill(String email, int idskill) throws DAOException {

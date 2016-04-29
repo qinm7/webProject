@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.sql.DataSource;
+import modele.Avis;
 import modele.Tache;
 
 /**
@@ -106,7 +107,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
     
 
     /**
-     * Ajoute une nouvelle compétence dans la table COMPETENCE associé à
+     * Ajoute une nouvelle compétence dans la table NECESSITE associé à
      * l'utilisateur.
      */
     public void ajouterSkill(int idtache, int idskill) throws DAOException {
@@ -296,7 +297,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
                 int idtache = rs.getInt("idtache");
                 String executant = getEngageExecutor(idtache);
                 Tache tache =               
-                        new Tache(getTache(idtache), executant);
+                        new Tache(getTache(idtache), executant);//, getAvis(idtache));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -339,8 +340,9 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
+                int idtache = rs.getInt("idtache");
                 Tache tache =
-                    getTache(rs.getInt("idtache"));
+                    getTache(idtache);//, getAvis(idtache));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -384,6 +386,30 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         } finally {
             closeConnection(conn);
         }
+    }
+    
+    public Avis getAvis(int idTache) throws DAOException {
+        Connection conn = null;
+        int idAvis, note;
+        String commentaire, emetteur, destinataire;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT * FROM engage WHERE idtache = ?");
+            st.setInt(1, idTache);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            idAvis = rs.getInt("idAvis");
+            note = rs.getInt("note");
+            commentaire = rs.getString("commentaire");
+            emetteur = rs.getString("emetteur");
+            destinataire = rs.getString("destinataire");
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return new Avis(idAvis, idTache, note, commentaire, emetteur, destinataire);
     }
     
     /*public Set<Tache> getListTache(List<String> skill) throws DAOException {

@@ -24,6 +24,7 @@ public class Tache {
     private String email;
     private List<String> skill;
     private String executant;
+    private Avis avis;
 
     public Tache() {
         super();
@@ -44,6 +45,9 @@ public class Tache {
         this.skill = skill;
     }
     
+    /*Utiliser pour retrouver les taches postées en cours de realisation (elles ont donc un executant)
+    **
+    */
     public Tache(Tache tache, String executant) {
         this.idTache = tache.idTache;
         this.titre = tache.titre;
@@ -56,6 +60,41 @@ public class Tache {
         this.email = tache.email;
         this.skill = tache.skill;
         this.executant = executant;
+    }
+    
+    /*Utiliser pour retrouver les taches postees et realisees (elles ont donc un executant et un commentaire)
+    **
+    */
+    public Tache(Tache tache, String executant, Avis avis) {
+        this.idTache = tache.idTache;
+        this.titre = tache.titre;
+        this.description = tache.description;
+        this.remuneration = tache.remuneration;
+        this.longitude = tache.longitude;
+        this.latitude = tache.latitude;
+        this.datedebut = tache.datedebut;
+        this.datefin = tache.datefin;
+        this.email = tache.email;
+        this.skill = tache.skill;
+        this.executant = executant;
+        this.avis = avis;
+    }
+    
+    /*Utiliser pour retrouver les taches engagees et realisees (elles ont donc un executant et un commentaire)
+    **
+    */
+    public Tache(Tache tache, Avis avis) {
+        this.idTache = tache.idTache;
+        this.titre = tache.titre;
+        this.description = tache.description;
+        this.remuneration = tache.remuneration;
+        this.longitude = tache.longitude;
+        this.latitude = tache.latitude;
+        this.datedebut = tache.datedebut;
+        this.datefin = tache.datefin;
+        this.email = tache.email;
+        this.skill = tache.skill;
+        this.avis = avis;
     }
 
     public int getIdTache() {
@@ -100,5 +139,9 @@ public class Tache {
     
     public List<String> getSkill() {
        return this.skill;
+   }
+    
+    public Avis getAvis() {
+       return this.avis;
    }
 }
