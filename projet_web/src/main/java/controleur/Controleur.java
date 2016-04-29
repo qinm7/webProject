@@ -136,7 +136,9 @@ public class Controleur extends HttpServlet {
                 actionEngager(request, response, userDAO, tacheDAO);
             } else if (action.equals("facture")) {
                 actionFacture(request, response, userDAO, tacheDAO);
-            } else if (action.equals("avis")) {
+            } else if (action.equals("viewfacture")){
+                actionViewFacture(request, response, userDAO, tacheDAO);
+            }else if (action.equals("avis")) {
                 actionAvis(request, response, userDAO, tacheDAO);    
             } else {
                 invalidParameters(request, response);
@@ -144,6 +146,16 @@ public class Controleur extends HttpServlet {
         } catch (DAOException e) {
             erreurBD(request, response, e);
         }
+    }
+    
+    
+    private void actionViewFacture(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        request.setAttribute("user",request.getParameter("user"));
+        request.setAttribute("remuneration", request.getParameter("facture"));
+        request.setAttribute("titre", request.getParameter("titre"));
+        request.setAttribute("description", request.getParameter("description"));
+        request.getRequestDispatcher("/WEB-INF/generationFacture.jsp").forward(request, response);
     }
 
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
