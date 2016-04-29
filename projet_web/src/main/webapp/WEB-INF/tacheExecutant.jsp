@@ -120,6 +120,10 @@
                             <c:out value = "/" />  
                         </c:forEach>
                         <form method="post" action="controleur" >
+                            <input type="hidden" name="facture" value="${tacheEx.remuneration}" />
+                            <input type="hidden" name="titre" value="${tacheEx.titre}" />
+                            <input type="hidden" name="description" value="${tacheEx.description}" />
+                            <input type="hidden" name="action" value="viewfacture" />
                             <input type="hidden" name="action" value="viewfacture" />
                             <input style="margin-left : 42% " type="hidden" name="confirm" value="Voir la facture" />
                         </form>
