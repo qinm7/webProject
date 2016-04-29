@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,19 +29,18 @@ import modele.User;
  */
 @WebServlet(name = "CheckUser", urlPatterns = {"/checkuser"})
 public class CheckUser extends HttpServlet {
-    
+
     @Resource(name = "jdbc/blablajob")
     private DataSource ds;
-    
+
     private void erreurBD(HttpServletRequest request,
-                HttpServletResponse response, DAOException e)
+            HttpServletResponse response, DAOException e)
             throws ServletException, IOException {
         request.setAttribute("erreurMessage", e.getMessage());
         String action = request.getParameter("action");
         request.setAttribute("action", action);
         request.getRequestDispatcher("/WEB-INF/bdErreur.jsp").forward(request, response);
     }
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,7 +50,7 @@ public class CheckUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckUser</title>");            
+            out.println("<title>Servlet CheckUser</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CheckUser at " + request.getContextPath() + "</h1>");
@@ -59,29 +59,28 @@ public class CheckUser extends HttpServlet {
         }
     }
 
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
         UserDAO userDAO = new UserDAO(ds);
         TacheDAO tacheDAO = new TacheDAO(ds);
-        
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (isLoginValid(username, password, userDAO)) {
+            Cookie[] cookies = request.getCookies();
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             try {
-                actionRecommander(request,response,userDAO,tacheDAO);
+                actionRecommander(request, response, userDAO, tacheDAO);
             } catch (DAOException e) {
                 erreurBD(request, response, e);
             }
@@ -92,7 +91,7 @@ public class CheckUser extends HttpServlet {
             request.getRequestDispatcher("/connexion.jsp").forward(request, response);
         }
     }
-    
+
     private boolean isLoginValid(String username, String password, UserDAO userDAO) {
         User user;
         try {
@@ -100,7 +99,7 @@ public class CheckUser extends HttpServlet {
         } catch (DAOException e) {
             //on rattrappe l'exception levée par getUser dans le cas où l'utilisateur n'existe pas encore dans la BD
             user = null;
-        }   
+        }
         if (user == null) {
             return false;
         } else {
@@ -111,7 +110,7 @@ public class CheckUser extends HttpServlet {
             }
         }
     }
-    
+
     private void actionRecommander(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("username");
@@ -121,8 +120,7 @@ public class CheckUser extends HttpServlet {
         skillUser = user.getSkill();
         //List<Tache> taches = tacheDAO.getListTache(skillUser);
     }
-    
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";

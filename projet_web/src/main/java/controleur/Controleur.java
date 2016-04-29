@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import modele.User;
 
@@ -169,6 +170,9 @@ public class Controleur extends HttpServlet {
     private void actionAfficherHistorique(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("id");
+        //si il y a un soucis il y a eu un merge de là 
+        request.setAttribute("taches", tacheDAO.getListTache(email));
+        //à là (ca veut dire virer ce qu'il y a entre les 2 )
         request.setAttribute("encours", tacheDAO.getListTachePosteeEnCours(email));
         request.setAttribute("nonengager", tacheDAO.getListTachePosteeNonEngagee(email));
         request.setAttribute("realiser", tacheDAO.getListTachePosteeRealisee(email));
@@ -267,7 +271,12 @@ public class Controleur extends HttpServlet {
             request.setAttribute("skills", userDAO.getUser(username).getSkill());
             getServletContext().getRequestDispatcher("/WEB-INF/profil.jsp").forward(request, response);
         } else if (vue.equals("poster")) {
-            getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            if (session.getAttribute("tacheClient") != null) {
+                getServletContext().getRequestDispatcher("/WEB-INF/creation_tache_preremplie.jsp").forward(request, response);
+            } else {
+                getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+            }
         } else if (vue.equals("historique")) {
             actionAfficherHistorique(request, response, tacheDAO);
         } else if (vue.equals("taches")) {
