@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import modele.User;
 
@@ -74,8 +75,8 @@ public class Controleur extends HttpServlet {
     }
 
     /**
-     * Méthode utilisée après connexion de l'utilisateur 
-     * Handles the HTTP <code>GET</code> method.
+     * Méthode utilisée après connexion de l'utilisateur Handles the HTTP
+     * <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -131,7 +132,7 @@ public class Controleur extends HttpServlet {
             } else if (action.equals("modifier_skill")) {
                 actionModifierSkill(request, response, userDAO);
             } else if (action.equals("engager")) {
-                actionEngager(request, response, userDAO);    
+                actionEngager(request, response, userDAO);
             } else {
                 invalidParameters(request, response);
             }
@@ -139,7 +140,7 @@ public class Controleur extends HttpServlet {
             erreurBD(request, response, e);
         }
     }
-    
+
     private void actionAfficher(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws DAOException, ServletException, IOException {
         String action = request.getParameter("action");
@@ -152,7 +153,7 @@ public class Controleur extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/indexUser.jsp").forward(request, response);
         } else if (action.equals("modifier_loca")) {
             getServletContext().getRequestDispatcher("/WEB-INF/indexLoca.jsp").forward(request, response);
-        } else if (action.equals("modifier_skill")) {           
+        } else if (action.equals("modifier_skill")) {
             String email = request.getParameter("email");
             request.setAttribute("skills", userDAO.getUser(email).getSkill());
             getServletContext().getRequestDispatcher("/WEB-INF/indexSkill.jsp").forward(request, response);
@@ -160,21 +161,21 @@ public class Controleur extends HttpServlet {
             getServletContext().getRequestDispatcher("/index.html").forward(request, response);
         }
     }
-    
+
     private void actionAfficherHistorique(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("id");
         request.setAttribute("taches", tacheDAO.getListTache(email));
-        getServletContext().getRequestDispatcher("/WEB-INF/historique_tache.jsp").forward(request, response);    
+        getServletContext().getRequestDispatcher("/WEB-INF/historique_tache.jsp").forward(request, response);
     }
-    
+
     private void actionAfficherTaches(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("id");
         request.setAttribute("taches", tacheDAO.getListTacheExecutant(email));
-        getServletContext().getRequestDispatcher("/WEB-INF/ListeTacheBBJob.jsp").forward(request, response);    
+        getServletContext().getRequestDispatcher("/WEB-INF/ListeTacheBBJob.jsp").forward(request, response);
     }
-        
+
     /**
      * Ajout d'un ouvrage.
      */
@@ -235,11 +236,16 @@ public class Controleur extends HttpServlet {
             request.setAttribute("skills", userDAO.getUser(username).getSkill());
             getServletContext().getRequestDispatcher("/WEB-INF/profil.jsp").forward(request, response);
         } else if (vue.equals("poster")) {
-            getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            if (session.getAttribute("tacheClient") != null) {
+                getServletContext().getRequestDispatcher("/WEB-INF/creation_tache_preremplie.jsp").forward(request, response);
+            } else {
+                getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+            }
         } else if (vue.equals("historique")) {
             actionAfficherHistorique(request, response, tacheDAO);
         } else if (vue.equals("taches")) {
-            actionAfficherTaches(request, response, tacheDAO);    
+            actionAfficherTaches(request, response, tacheDAO);
         } else {
             invalidParameters(request, response);
         }
@@ -296,7 +302,7 @@ public class Controleur extends HttpServlet {
         userDAO.modifierListSkill(email, skill);
         actionAfficher(request, response, userDAO);
     }
-    
+
     private void actionEngager(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO)
             throws IOException, ServletException, DAOException {
         String email = request.getParameter("email");
