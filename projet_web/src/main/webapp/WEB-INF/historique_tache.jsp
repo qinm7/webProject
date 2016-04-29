@@ -176,6 +176,8 @@
                             <c:out value = "/" />  
                         </c:forEach>
                         <br/>
+                        Note donné : ${tacheEx.note}/5<br/>
+                        Commentaire laissé à ${tacheEx.executant} : ${tacheEx.commentaire}<br/>
                         <br/>
                         <span style="color: red">Exécutant : 
                             <a href="controleur?action=getPage&view=afficheexecutant&id=${tacheEx.executant}&idtache=${tache.idTache}">${tacheEx.executant}</a>

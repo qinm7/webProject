@@ -85,17 +85,17 @@ public class TacheDAO extends AbstractDataBaseDAO {
             dateend = rs.getString("dateend");
             email = rs.getString("email");
             PreparedStatement st2 = conn.prepareStatement(
-             "SELECT idskill FROM necessite WHERE idtache = ? ");
-             st2.setInt(1, idtache);
-             ResultSet rs2 = st2.executeQuery();
-             while (rs2.next()) {
-             PreparedStatement st3 = conn.prepareStatement(
-             "SELECT skill FROM competence WHERE idskill = ? ");
-             st3.setInt(1,rs2.getInt("idskill"));
-             ResultSet rs3 = st3.executeQuery();
-             rs3.next();
-             skill.add(rs3.getString("skill"));
-             }
+                    "SELECT idskill FROM necessite WHERE idtache = ? ");
+            st2.setInt(1, idtache);
+            ResultSet rs2 = st2.executeQuery();
+            while (rs2.next()) {
+                PreparedStatement st3 = conn.prepareStatement(
+                        "SELECT skill FROM competence WHERE idskill = ? ");
+                st3.setInt(1, rs2.getInt("idskill"));
+                ResultSet rs3 = st3.executeQuery();
+                rs3.next();
+                skill.add(rs3.getString("skill"));
+            }
         } catch (SQLException e) {
             throw new DAOException("Erreur BD " + e.getMessage(), e);
         } finally {
@@ -104,7 +104,6 @@ public class TacheDAO extends AbstractDataBaseDAO {
         return new Tache(idtache, titre, description, remuneration,
                 longitude, latitude, datebegin, dateend, email, skill);
     }
-    
 
     /**
      * Ajoute une nouvelle compétence dans la table NECESSITE associé à
@@ -145,7 +144,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         };
         return idtache;
     }
-    
+
     public List<Tache> getListTache(String email) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -156,8 +155,8 @@ public class TacheDAO extends AbstractDataBaseDAO {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Tache tache =
-                    getTache(rs.getInt("idtache"));
+                Tache tache
+                        = getTache(rs.getInt("idtache"));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -167,9 +166,8 @@ public class TacheDAO extends AbstractDataBaseDAO {
         }
         return taches;
     }
-    
 
-public List<Tache> getListTacheExecutant(String email) throws DAOException {
+    public List<Tache> getListTacheExecutant(String email) throws DAOException {
 
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -180,8 +178,8 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Tache tache =
-                    getTache(rs.getInt("idtache"));
+                Tache tache
+                        = getTache(rs.getInt("idtache"));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -193,22 +191,21 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
 
     }
 
-    
     public List<Tache> getTacheCityJob(float longitude, float latitude, int skill) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite "+
-                            "WHERE longitude < ? + 1 AND latitude < ? +1 AND idskill = ?");
-            st.setFloat(1,longitude);
-            st.setFloat(2,latitude);
-            st.setInt(3,skill);
+                    = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite "
+                            + "WHERE longitude < ? + 1 AND latitude < ? +1 AND idskill = ?");
+            st.setFloat(1, longitude);
+            st.setFloat(2, latitude);
+            st.setInt(3, skill);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Tache tache =
-                    getTache(rs.getInt("idtache"));
+                Tache tache
+                        = getTache(rs.getInt("idtache"));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -218,7 +215,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return taches;
     }
-    
+
     public String getEngageExecutor(int idtache) throws DAOException {
         Connection conn = null;
         String email;
@@ -237,7 +234,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return email;
     }
-    
+
     public List<Tache> getListTachePosteeEnCours(String email) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -250,8 +247,8 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             while (rs.next()) {
                 int idtache = rs.getInt("idtache");
                 String executant = getEngageExecutor(idtache);
-                Tache tache =               
-                        new Tache(getTache(idtache), executant);
+                Tache tache
+                        = new Tache(getTache(idtache), executant);
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -261,7 +258,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return taches;
     }
-    
+
     public List<Tache> getListTachePosteeNonEngagee(String email) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -272,8 +269,8 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Tache tache =
-                    getTache(rs.getInt("idtache"));
+                Tache tache
+                        = getTache(rs.getInt("idtache"));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -283,7 +280,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return taches;
     }
-    
+
     public List<Tache> getListTachePosteeRealisee(String email) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -296,8 +293,8 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             while (rs.next()) {
                 int idtache = rs.getInt("idtache");
                 String executant = getEngageExecutor(idtache);
-                Tache tache =               
-                        new Tache(getTache(idtache), executant);//, getAvis(idtache));
+                Tache tache
+                        = new Tache(getTache(idtache), executant, getAvis(idtache));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -307,7 +304,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return taches;
     }
-    
+
     public List<Tache> getListTacheEngageeEnCours(String email) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -318,8 +315,8 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Tache tache =
-                    getTache(rs.getInt("idtache"));
+                Tache tache
+                        = getTache(rs.getInt("idtache"));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -329,7 +326,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return taches;
     }
-    
+
     public List<Tache> getListTacheEngageeRealisee(String email) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
@@ -341,8 +338,8 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 int idtache = rs.getInt("idtache");
-                Tache tache =
-                    getTache(idtache);//, getAvis(idtache));
+                Tache tache
+                        = new Tache(getTache(idtache), getAvis(idtache));
                 taches.add(tache);
             }
         } catch (SQLException e) {
@@ -352,7 +349,7 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
         }
         return taches;
     }
-    
+
     public void editerFacture(int idtache, int facture) throws DAOException {
         Connection conn = null;
         try {
@@ -368,17 +365,17 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             closeConnection(conn);
         }
     }
-    
+
     public void supprimerTache(int idtache) throws DAOException {
-        Connection conn = null ;
+        Connection conn = null;
         try {
             conn = getConnection();
             PreparedStatement st = conn.prepareStatement(
-                "DELETE FROM necessite WHERE idtache = ?");
+                    "DELETE FROM necessite WHERE idtache = ?");
             st.setInt(1, idtache);
             st.executeUpdate();
             st = conn.prepareStatement(
-                "DELETE FROM tache WHERE idtache = ?");
+                    "DELETE FROM tache WHERE idtache = ?");
             st.setInt(1, idtache);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -387,62 +384,66 @@ public List<Tache> getListTacheExecutant(String email) throws DAOException {
             closeConnection(conn);
         }
     }
-    
+
     public Avis getAvis(int idTache) throws DAOException {
         Connection conn = null;
         int idAvis, note;
         String commentaire, emetteur, destinataire;
+        Avis avis = new Avis(-1,-1,-1,"Pas de commentaire déposé","erreur","erreur");
         try {
             conn = getConnection();
             PreparedStatement st = conn.prepareStatement(
-                    "SELECT * FROM engage WHERE idtache = ?");
+                    "SELECT * FROM avis WHERE idtache = ?");
             st.setInt(1, idTache);
             ResultSet rs = st.executeQuery();
-            rs.next();
-            idAvis = rs.getInt("idAvis");
-            note = rs.getInt("note");
-            commentaire = rs.getString("commentaire");
-            emetteur = rs.getString("emetteur");
-            destinataire = rs.getString("destinataire");
+            //rs peut être null
+            if (rs.next()) {
+                idAvis = rs.getInt("idavis");
+                note = rs.getInt("note");
+                commentaire = rs.getString("commentaire");
+                emetteur = rs.getString("emetteur");
+                destinataire = rs.getString("destinataire");
+                avis = new Avis(idAvis, idTache, note, commentaire, emetteur, destinataire);
+            }
         } catch (SQLException e) {
             throw new DAOException("Erreur BD " + e.getMessage(), e);
         } finally {
             closeConnection(conn);
         }
-        return new Avis(idAvis, idTache, note, commentaire, emetteur, destinataire);
+        return avis;
     }
-    
+
     /*public Set<Tache> getListTache(List<String> skill) throws DAOException {
-        Connection conn = null;
-        Set<Tache> taches = new HashSet<Tache>();
-        try {
-            conn = getConnection();
-            PreparedStatement st
-                    = conn.prepareStatement("SELECT idtache FROM tache");
-            ResultSet rs = st.executeQuery();
-            PreparedStatement st1; 
-            while (rs.next()) {     
-                int idtache = rs.getInt("idtache");
-                st1 = conn.prepareStatement("SELECT i FROM necessite WHERE idtache = ? ");
-                st1.setInt(1,idtache);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Erreur BD " + e.getMessage(), e);
-        } finally {
-            closeConnection(conn);
-        }
-        return taches;
-    }PreparedStatement st2 = conn.prepareStatement(
-                    "SELECT idskill FROM possede WHERE email = ? ");
-            st2.setString(1, email);
-            ResultSet rs2 = st2.executeQuery();
-            while (rs2.next()) {
-                PreparedStatement st3 = conn.prepareStatement(
-                        "SELECT skill FROM competence WHERE idskill = ? ");
-                st3.setInt(1, rs2.getInt("idskill"));
-                ResultSet rs3 = st3.executeQuery();
-                rs3.next();
-                skill.add(rs3.getString("skill"));
-            }
-    */
+     Connection conn = null;
+     Set<Tache> taches = new HashSet<Tache>();
+     try {
+     conn = getConnection();
+     PreparedStatement st
+     = conn.prepareStatement("SELECT idtache FROM tache");
+     ResultSet rs = st.executeQuery();
+     PreparedStatement st1; 
+     while (rs.next()) {     
+     int idtache = rs.getInt("idtache");
+     st1 = conn.prepareStatement("SELECT i FROM necessite WHERE idtache = ? ");
+     st1.setInt(1,idtache);
+     }
+     } catch (SQLException e) {
+     throw new DAOException("Erreur BD " + e.getMessage(), e);
+     } finally {
+     closeConnection(conn);
+     }
+     return taches;
+     }PreparedStatement st2 = conn.prepareStatement(
+     "SELECT idskill FROM possede WHERE email = ? ");
+     st2.setString(1, email);
+     ResultSet rs2 = st2.executeQuery();
+     while (rs2.next()) {
+     PreparedStatement st3 = conn.prepareStatement(
+     "SELECT skill FROM competence WHERE idskill = ? ");
+     st3.setInt(1, rs2.getInt("idskill"));
+     ResultSet rs3 = st3.executeQuery();
+     rs3.next();
+     skill.add(rs3.getString("skill"));
+     }
+     */
 }

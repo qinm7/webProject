@@ -370,13 +370,13 @@ public class Controleur extends HttpServlet {
     
     private void actionFacture(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
             throws IOException, ServletException, DAOException {
-        //int idtache = Integer.parseInt(request.getParameter("idtache"));
+        int idtache = Integer.parseInt(request.getParameter("idtache"));
         int facture = Integer.parseInt(request.getParameter("facture"));
         request.setAttribute("price",facture);
-        /*tacheDAO.editerFacture(idtache, facture);
+        //tacheDAO.editerFacture(idtache, facture);
         User user = userDAO.getEngageExecutor(idtache);
         String executant = user.getEmail();
-        request.setAttribute("executant", executant);*/
+        request.setAttribute("executant", executant);
         actionAfficherAvis(request, response, tacheDAO);
     }
     

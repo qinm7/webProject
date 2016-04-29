@@ -119,6 +119,9 @@
                             ${skillEx}
                             <c:out value = "/" />  
                         </c:forEach>
+                        <br/>
+                        Note : ${tacheEx.note}/5<br/>
+                        Commentaire reçu de ${tacheEx.email} : ${tacheEx.commentaire}<br/>
                         <form method="post" action="controleur" >
                             <input type="hidden" name="facture" value="${tacheEx.remuneration}" />
                             <input type="hidden" name="titre" value="${tacheEx.titre}" />
