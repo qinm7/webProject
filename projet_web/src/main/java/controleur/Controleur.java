@@ -151,7 +151,9 @@ public class Controleur extends HttpServlet {
     
     private void actionViewFacture(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
-        request.setAttribute("user",request.getParameter("user"));
+        request.setAttribute("executant", userDAO.getUser(request.getParameter("user")));
+        request.setAttribute("commanditaire", userDAO.getUser(request.getParameter("commanditaire")));
+        request.setAttribute("idtache", request.getParameter("idtache"));
         request.setAttribute("remuneration", request.getParameter("facture"));
         request.setAttribute("titre", request.getParameter("titre"));
         request.setAttribute("description", request.getParameter("description"));
