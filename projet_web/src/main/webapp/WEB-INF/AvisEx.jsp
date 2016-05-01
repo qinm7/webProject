@@ -62,7 +62,7 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-description">Commentaire</label>
-                            <textarea name="commentaire" id="input-description" rows="5" cols="30" required maxlength="200" ></textarea>
+                            <textarea name="commentaire" id="input-description" rows="10" cols="20" required maxlength="200" placeholder="Évaluer la qualité de la tâche réalisée"></textarea>
                         </div>
                     </div>					
                     <div class="af-outer">

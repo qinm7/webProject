@@ -412,6 +412,67 @@ public class TacheDAO extends AbstractDataBaseDAO {
         }
         return avis;
     }
+    
+    public void creerTacheComposee(int idtache) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "INSERT INTO tachecomposee (idtache) values (?)");
+            st.setInt(1, idtache);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public void creerTacheAtomique(int idtache) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "INSERT INTO tacheatomique (idtache) values (?)");
+            st.setInt(1, idtache);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public void EstComposee(int idtache, int idtacheA) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            PreparedStatement st = conn.prepareStatement(
+                    "INSERT INTO estcomposee (idtachecomp, idtacheatom) values (?, ?)");
+            st.setInt(1, idtache);
+            st.setInt(2, idtacheA);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
+    
+    public void UpdateComposee(int idtache) throws DAOException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            /*PreparedStatement st = conn.prepareStatement(
+                    "SELECT FROM estcomposee WHERE idtache = ?");
+            st.setInt(1, idtache);
+            st.executeUpdate();*/
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+    }
 
     /*public Set<Tache> getListTache(List<String> skill) throws DAOException {
      Connection conn = null;

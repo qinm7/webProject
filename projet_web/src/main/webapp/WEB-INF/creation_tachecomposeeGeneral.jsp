@@ -1,14 +1,12 @@
 <%-- 
-    Document   : creation_tache
-    Created on : 23 avr. 2016, 15:08:51
-    Author     : charles
+    Document   : creation_tachecomposeeGeneral
+    Created on : 1 mai 2016, 10:29:36
+    Author     : qinm
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
-
     <head>
     <head>
         <title>Poster une annonce</title>
@@ -109,7 +107,13 @@
         <div class="container">
             <section class="af-wrapper">
                 <h3>Poster une annonce sur BlablaJob</h3>			
-                <form class="af-form" id="af-form" method="get" action="controleurtache" onsubmit="return comparDate()">
+                <form class="af-form" id="af-form" method="get" action="controleurtache" onsubmit="return comparDate()" >
+                    <div class="af-outer">	
+                        <div class="af-inner">				
+                            <span>Entrez les informations générales sur la tâche à réaliser.</span><br/>
+                            Veuillez remplir les champs ci-dessous, SVP.
+                        </div>
+                    </div>
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-title">Titre</label>
@@ -119,30 +123,9 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-description">Description</label>
-                            <textarea name="description" id="input-description" rows="10" cols="20" required placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200" ></textarea>
-                        </div>
-                    </div>
-                    <div class="af-outer">
-                        <div class="af-inner">	
-                            <label id=prix for="input-price">Rémunération</label>
-                            <input type="number" name="price" step="1" min="0" required id="input-price" 
-                                   placeholder="Rémunération en €">
+                            <textarea name="description" id="input-description" required rows="10" cols="20" placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200" ></textarea>
                         </div>
                     </div>					
-                    <div class="af-outer">
-                        <div class="af-inner">
-                            <label>Compétences</label>
-                            <input type="checkbox" name="skill" value="1"/> Bricolage<br/>
-                            <input type="checkbox" name="skill" value="2"/> Ménage<br/>
-                            <input type="checkbox" name="skill" value="3"/> Jardinage<br/>
-                            <input type="checkbox" name="skill" value="4"/> Pyrogravure sur boîte de camembert<br/>
-                            <label></label>
-                            <input type="checkbox" name="skill" value="5"/> Peinture<br/>
-                            <input type="checkbox" name="skill" value="6"/> Réparation<br/>
-                            <input type="checkbox" name="skill" value="7"/> Cuisine<br/>
-                            <input type="checkbox" name="skill" value="8"/> Aide à la personne<br/>					
-                        </div>
-                    </div>
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-addr">Adresse</label>
@@ -180,20 +163,11 @@
                             <br/>
                             <span id="mySpan1" style="color:red"></span>
                         </div>
-                    </div>
-
-                    <div class="af-outer">
-                        <div class="af-inner">
-
-                            <label id="box"><input type="checkbox" required name="remember_me" checked /></label>
-                            Je certifie avoir lu et accepté les <a href="#">conditions générales</a> 
-                            d'utilisation du site BlablaJob.  
-                        </div>
                     </div>	
 
                     <input type="hidden" name="email" value=${user} />
-                    <input type="hidden" name="action" value="poster" />
-                    <input type="submit" name="submit_tache" value="Poster" /> 
+                    <input type="hidden" name="action" value="tacheComposee" />
+                    <input type="submit" name="submit_tache" value="Envoyer" /> 
 
                 </form>
             </section>
