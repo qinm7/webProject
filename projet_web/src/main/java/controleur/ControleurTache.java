@@ -291,7 +291,7 @@ public class ControleurTache extends HttpServlet {
         latitude = (float) (results[0].geometry.location.lat);
         longitude = (float) (results[0].geometry.location.lng);
         
-        request.setAttribute("sk",skill);
+        request.setAttribute("city",cityV);
         request.setAttribute("lo",longitude);
         request.setAttribute("la",latitude);
         
@@ -340,7 +340,7 @@ public class ControleurTache extends HttpServlet {
             i++;
         }   
         
-        getServletContext().getRequestDispatcher("/WEB-INF/afficheTache.jsp").forward(request, response);
+
         getServletContext().getRequestDispatcher("/WEB-INF/affichetache2.jsp").forward(request, response);
 
     }
