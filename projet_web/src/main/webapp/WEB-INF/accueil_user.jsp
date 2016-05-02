@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="row">
                     <div id="section_1">
-                        <form method="get" action="liste_tache">
+                        <form method="post" action="controleurtache">
                             <div class="form_row"> 
                                 <label for="ville">Ville : </label>
                                 <input class="main" type="text" name="city" value="" placeholder="Entrez une ville" /> </div>
@@ -71,6 +71,7 @@
                             </div>
                             <div class="form_row" id="recherche"> 
                                 <input class="main" type="submit" value="Rechercher" name="search" />
+                                <input type="hidden" name="action" value="rechercher" />
                             </div>        
                         </form>
                     </div>
