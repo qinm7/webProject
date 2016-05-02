@@ -93,7 +93,7 @@
                                 <h3>À propos</h3>
                                 <ul class="alt">
                                     <li><a href="quisommesnous.html">Qui sommes-nous ?</a></li>
-                                    <li><a href="#">Conditions générales et confidentialité</a></li>
+                                    <li><a href="conditions.html">Conditions générales et confidentialité</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -102,11 +102,11 @@
                         <h3>Suivez-nous</h3>
                         <p> Retrouvez toutes nos dernières actualités sur les réseaux sociaux. </p>
                         <ul class="icons">
-                            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                            <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                            <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                            <li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
+                            <li><a href="https://twitter.com/" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                            <li><a href="https://www.facebook.com/" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                            <li><a href="https://www.instagram.com/" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+                            <li><a href="https://fr.linkedin.com/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                            <li><a href="https://fr.pinterest.com/" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
                         </ul>
                     </div>
                 </div>

@@ -14,6 +14,22 @@ and open the template in the editor.
     line-height: 40px;
 }
 
+.accueil{
+    background-image:url("http://mcetv.fr/wp-content/uploads/2015/11/MOOC-7-semaines-pour-trouver-le-job-de-mes-r%C3%AAves-e1446921437117.jpg");
+        
+}
+
+.formulaire{
+    color:green;
+    font-size: 50px;
+    line-height: 50px;
+}
+.commentbis{
+    background-color: white;
+    color: #0568CD;
+    font-size: 40px;
+    line-height: 40px;
+}
 .sous-titre{
     color:grey;
     font-size: 25px;

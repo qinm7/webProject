@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.sql.DataSource;
 import modele.Avis;
 import modele.Tache;
+import modele.TacheComposee;
 
 /**
  *
@@ -174,7 +175,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email <> ? AND (idtache) NOT IN (SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache)");
+                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email <> ? AND (idtache) NOT IN (SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache) AND (idtache) NOT IN (SELECT idtache FROM tachecomposee)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -247,7 +248,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache AND f.facture = 0 AND email = ?");
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache AND f.facture = 0 AND email = ? AND (t.idtache) NOT IN (SELECT idtache FROM tachecomposee)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -271,7 +272,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email = ? AND (idtache) NOT IN (SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache)");
+                    = conn.prepareStatement("SELECT idtache FROM tache WHERE email = ? AND (idtache) NOT IN (SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache) AND (idtache) NOT IN (SELECT idtache FROM tachecomposee)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -293,7 +294,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache AND f.facture <> '0' AND email = ?");
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, facture f WHERE t.idtache = f.idtache AND f.facture <> '0' AND email = ? AND (t.idtache) NOT IN (SELECT idtache FROM tachecomposee)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -317,7 +318,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT t.idtache FROM tache t, engage e, facture f WHERE t.idtache = f.idtache AND t.idtache = e.idtache AND f.facture = '0' AND e.email = ?");
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, engage e, facture f WHERE t.idtache = f.idtache AND t.idtache = e.idtache AND f.facture = '0' AND e.email = ? AND (t.idtache) NOT IN (SELECT idtache FROM tachecomposee)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -339,7 +340,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT t.idtache FROM tache t, engage e, facture f WHERE t.idtache = f.idtache AND t.idtache = e.idtache AND f.facture <> '0' AND e.email = ?");
+                    = conn.prepareStatement("SELECT t.idtache FROM tache t, engage e, facture f WHERE t.idtache = f.idtache AND t.idtache = e.idtache AND f.facture <> '0' AND e.email = ? AND (t.idtache) NOT IN (SELECT idtache FROM tachecomposee)");
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -395,7 +396,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         Connection conn = null;
         int idAvis, note;
         String commentaire, emetteur, destinataire;
-        Avis avis = new Avis(-1,-1,-1,"Pas de commentaire déposé","erreur","erreur");
+        Avis avis = new Avis(-1, -1, -1, "Pas de commentaire déposé", "erreur", "erreur");
         try {
             conn = getConnection();
             PreparedStatement st = conn.prepareStatement(
@@ -418,7 +419,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
         }
         return avis;
     }
-    
+
     public void creerTacheComposee(int idtache) throws DAOException {
         Connection conn = null;
         try {
@@ -433,7 +434,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
     }
-    
+
     public void creerTacheAtomique(int idtache) throws DAOException {
         Connection conn = null;
         try {
@@ -448,7 +449,7 @@ public class TacheDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
     }
-    
+
     public void EstComposee(int idtache, int idtacheA) throws DAOException {
         Connection conn = null;
         try {
@@ -464,20 +465,57 @@ public class TacheDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
     }
-    
+
     public void UpdateComposee(int idtache) throws DAOException {
         Connection conn = null;
         try {
             conn = getConnection();
-            /*PreparedStatement st = conn.prepareStatement(
-                    "SELECT FROM estcomposee WHERE idtache = ?");
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT DISTINCT n.idskill FROM estcomposee e, necessite n WHERE e.idtacheatom = n.idtache AND idtachecomp = ?");
             st.setInt(1, idtache);
-            st.executeUpdate();*/
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                ajouterSkill(idtache, rs.getInt("idskill"));
+            }
+            st = conn.prepareStatement(
+                    "SELECT remuneration FROM estcomposee e, tache t WHERE e.idtacheatom = t.idtache AND idtachecomp = ?");
+            st.setInt(1, idtache);
+            rs = st.executeQuery();
+            int remun = 0;
+            while (rs.next()) {
+                remun = rs.getInt("remuneration") + remun;
+            }
+            st = conn.prepareStatement(
+                    "UPDATE tache SET remuneration = ? WHERE idtache = ? ");
+            st.setInt(1, remun);
+            st.setInt(2, idtache);
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erreur BD " + e.getMessage(), e);
         } finally {
             closeConnection(conn);
         }
+    }
+
+    public TacheComposee getTacheComposee(int idtache) throws DAOException {
+        Connection conn = null;
+        Tache tache = getTache(idtache);
+        List<Tache> tacheAtomique = new ArrayList<Tache>();
+        try {
+            conn = getConnection();
+            PreparedStatement st2 = conn.prepareStatement(
+                    "SELECT idtacheatom FROM estcomposee WHERE idtachecomp = ? ");
+            st2.setInt(1, idtache);
+            ResultSet rs2 = st2.executeQuery();
+            while (rs2.next()) {
+                tacheAtomique.add(getTache(rs2.getInt("idtacheatom")));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur BD " + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+        return new TacheComposee(tache, tacheAtomique);
     }
 
     /*public Set<Tache> getListTache(List<String> skill) throws DAOException {

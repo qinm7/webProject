@@ -186,7 +186,7 @@
                         <div class="af-inner">
 
                             <label id="box"><input type="checkbox" required name="remember_me" checked /></label>
-                            Je certifie avoir lu et accepté les <a href="#">conditions générales</a> 
+                            Je certifie avoir lu et accepté les <a href="conditions.html">conditions générales</a> 
                             d'utilisation du site BlablaJob.  
                         </div>
                     </div>	

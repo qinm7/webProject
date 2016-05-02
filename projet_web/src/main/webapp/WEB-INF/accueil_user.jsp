@@ -15,31 +15,12 @@
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
 
         <link rel="stylesheet" type="text/css" href="css/accueil_user.css" />
-        <style>
-            #section_1 {
-                margin-left: 36%;
-                margin-right: auto;
-            }
 
-            #section_1 form {
-                text-align: left;
-                padding: 0;
-                margin:0;
-            }
+         <!--Script-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/init.js"></script>
 
-            #section_1 .form_row {
-                clear: both;
-                padding-bottom: 15px;
-            }
-
-            #recherche {
-                margin-left: 22%;
-                margin-right: auto;
-            }
-        </style>
-        
-        
-        
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
@@ -52,7 +33,7 @@
                     <li><a href="controleur?action=getPage&view=taches&id=${user}">Tâches de BlablaJob</a></li>
                     <li><a href="controleur?action=getPage&view=historique&id=${user}">Espace commanditaire</a></li>
                     <li><a href="controleur?action=getPage&view=historiqueEx&id=${user}">Espace exécutant</a></li>
-                    <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
+                        <%--<li><a href="controleur?action=getPage&view=tachesencours&id=${user}">Tâches en cours</a></li>--%>
                     <li>
                         <form method="post" action="logout">
                             <input type="submit" value="Se déconnecter" class="button special"/>
@@ -60,42 +41,44 @@
                     </li>	
                 </ul>
             </nav>
-        </header>
-                    
-        <div class="container">
-            <div class="row">
-                <div id="section_1">
-                    <form method="post" action="controleurtache">
-                        <div class="form_row"> 
-                            <label class="main">Ville : </label>
-                            <input class="main" type="text" name="city" value="ville" placeholder="Entrez une ville" /> </div>
+        </header>     
+       <section id="one" class="wrapper style1">
+            <header class="major">
+                <h2>Trouvez un boulot près de chez vous </h2>
+                <img src="images/logo.jpg" alt="Logo de BlablaJob" />
+            </header>
 
-                            
-                        <div class="form_row"> 
-                            <label class="main">Compétence : </label>
-                            <select class="main" name="skill">
-                                <option value="-1">Sélectionnez une compétence...</option>
-                                <option value="1">Bricolage</option>
-                                <option value="2">Ménage</option>
-                                <option value="3">Jardinage</option>
-                                <option value="4">Pyrogravure sur boîte de camembert</option>
-                                <option value="5">Peinture</option>
-                                <option value="6">Réparation</option>
-                                <option value="7">Cuisine</option>
-                                <option value="8">Aide à la personne</option>
-                            </select>
-                        </div>
-                        <div class="form_row" id="recherche"> 
-                            <input type="hidden" name="action" value="rechercher" />
-                            <input class="main" type="submit" value="Rechercher" name="search" />
-                        </div>        
-                    </form>
+            <div class="container">
+                <div class="row">
+                    <div id="section_1">
+                        <form method="get" action="liste_tache">
+                            <div class="form_row"> 
+                                <label for="ville">Ville : </label>
+                                <input class="main" type="text" name="city" value="" placeholder="Entrez une ville" /> </div>
+                            <div class="form_row"> 
+                                <label for="competence">Compétence : </label>
+                                <select class="main" name="skill">
+                                    <option value="-1">Sélectionnez une compétence...</option>
+                                    <option value="1">Bricolage</option>
+                                    <option value="2">Ménage</option>
+                                    <option value="3">Jardinage</option>
+                                    <option value="4">Pyrogravure sur boîte de camembert</option>
+                                    <option value="5">Peinture</option>
+                                    <option value="6">Réparation</option>
+                                    <option value="7">Cuisine</option>
+                                    <option value="8">Aide à la personne</option>
+                                </select>
+                            </div>
+                            <div class="form_row" id="recherche"> 
+                                <input class="main" type="submit" value="Rechercher" name="search" />
+                            </div>        
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            
-        </div>
+        </section><!-- end of section 1 -->		
+
+
 
     </body>
 </html>

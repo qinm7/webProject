@@ -271,7 +271,7 @@
                     <div class="af-outer">
                         <div class="af-inner">
                             <label id="box"><input type="checkbox" name="check" required /></label>
-                            Je certifie avoir lu et accepté les <a href="#">conditions générales</a> d'utilisation du site BlablaJob.  
+                            Je certifie avoir lu et accepté les <a href="conditions.html">conditions générales</a> d'utilisation du site BlablaJob.  
                         </div>
                     </div>	
 

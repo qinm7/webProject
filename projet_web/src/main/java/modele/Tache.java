@@ -47,6 +47,19 @@ public class Tache {
         this.skill = skill;
     }
     
+    public Tache(Tache tache) {
+        this.idTache = tache.idTache;
+        this.titre = tache.titre;
+        this.description = tache.description;
+        this.remuneration = tache.remuneration;
+        this.longitude = tache.longitude;
+        this.latitude = tache.latitude;
+        this.datedebut = tache.datedebut;
+        this.datefin = tache.datefin;
+        this.email = tache.email;
+        this.skill = tache.skill;
+    }
+    
     /*Utiliser pour retrouver les taches postées en cours de realisation (elles ont donc un executant)
     **
     */
@@ -143,7 +156,7 @@ public class Tache {
     
     public List<String> getSkill() {
        return this.skill;
-   }
+    }
     
     public int getNote() {
         return this.note;
