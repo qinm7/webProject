@@ -1,7 +1,7 @@
 body, p, legend, label, input {
                 font-family: "Roboto", Helvetica, sans-serif;
                 font-weight: 300;
-            }		
+            }
 
             h1{
                 color: #666f77;
@@ -9,7 +9,7 @@ body, p, legend, label, input {
                 line-height: 1em;
                 margin: 0 0 1em 0;
                 text-transform: uppercase;
-                letter-spacing: 0.125em;
+                letter-spacing: 0.125em; 
             }
 
             h1 a {

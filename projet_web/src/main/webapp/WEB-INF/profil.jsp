@@ -16,7 +16,7 @@
         <link type="text/css" rel="stylesheet" href="css/style_register.css" />
         <link rel="stylesheet" type="text/css" href="css/skel.css" />
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
-        <link rel="stylesheet" type="text/css" href="css/profil.css" />    
+        <link rel="stylesheet" type="text/css" href="css/profil.css" />  
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
