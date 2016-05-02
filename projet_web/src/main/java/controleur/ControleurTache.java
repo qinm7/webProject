@@ -198,6 +198,8 @@ public class ControleurTache extends HttpServlet {
             actionAjouterTacheAtomique(request, response, userDAO, tacheDAO);
             int idtache = Integer.parseInt(request.getParameter("idtache"));
             tacheDAO.UpdateComposee(idtache);
+            request.setAttribute("tacheC", tacheDAO.getTacheComposee(idtache));
+            request.setAttribute("tacheAs", tacheDAO.getTacheComposee(idtache).getTacheAtomique());
             getServletContext().getRequestDispatcher("/WEB-INF/indexTacheComposee.jsp").forward(request, response);
         } else {
             invalidParameters(request, response);

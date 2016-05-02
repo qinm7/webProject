@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
 
         <link rel="stylesheet" type="text/css" href="css/accueil_user.css" />
+<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="./css/comment_ca_marche.css"/>
         <style>
             #section_1 {
@@ -55,6 +56,13 @@
 
 
 
+=======
+        
+         <!--Script-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/init.js"></script>
+>>>>>>> 606ed5f681b8a466ff86e00bbb974aa8767efd2e
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
@@ -75,46 +83,44 @@
                     </li>	
                 </ul>
             </nav>
-        </header>
-        <div class="acceuil">
-            <h2 class="commentbis">Bonjour ${user}, choissisez une ville et une compétence pour trouver un travail</h2>
-            <br>
-            <div class="user">
-                <div id="moncadre" class="container">
-                    <div class="row">
-                        <div id="section_1">
-                            <form method="post" action="controleurtache">
-                                <div class="form_row"> 
-                                    <label class="formulaire" >Ville : </label>
-                                    <input class="main city" type="text" name="city" placeholder="Entrez une ville" /> </div>
+        </header>     
+       <section id="one" class="wrapper style1">
+            <header class="major">
+                <h2>Trouvez un boulot près de chez vous </h2>
+                <img src="images/logo.jpg" alt="Logo de BlablaJob" />
+            </header>
 
-
-                                <div class="form_row"> 
-                                    <label class="formulaire">Compétence : </label>
-                                    <select class="main" name="skill">
-                                        <option value="-1">Sélectionnez une compétence...</option>
-                                        <option value="1">Bricolage</option>
-                                        <option value="2">Ménage</option>
-                                        <option value="3">Jardinage</option>
-                                        <option value="4">Pyrogravure sur boîte de camembert</option>
-                                        <option value="5">Peinture</option>
-                                        <option value="6">Réparation</option>
-                                        <option value="7">Cuisine</option>
-                                        <option value="8">Aide à la personne</option>
-                                    </select>
-                                </div>
-                                <div class="form_row" id="recherche"> 
-                                    <input type="hidden" name="action" value="rechercher" />
-                                    <input class="main" type="submit" value="Rechercher" name="search" />
-                                </div>        
-                            </form>
-                        </div>
+            <div class="container">
+                <div class="row">
+                    <div id="section_1">
+                        <form method="get" action="liste_tache">
+                            <div class="form_row"> 
+                                <label for="ville">Ville : </label>
+                                <input class="main" type="text" name="city" value="" placeholder="Entrez une ville" /> </div>
+                            <div class="form_row"> 
+                                <label for="competence">Compétence : </label>
+                                <select class="main" name="skill">
+                                    <option value="-1">Sélectionnez une compétence...</option>
+                                    <option value="1">Bricolage</option>
+                                    <option value="2">Ménage</option>
+                                    <option value="3">Jardinage</option>
+                                    <option value="4">Pyrogravure sur boîte de camembert</option>
+                                    <option value="5">Peinture</option>
+                                    <option value="6">Réparation</option>
+                                    <option value="7">Cuisine</option>
+                                    <option value="8">Aide à la personne</option>
+                                </select>
+                            </div>
+                            <div class="form_row" id="recherche"> 
+                                <input class="main" type="submit" value="Rechercher" name="search" />
+                            </div>        
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="container">
+        </section><!-- end of section 1 -->		
 
-            </div>
+
 
     </body>
 </html>
