@@ -59,13 +59,7 @@
                     
                     
     <body>
-        
-        Test
-        ${sk}
-        ${lo}
-        ${la}
-        ${t1}
-        ${t2}
+        <br/>
        <div class="container">
             <h1>Liste des tâches</h1>
             <table>
