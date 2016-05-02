@@ -15,54 +15,12 @@
         <link rel="stylesheet" type="text/css" href="css/style-xlarge.css" />
 
         <link rel="stylesheet" type="text/css" href="css/accueil_user.css" />
-<<<<<<< HEAD
-        <link rel="stylesheet" type="text/css" href="./css/comment_ca_marche.css"/>
-        <style>
-            #section_1 {
-                margin-left: 19%;
-                margin-right: auto;
-                margin-top: 5%;
-            }
 
-            #section_1 form {
-                text-align: center;
-                padding: 0;
-                margin:0;
-            }
-
-            #section_1 .form_row {
-                clear: both;
-                padding-bottom: 20px ;
-                text-align : center;
-            }
-
-            #recherche {
-                margin-left: 22%;
-                margin-right: auto;
-            }
-
-
-            #moncadre {
-                border:1px solid black;
-                width:1200px;
-                height:300px;
-            }
-            
-         .city {
-    margin-left: 110px;
-    text-align: center;
-}
-        </style>
-
-
-
-=======
-        
          <!--Script-->
         <script src="js/jquery.min.js"></script>
         <script src="js/skel.min.js"></script>
         <script src="js/init.js"></script>
->>>>>>> 606ed5f681b8a466ff86e00bbb974aa8767efd2e
+
     </head>
     <body>
         <header id="header" class="skel-layers-fixed">
