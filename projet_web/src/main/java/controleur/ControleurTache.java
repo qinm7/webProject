@@ -340,6 +340,7 @@ public class ControleurTache extends HttpServlet {
             i++;
         }   
         
+        getServletContext().getRequestDispatcher("/WEB-INF/afficheTache.jsp").forward(request, response);
         getServletContext().getRequestDispatcher("/WEB-INF/affichetache2.jsp").forward(request, response);
 
     }
