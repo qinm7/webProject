@@ -9,39 +9,11 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>LIJE : Google Maps JavaScript API v3</title>
-    <style>
-    html, body { margin:50px 0; padding:0; }
-    #map { 
-        height: 300px; width:80%; margin:0 auto;
-        -webkit-box-shadow: 0 2px 3px 3px rgba(0,0,0,0.2);
-        box-shadow: 0 2px 3px 3px rgba(0,0,0,0.2);
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-    }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <title> Affichage des tâches </title>
 </head>
-<body>
 
-    <div id="map"></div>
-    <script type="text/javascript">
-        var mapOptions = {
-            zoom: 13,
-            center: new google.maps.LatLng(48.853, 2.35),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-			disableDefaultUI: true,
-			scrollwheel: false,
-			draggable: false
-        }
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
-        var myLatLng = new google.maps.LatLng(48.804128, 7.776792);
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: 'LIJE Creative'
-        });	
-    </script>
+<body>
+    <img id="image" width="600" src="http://maps.googleapis.com/maps/api/staticmap?center=France,+paris&zoom=12&scale=true&size=1000x500&markers=color:red|label:A|48.853,2.35&markers=color:green|label:B|48.858370099999,2.294481300000&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of France">
+    <h1> Liste des tâches qui vous correspondent </h1>
 </body>
 </html>

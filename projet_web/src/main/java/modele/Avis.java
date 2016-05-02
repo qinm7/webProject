@@ -43,7 +43,7 @@ public class Avis {
         return this.destinataire;
     }
 
-    public int gtNote() {
+    public int getNote() {
         return this.note;
     }
     

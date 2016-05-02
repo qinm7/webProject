@@ -24,7 +24,9 @@ public class Tache {
     private String email;
     private List<String> skill;
     private String executant;
-    private Avis avis;
+    private int idAvis;
+    private int note;
+    private String commentaire;
 
     public Tache() {
         super();
@@ -77,7 +79,8 @@ public class Tache {
         this.email = tache.email;
         this.skill = tache.skill;
         this.executant = executant;
-        this.avis = avis;
+        this.note = avis.getNote();
+        this.commentaire = avis.getCommentaire();
     }
     
     /*Utiliser pour retrouver les taches engagees et realisees (elles ont donc un executant et un commentaire)
@@ -94,7 +97,8 @@ public class Tache {
         this.datefin = tache.datefin;
         this.email = tache.email;
         this.skill = tache.skill;
-        this.avis = avis;
+        this.note = avis.getNote();
+        this.commentaire = avis.getCommentaire();
     }
 
     public int getIdTache() {
@@ -141,7 +145,12 @@ public class Tache {
        return this.skill;
    }
     
-    public Avis getAvis() {
-       return this.avis;
-   }
+    public int getNote() {
+        return this.note;
+    }
+    
+    public String getCommentaire() {
+        return this.commentaire;
+    }
+    
 }

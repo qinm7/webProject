@@ -1,7 +1,7 @@
 <%-- 
-    Document   : creation_tache
-    Created on : 23 avr. 2016, 15:08:51
-    Author     : charles
+    Document   : creation_tachecomposee
+    Created on : 30 avr. 2016, 09:02:20
+    Author     : qinm
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,35 +27,7 @@
         <script type="text/javascript" src="js/modernizr.custom.04022.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
-        <script>
-            $(function () {
-                $("#input-begin").datepicker({dateFormat: "dd/mm/yy"});
-            });
-            $(function () {
-                $("#input-end").datepicker({dateFormat: "dd/mm/yy"});
-            });
-            function comparDate() {
-                var sdate1 = document.getElementById("input-begin").value;
-                var date1 = new Date();
-                date1.setFullYear(sdate1.substring(6, 10));
-                date1.setMonth(sdate1.substring(3, 5));
-                date1.setDate(sdate1.substring(0, 2));
-                var d1 = date1.getTime();
-
-                var sdate2 = document.getElementById("input-end").value;
-                var date2 = new Date();
-                date2.setFullYear(sdate2.substring(6, 10));
-                date2.setMonth(sdate2.substring(3, 5));
-                date2.setDate(sdate2.substring(0, 2));
-                var d2 = date2.getTime();
-                if (d1 > d2) {
-                    mySpan.innerHTML = "Les dates sont incohérentes !";
-                    mySpan1.innerHTML = "Les dates sont incohérentes !";
-                    return false;
-                }    
-                return true;
-            }
-        </script>
+       
         <style>
             body, p, legend, label, input {
                 font-family: "Roboto", Helvetica, sans-serif;
@@ -109,7 +81,15 @@
         <div class="container">
             <section class="af-wrapper">
                 <h3>Poster une annonce sur BlablaJob</h3>			
-                <form class="af-form" id="af-form" method="get" action="controleurtache" onsubmit="return comparDate()">
+                <form class="af-form" id="af-form" method="get" action="controleurtache">
+                    <div class="af-outer">	
+                        <div class="af-inner">
+                            <br/>
+                            <br/>
+                            <span>Entrez les informations générales sur la tâche à réaliser.</span><br/>
+                            Veuillez remplir les champs ci-dessous concernant une tâche atomique, SVP.
+                        </div>
+                    </div>
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-title">Titre</label>
@@ -145,55 +125,18 @@
                     </div>
                     <div class="af-outer">
                         <div class="af-inner">
-                            <label for="input-addr">Adresse</label>
-                            <input type="text" name="address" id="input-addr" required placeholder="Adresse postale" /> 
-                        </div>
-                    </div>
-
-                    <div class="af-outer">
-                        <div class="af-inner">
-                            <label for="input-codeP">Code postal</label>	
-                            <input type="text" name="codeP" id="input-codeP" required placeholder="Code postal" /> 
-                        </div>
-                    </div>
-
-                    <div class="af-outer">
-                        <div class="af-inner">
-                            <label for="input-city">Ville</label>	
-                            <input type="text" name="city" id="input-city" required placeholder="Ville" /> 
-                        </div>
-                    </div>
-
-                    <div class="af-outer">
-                        <div class="af-inner">
-                            <label id="begin" for="input-begin">Date de début</label>	
-                            <input type="date" name="begin_date" id="input-begin" required placeholder="jj/mm/aaaa" />
-                            <br/>
-                            <span id="mySpan" style="color:red"></span>
-                        </div>
-                    </div>
-
-                    <div class="af-outer">
-                        <div class="af-inner">
-                            <label for="input-end">Date de fin</label>	
-                            <input type="date" name="end_date" id="input-end" required placeholder="jj/mm/aaaa" />
-                            <br/>
-                            <span id="mySpan1" style="color:red"></span>
-                        </div>
-                    </div>
-
-                    <div class="af-outer">
-                        <div class="af-inner">
 
                             <label id="box"><input type="checkbox" required name="remember_me" checked /></label>
-                            Je certifie avoir lu et accepté les <a href="conditions.html">conditions générales</a> 
+                            Je certifie avoir lu et accepté les <a href="#">conditions générales</a> 
                             d'utilisation du site BlablaJob.  
                         </div>
                     </div>	
-
-                    <input type="hidden" name="email" value=${user} />
-                    <input type="hidden" name="action" value="poster" />
-                    <input type="submit" name="submit_tache" value="Poster" /> 
+                    
+                    <input type="hidden" name="idtache" value=${idtache} />
+                    <input type="hidden" name="adresse" value=${adresse} />
+                    <input type="submit" name="choix" value="Ajouter" />                                    
+                    <input type="hidden" name="action" value="tacheatomique" />
+                    <input style="margin-left: 42.7%" type="submit" name="choix" value="Poster" /> 
 
                 </form>
             </section>

@@ -266,7 +266,7 @@ public class UserDAO extends AbstractDataBaseDAO {
         }
     }
     
-    /*public User getEngageExecutor(int idtache) throws DAOException {
+    public User getEngageExecutor(int idtache) throws DAOException {
         Connection conn = null;
         String email;
         try {
@@ -283,7 +283,7 @@ public class UserDAO extends AbstractDataBaseDAO {
             closeConnection(conn);
         }
         return getUser(email);
-    }*/
+    }
     
     public void AjouterAvis(int idtache, int note, String commentaire, String emetteur, String destinataire) throws DAOException {
         Connection conn = null;

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.Tache;
 
-
 @WebServlet(name = "ControleurTache", urlPatterns = {"/controleurtache"})
 public class ControleurTache extends HttpServlet {
 
@@ -96,7 +95,11 @@ public class ControleurTache extends HttpServlet {
             } else if (action.equals("poster")) {
                 actionAjouter(request, response, userDAO, tacheDAO);
             } else if (action.equals("supprimer")) {
-                actionSuppTache(request, response, tacheDAO);    
+                actionSuppTache(request, response, tacheDAO);
+            } else if (action.equals("tacheComposee")) {
+                actionAjouterTacheComposee(request, response, userDAO, tacheDAO);
+            } else if (action.equals("tacheatomique")) {
+                actionTacheAtomique(request, response, userDAO, tacheDAO);
             } else {
                 invalidParameters(request, response);
             }
@@ -124,7 +127,7 @@ public class ControleurTache extends HttpServlet {
             if (action == null) {
                 actionAfficher(request, response, tacheDAO);
             } else if (action.equals("rechercher")) {
-                actionRechercher(request, response, tacheDAO);    
+                actionRechercher(request, response, tacheDAO);
             } else {
                 invalidParameters(request, response);
             }
@@ -145,6 +148,85 @@ public class ControleurTache extends HttpServlet {
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/accueil_user.jsp").forward(request, response);
         }
+    }
+
+    private void actionAjouterTacheComposee(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
+        GeocodingResult[] results = null;
+        float latitude = 0;
+        float longitude = 0;
+        String adresse = request.getParameter("address") + " " + request.getParameter("codeP") + " " + request.getParameter("city");
+        request.setAttribute("adresse", adresse);
+        try {
+            //results =  GeocodingApi.geocode(context, "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
+            results = GeocodingApi.geocode(context, adresse).await();
+            //System.out.println(results[0].formattedAddress);
+            latitude = (float) (results[0].geometry.location.lat);
+            longitude = (float) (results[0].geometry.location.lng);
+        } catch (Exception e) {
+            //on rattrape l'exception dans le cas où l'API de Google n'arrive pas à associer une coordonnée géographique à l'adresse saisie
+            String adr = "Adresse mal saisie";
+            request.setAttribute("AdrErreur", adr);
+            request.getRequestDispatcher("/WEB-INF/demande_type_tache.jsp").forward(request, response);
+        }
+        String email = request.getParameter("email");
+        String titre = request.getParameter("title");
+        String description = request.getParameter("description");
+        String datebegin = request.getParameter("begin_date");
+        String dateend = request.getParameter("end_date");
+        try {
+            userDAO.ajouterCommanditaire(email);
+        } catch (DAOException e) {
+        };
+        int idtache = tacheDAO.creerTache(titre, description, -1, longitude, latitude, datebegin, dateend, email, null);
+        tacheDAO.creerTacheComposee(idtache);
+        request.setAttribute("idtache", idtache);
+        getServletContext().getRequestDispatcher("/WEB-INF/creation_tachecomposee.jsp").forward(request, response);
+        //getServletContext().getRequestDispatcher("/WEB-INF/creation_tache.jsp").forward(request, response);
+    }
+
+    private void actionTacheAtomique(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException {
+        String choix = request.getParameter("choix");
+        if (choix == null) {
+            invalidParameters(request, response);
+        } else if (choix.equals("Ajouter")) {
+            actionAjouterTacheAtomique(request, response, userDAO, tacheDAO);
+            getServletContext().getRequestDispatcher("/WEB-INF/creation_tachecomposee.jsp").forward(request, response);
+        } else if (choix.equals("Poster")) {
+            actionAjouterTacheAtomique(request, response, userDAO, tacheDAO);
+            int idtache = Integer.parseInt(request.getParameter("idtache"));
+            tacheDAO.UpdateComposee(idtache);
+            getServletContext().getRequestDispatcher("/WEB-INF/indexTacheComposee.jsp").forward(request, response);
+        } else {
+            invalidParameters(request, response);
+        }
+    }
+
+    private void actionAjouterTacheAtomique(HttpServletRequest request, HttpServletResponse response, UserDAO userDAO, TacheDAO tacheDAO)
+            throws IOException, ServletException, DAOException {
+        request.setAttribute("adresse", request.getParameter("adresse"));
+        int idtache = Integer.parseInt(request.getParameter("idtache"));
+        Tache tache = tacheDAO.getTache(idtache);
+        float latitude = tache.getLatitude();
+        float longitude = tache.getLongitude();
+        String datebegin = tache.getDatedebut();
+        String dateend = tache.getDatefin();
+        String email = tache.getEmail();
+        String titre = request.getParameter("title");
+        String description = request.getParameter("description");
+        int remuneration = Integer.parseInt(request.getParameter("price"));
+        String[] skill = request.getParameterValues("skill");
+        try {
+            userDAO.ajouterCommanditaire(email);
+        } catch (DAOException e) {
+        };
+        int idtacheA = tacheDAO.creerTache(titre, description, remuneration,
+                longitude, latitude, datebegin, dateend, email, skill);
+        tacheDAO.creerTacheAtomique(idtacheA);
+        tacheDAO.EstComposee(idtache, idtacheA);
+        request.setAttribute("idtache", idtache);
     }
 
     /**
@@ -191,35 +273,35 @@ public class ControleurTache extends HttpServlet {
          request.setAttribute("tache", tache);*/
         actionAfficher(request, response, tacheDAO);
     }
-    
+
     private void actionRechercher(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException, Exception {
-        
+
         String cityV = request.getParameter("city");
         int skill = Integer.parseInt(request.getParameter("skill"));
-       
+
         float longitude = 0, latitude = 0;
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
-        GeocodingResult[] results = GeocodingApi.geocode(context, cityV).await(); 
+        GeocodingResult[] results = GeocodingApi.geocode(context, cityV).await();
         latitude = (float) (results[0].geometry.location.lat);
         longitude = (float) (results[0].geometry.location.lng);
-        
-        List<Tache> taches = tacheDAO.getTacheCityJob(longitude,latitude,skill);
-        
-        request.setAttribute("taches",taches);
-        
+
+        List<Tache> taches = tacheDAO.getTacheCityJob(longitude, latitude, skill);
+
+        request.setAttribute("taches", taches);
+
         getServletContext().getRequestDispatcher("/WEB-INF/afficheTache.jsp").forward(request, response);
-        
+
     }
-    
+
     private void actionSuppTache(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         int idtache = Integer.parseInt(request.getParameter("idtache"));
         tacheDAO.supprimerTache(idtache);
-        actionAfficherHistorique(request, response, tacheDAO); 
-        
+        actionAfficherHistorique(request, response, tacheDAO);
+
     }
-    
+
     private void actionAfficherHistorique(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
             throws DAOException, ServletException, IOException {
         String email = request.getParameter("id");

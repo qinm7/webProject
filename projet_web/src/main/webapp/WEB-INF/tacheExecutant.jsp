@@ -119,14 +119,19 @@
                             ${skillEx}
                             <c:out value = "/" />  
                         </c:forEach>
+                        <br/>
+                        Note : ${tacheEx.note}/5<br/>
+                        Commentaire reçu de ${tacheEx.email} : ${tacheEx.commentaire}<br/>
                         <form method="post" action="controleur" >
-                            <input type="hidden" name="facture" value="${tacheEx.remuneration}" />
-                            <input type="hidden" name="titre" value="${tacheEx.titre}" />
-                            <input type="hidden" name="description" value="${tacheEx.description}" />
-                            <input type="hidden" name="user" value="${user}" />
+                            <input type="hidden" name="facture" value=${tacheEx.remuneration} />
+                            <input type="hidden" name="idtache" value=${tacheEx.idTache} />
+                            <input type="hidden" name="commanditaire" value=${tacheEx.email} />
+                            <input type="hidden" name="titre" value=${tacheEx.titre} />
+                            <input type="hidden" name="description" value=${tacheEx.description} />
+                            <input type="hidden" name="user" value=${user} />
                             <!--pour récupérer il faut aller dans le contrôleur dans le doPost et variable action=viewfacture-->
                             <input type="hidden" name="action" value="viewfacture" />
-                            <input style="margin-left : 42%" type="submit" name="confirm" value="Voir la facture" />
+                            <input style="margin-left : 44%" type="submit" name="confirm" value="Voir la facture" />
                         </form>
                     </fieldset>
                     </tr>
