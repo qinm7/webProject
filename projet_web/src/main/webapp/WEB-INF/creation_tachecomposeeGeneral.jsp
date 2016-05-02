@@ -125,7 +125,7 @@
                             <label for="input-description">Description</label>
                             <textarea name="description" id="input-description" required rows="10" cols="20" placeholder="Description du travail à réaliser (200 caractères max)" maxlength="200" ></textarea>
                         </div>
-                    </div>					
+                    </div>
                     <div class="af-outer">
                         <div class="af-inner">
                             <label for="input-addr">Adresse</label>

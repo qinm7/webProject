@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,24 +58,41 @@
         <br/>
         <div class="container">
             <h1>Tâche créée avec succès !</h1>
-            Voici un récapitulatif de votre tâche :<br/>
+            Voici un récapitulatif de votre tâche composée :<br/>
             <%--affichage des données clients --%>
-            Titre : ${tache.titre}<br/>
-            Description : ${tache.description}<br/>
-            Rémuneration : ${tache.remuneration} €<br/>
-            Adresse : ${adresse}<br/>
-            Longitude : ${tache.longitude}<br/>
-            Latitude : ${tache.latitude}<br/>
-            Date de début : ${tache.datedebut}<br/>
-            Date de fin : ${tache.datefin}<br/>
-            Email : ${tache.email}<br/>
+            Titre : ${tacheC.titre}<br/>
+            Description : ${tacheC.description}<br/>
+            Rémuneration : ${tacheC.remuneration} €<br/>
+            Longitude : ${tacheC.longitude}<br/>
+            Latitude : ${tacheC.latitude}<br/>
+            Date de début : ${tacheC.datedebut}<br/>
+            Date de fin : ${tacheC.datefin}<br/>
+            Email : ${tacheC.email}<br/>
             Compétences : 
-            <c:forEach items="${tache.skill}" var="skill">
+            <c:forEach items="${tacheC.skill}" var="skill">
                 ${skill}
                 <c:out value = "/" />  
             </c:forEach>
             <br/>
             <br/>
+            Composition de la tâche : <br/>
+            <c:forEach items="${tacheAs}" var="tacheA">
+                Titre : ${tacheA.titre}<br/>
+                Description : ${tacheA.description}<br/>
+                Rémuneration : ${tacheA.remuneration} €<br/>
+                Longitude : ${tacheA.longitude}<br/>
+                Latitude : ${tacheA.latitude}<br/>
+                Date de début : ${tacheA.datedebut}<br/>
+                Date de fin : ${tacheA.datefin}<br/>
+                Email : ${tacheA.email}<br/>
+                Compétences : 
+                <c:forEach items="${tacheA.skill}" var="skill">
+                    ${skill}
+                    <c:out value = "/" />  
+                </c:forEach>
+                <br/>
+                <br/>  
+            </c:forEach>
         </div>
     </body>
 </html>
