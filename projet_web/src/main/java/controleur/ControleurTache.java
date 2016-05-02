@@ -13,6 +13,7 @@ import dao.TacheDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -285,11 +286,24 @@ public class ControleurTache extends HttpServlet {
         GeocodingResult[] results = GeocodingApi.geocode(context, cityV).await();
         latitude = (float) (results[0].geometry.location.lat);
         longitude = (float) (results[0].geometry.location.lng);
-
+        
+        request.setAttribute("sk",skill);
+        request.setAttribute("lo",longitude);
+        request.setAttribute("la",latitude);
+        
         List<Tache> taches = tacheDAO.getTacheCityJob(longitude, latitude, skill);
-
+        
         request.setAttribute("taches", taches);
-
+        
+        Iterator<Tache> it = taches.iterator();
+        int i =0;
+        
+        while(it.hasNext()){
+            Tache t = it.next();
+            request.setAttribute("t"+i,t.getSkill());
+            i++;
+        }   
+        
         getServletContext().getRequestDispatcher("/WEB-INF/afficheTache.jsp").forward(request, response);
 
     }

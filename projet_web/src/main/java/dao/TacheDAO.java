@@ -194,14 +194,20 @@ public class TacheDAO extends AbstractDataBaseDAO {
     public List<Tache> getTacheCityJob(float longitude, float latitude, int skill) throws DAOException {
         Connection conn = null;
         List<Tache> taches = new ArrayList<Tache>();
+        
+        float latempP = latitude + (float) 0.1;
+        float latempN = latitude -(float) 0.1;
+        float lotempP = longitude +(float) 0.1;
+        float lotempN = longitude -(float) 0.1;
         try {
             conn = getConnection();
             PreparedStatement st
-                    = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite "
-                            + "WHERE longitude < ? + 1 AND latitude < ? +1 AND idskill = ?");
-            st.setFloat(1, longitude);
-            st.setFloat(2, latitude);
-            st.setInt(3, skill);
+                    = conn.prepareStatement("SELECT DISTINCT t.idtache FROM tache t, necessite n WHERE n.idtache=t.idtache AND n.idskill = ? AND t.latitude<? AND ?<t.latitude AND t.longitude<? AND ?<t.longitude");
+            st.setInt(1, skill);
+            st.setFloat(2, latempP);
+            st.setFloat(3, latempN);
+            st.setFloat(4, lotempP);
+            st.setFloat(5, lotempN);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Tache tache

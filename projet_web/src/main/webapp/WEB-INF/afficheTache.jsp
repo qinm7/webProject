@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,9 +59,17 @@
                     
                     
     <body>
-        <h1>Affiche les taches</h1>
         
-        <c:forEach items="${taches}" var="tache">
+        Test
+        ${sk}
+        ${lo}
+        ${la}
+        ${t1}
+        ${t2}
+       <div class="container">
+            <h1>Liste des tâches</h1>
+            <table>
+                <c:forEach items="${taches}" var="tache">
                     <tr>
                     <fieldset>
                         <legend>Tâche ${tache.idTache}</legend>
@@ -72,15 +81,12 @@
                         Date de début : ${tache.datedebut}<br/>
                         Date de fin : ${tache.datefin}<br/>
                         Email : ${tache.email}<br/>
-                        Compétences : 
-                            <c:forEach items="${tache.skill}" var="skill">
-                                ${skill}
-                                <c:out value = "/" />  
-                            </c:forEach>    
+                        <br/>
                     </fieldset>
                     </tr>
                 </c:forEach>
-    
+            </table>   
+        </div>
     </body>
     
     
