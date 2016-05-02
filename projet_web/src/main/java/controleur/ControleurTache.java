@@ -129,6 +129,8 @@ public class ControleurTache extends HttpServlet {
                 actionAfficher(request, response, tacheDAO);
             } else if (action.equals("rechercher")) {
                 actionRechercher(request, response, tacheDAO);
+            } else if (action.equals("rechercher2")) {
+                actionRechercher2(request, response, tacheDAO);
             } else {
                 invalidParameters(request, response);
             }
@@ -307,6 +309,38 @@ public class ControleurTache extends HttpServlet {
         }   
         
         getServletContext().getRequestDispatcher("/WEB-INF/afficheTache.jsp").forward(request, response);
+
+    }
+    private void actionRechercher2(HttpServletRequest request, HttpServletResponse response, TacheDAO tacheDAO)
+            throws DAOException, ServletException, IOException, Exception {
+
+        String cityV = request.getParameter("city");
+        int skill = Integer.parseInt(request.getParameter("skill"));
+
+        float longitude = 0, latitude = 0;
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyAcffx6gRrhEOWEtNtIgqU2HdAqihPxgUw");
+        GeocodingResult[] results = GeocodingApi.geocode(context, cityV).await();
+        latitude = (float) (results[0].geometry.location.lat);
+        longitude = (float) (results[0].geometry.location.lng);
+        
+        request.setAttribute("sk",skill);
+        request.setAttribute("lo",longitude);
+        request.setAttribute("la",latitude);
+        
+        List<Tache> taches = tacheDAO.getTacheCityJob(longitude, latitude, skill);
+        
+        request.setAttribute("taches", taches);
+        
+        Iterator<Tache> it = taches.iterator();
+        int i =0;
+        
+        while(it.hasNext()){
+            Tache t = it.next();
+            request.setAttribute("t"+i,t.getSkill());
+            i++;
+        }   
+        
+        getServletContext().getRequestDispatcher("/WEB-INF/affichetache2.jsp").forward(request, response);
 
     }
 
