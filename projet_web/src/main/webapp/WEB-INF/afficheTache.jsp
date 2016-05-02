@@ -63,12 +63,11 @@
     <center>
     <h1> Liste des tâches qui vous correspondent </h1>
     <div  id="image1">
-    <img id="image" width="600" src="http://maps.googleapis.com/maps/api/staticmap?center=France,+paris&zoom=12&scale=true&size=1000x500&markers=color:red|label:A|48.853,2.35&markers=color:green|label:B|48.858370099999,2.294481300000&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of France">
+    <img id="image" width="600" src="http://maps.googleapis.com/maps/api/staticmap?center=France,+grenoble&zoom=12&scale=true&size=1000x500&markers=color:red|label:A|${tache.la},${tache.lo}&markers=color:green|label:B|48.858370099999,2.294481300000&maptype=roadmap&format=png&visual_refresh=true" alt="Google Map of France">
     </div>
     </center>
         <br/>
        <div class="container">
-            <h1>Liste des tâches</h1>
             <table>
                 <c:forEach items="${taches}" var="tache">
                     <tr>
