@@ -323,7 +323,7 @@ public class ControleurTache extends HttpServlet {
         latitude = (float) (results[0].geometry.location.lat);
         longitude = (float) (results[0].geometry.location.lng);
         
-        request.setAttribute("sk",skill);
+        request.setAttribute("city",cityV);
         request.setAttribute("lo",longitude);
         request.setAttribute("la",latitude);
         
