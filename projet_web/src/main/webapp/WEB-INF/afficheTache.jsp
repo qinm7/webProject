@@ -58,9 +58,7 @@
         </header>
                     
                     
-    <body>
-        <p> ville  : ${city}  longitude : ${lo}     ${la}</p>
-        
+    <body>    
     <center>
     <h1> Liste des tâches qui vous correspondent </h1>
     <div  id="image1">
